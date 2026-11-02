@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YemBridge Digital Commerce</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fa;color:#17243a;font-family:Arial,sans-serif}
+header{background:#102d50;color:white;padding:22px 18px}
+header h2{margin:0;font-size:22px}
+header p{margin:6px 0 0;color:#c9d8e9;font-size:13px}
+main{max-width:650px;margin:auto;padding:16px}
+.card{background:white;border-radius:15px;padding:19px;margin-bottom:15px;box-shadow:0 3px 14px #142b4810}
+.balance{background:linear-gradient(130deg,#12345a,#176b83);color:white}
+.balance small{color:#d5e7f0}
+.amount{font-size:30px;font-weight:bold;margin:12px 0}
+button{border:0;border-radius:9px;padding:12px 15px;background:#147d83;color:white;font-weight:bold;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.service{background:white;border:1px solid #e5eaf0;border-radius:13px;padding:17px 10px;text-align:center;cursor:pointer}
+.service span{font-size:25px;display:block;margin-bottom:8px}
+.service b{font-size:14px}
+h3{margin:5px 0 14px}
+.muted{color:#738197;font-size:13px}
+nav{display:flex;justify-content:space-around;background:white;padding:13px 3px;position:sticky;bottom:0;border-top:1px solid #e4eaf0}
+nav button{background:transparent;color:#25415d;padding:8px;font-size:12px}
+nav button.active{color:#07858b}
+input{width:100%;padding:12px;border:1px solid #ccd5df;border-radius:8px;margin:8px 0 13px}
+.hidden{display:none}
+footer{text-align:center;color:#8290a0;font-size:11px;padding:15px}
+</style>
+</head>
+<body>
+<header>
+<h2>YemBridge</h2>
+<p>Digital Commerce Platform</p>
+</header>
+<main>
+<section id="home">
+<div class="card balance">
+<small>Customer spending balance · DEMO</small>
+<div class="amount">UGX 250,000</div>
+<small>Illustrative balance only — no real funds</small>
+</div>
+<div class="card">
+<h3>Welcome to YemBridge</h3>
+<p class="muted">Your digital commerce and everyday services platform.</p>
+<button onclick="show('services')">Explore services</button>
+</div>
+<h3>Our services</h3>
+<div class="grid">
+<div class="service" onclick="show('services')"><span>📱</span><b>Airtime & Data</b></div>
+<div class="service" onclick="show('services')"><span>💡</span><b>Bill Payments</b></div>
+<div class="service" onclick="show('shop')"><span>🛍️</span><b>Marketplace</b></div>
+<div class="service" onclick="show('activity')"><span>📋</span><b>Transactions</b></div>
+</div>
+</section>
+
+<section id="services" class="hidden">
+<div class="card">
+<h3>Digital Services</h3>
+<p class="muted">Choose a service to explore the prototype.</p>
+<div class="service" onclick="demo('Airtime')">📱 Airtime</div><br>
+<div class="service" onclick="demo('Mobile data')">🌐 Mobile data</div><br>
+<div class="service" onclick="demo('Utility bills')">💡 Utility bills</div>
+</div>
+</section>
+
+<section id="shop" class="hidden">
+<div class="card">
+<h3>Marketplace</h3>
+<p class="muted">Discover products from approved merchants.</p>
+<div class="service" onclick="demo('Product catalogue')">🛒 Product catalogue</div>
+<p class="muted">Demo marketplace — products and merchants will be added during development.</p>
+</div>
+</section>
+
+<section id="activity" class="hidden">
+<div class="card">
+<h3>Transaction History</h3>
+<p class="muted">No transactions yet.</p>
+<p>Future purchases and payments will appear here.</p>
+</div>
+</section>
+
+<section id="account" class="hidden">
+<div class="card">
+<h3>My Account</h3>
+<p>Customer account</p>
+<p class="muted">KYC status: Not verified</p>
+<p class="muted">YEM connection: Not connected</p>
+<p class="muted">All balances and connections are simulated.</p>
+</div>
+</section>
+</main>
+<nav>
+<button class="active" onclick="show('home',this)">⌂ Home</button>
+<button onclick="show('services',this)">Services</button>
+<button onclick="show('shop',this)">Shop</button>
+<button onclick="show('activity',this)">Activity</button>
+<button onclick="show('account',this)">Account</button>
+</nav>
+<footer>YemBridge Digital Commerce Ltd · Prototype v1.0</footer>
+<script>
+function show(id,btn){
+document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+document.getElementById(id).classList.remove('hidden');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(btn)btn.classList.add('active');
+else document.querySelectorAll('nav button')[1].classList.add('active');
+}
+function demo(service){
+alert(service+' will be developed in a future YemBridge prototype stage. No real transaction has been made.');
+}
+</script>
+</body>
+</html>
