@@ -284,6 +284,147 @@ footer {
   flex-shrink: 0;
 }
 
+.balance-top,
+.balance-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.balance-top {
+  color: #D5E8E2;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  margin-bottom: 22px;
+}
+
+.balance .demo-label {
+  background: #F2B84B;
+  color: #102B46;
+}
+
+.balance .amount {
+  font-size: 34px;
+  margin: 8px 0;
+}
+
+.balance-bottom {
+  border-top: 1px solid #FFFFFF35;
+  margin-top: 20px;
+  padding-top: 13px;
+  font-size: 11px;
+  color: #D5E8E2;
+}
+
+.gold-symbol {
+  color: #F2C45C;
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.welcome {
+  padding: 13px 3px 22px;
+}
+
+.welcome-tag,
+.section-heading span {
+  color: #087F68;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+}
+
+.welcome h3 {
+  font-size: 27px;
+  line-height: 1.2;
+  margin: 7px 0;
+  letter-spacing: -0.6px;
+}
+
+.welcome button {
+  margin-top: 8px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 8px 0 14px;
+}
+
+.section-heading h3 {
+  margin: 0;
+}
+
+.section-heading span {
+  font-size: 9px;
+}
+
+.service {
+  min-height: 125px;
+}
+
+.service small {
+  display: block;
+  color: #82918C;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.market-banner {
+  background: linear-gradient(120deg, #102B46, #087F68);
+  border-radius: 19px;
+  color: white;
+  padding: 22px;
+  margin-top: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.market-banner span {
+  color: #F2C45C;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.market-banner h3 {
+  color: white;
+  font-size: 23px;
+  line-height: 1.2;
+  margin: 9px 0;
+}
+
+.market-banner p {
+  color: #D5E8E2;
+  font-size: 12px;
+}
+
+.market-banner b {
+  color: #F2C45C;
+  font-size: 12px;
+}
+
+.market-symbol {
+  color: #F2C45C;
+  font-family: Georgia, serif;
+  font-size: 42px;
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: -6px;
+  flex-shrink: 0;
+  padding-right: 7px;
+}
+
 </style>
 
 </head>
@@ -302,25 +443,75 @@ footer {
 </header>
 
 <main>
+
 <section id="home">
-<div class="card balance">
-<small>Customer spending balance · DEMO</small>
-<div class="amount">UGX 250,000</div>
-<small>Illustrative balance only — no real funds</small>
-</div>
-<div class="card">
-<h3>Welcome to YemBridge</h3>
-<p class="muted">Your digital commerce and everyday services platform.</p>
-<button onclick="show('services')">Explore services</button>
-</div>
-<h3>Our services</h3>
-<div class="grid">
-<div class="service" onclick="show('services')"><span>📱</span><b>Airtime & Data</b></div>
-<div class="service" onclick="show('services')"><span>💡</span><b>Bill Payments</b></div>
-<div class="service" onclick="show('shop')"><span>🛍️</span><b>Marketplace</b></div>
-<div class="service" onclick="show('activity')"><span>📋</span><b>Transactions</b></div>
-</div>
+
+  <div class="card balance">
+    <div class="balance-top">
+      <span>◈ YOUR YEMBRIDGE WALLET</span>
+      <span class="demo-label">DEMO</span>
+    </div>
+
+    <small>Available spending balance</small>
+    <div class="amount">UGX 250,000</div>
+    <small>Illustrative demo balance · No real funds</small>
+
+    <div class="balance-bottom">
+      <span>Everyday commerce, made easier.</span>
+      <span class="gold-symbol">YB</span>
+    </div>
+  </div>
+
+  <div class="welcome">
+    <p class="welcome-tag">WELCOME TO YEMBRIDGE</p>
+    <h3>Everything you need,<br>in one place.</h3>
+    <p class="muted">Pay bills, stay connected and discover great local businesses.</p>
+    <button onclick="show('services')">Explore services →</button>
+  </div>
+
+  <div class="section-heading">
+    <h3>Explore services</h3>
+    <span>YOUR DAILY ESSENTIALS</span>
+  </div>
+
+  <div class="grid">
+    <div class="service" onclick="show('services')">
+      <span>📱</span>
+      <b>Airtime & Data</b>
+      <small>Stay connected</small>
+    </div>
+
+    <div class="service" onclick="show('services')">
+      <span>💡</span>
+      <b>Pay Bills</b>
+      <small>Easy payments</small>
+    </div>
+
+    <div class="service" onclick="show('shop')">
+      <span>🛍️</span>
+      <b>Marketplace</b>
+      <small>Shop local</small>
+    </div>
+
+    <div class="service" onclick="show('activity')">
+      <span>📋</span>
+      <b>Activity</b>
+      <small>Track transactions</small>
+    </div>
+  </div>
+
+  <div class="market-banner" onclick="show('shop')">
+    <div>
+      <span>THE YEMBRIDGE MARKETPLACE</span>
+      <h3>Shop local.<br>Grow together.</h3>
+      <p>Discover products from local merchants.</p>
+      <b>Explore marketplace →</b>
+    </div>
+    <div class="market-symbol">YB</div>
+  </div>
+
 </section>
+
 
 <section id="services" class="hidden">
 <div class="card">
