@@ -85,13 +85,35 @@ footer{text-align:center;color:#8290a0;font-size:11px;padding:15px}
 </section>
 
 <section id="account" class="hidden">
-<div class="card">
-<h3>My Account</h3>
-<p>Customer account</p>
-<p class="muted">KYC status: Not verified</p>
-<p class="muted">YEM connection: Not connected</p>
-<p class="muted">All balances and connections are simulated.</p>
-</div>
+  <div class="card">
+    <h3>My Account</h3>
+
+    <div id="loggedOut">
+      <h4>Create a demo account</h4>
+      <input id="fullName" type="text" placeholder="Your full name">
+      <input id="email" type="email" placeholder="Email address">
+      <input id="password" type="password" placeholder="Create a password">
+      <button onclick="registerUser()">Register</button>
+
+      <hr>
+
+      <h4>Already registered?</h4>
+      <input id="loginEmail" type="email" placeholder="Email address">
+      <input id="loginPassword" type="password" placeholder="Password">
+      <button onclick="loginUser()">Sign in</button>
+
+      <p id="authMessage" class="muted"></p>
+    </div>
+
+    <div id="loggedIn" class="hidden">
+      <h4>Welcome, <span id="displayName"></span>!</h4>
+      <p id="displayEmail" class="muted"></p>
+      <p class="muted">KYC status: Not verified</p>
+      <p class="muted">YEM connection: Not connected</p>
+      <p class="muted">Demo account only. No real funds.</p>
+      <button onclick="logoutUser()">Sign out</button>
+    </div>
+  </div>
 </section>
 </main>
 <nav>
@@ -102,17 +124,97 @@ footer{text-align:center;color:#8290a0;font-size:11px;padding:15px}
 <button onclick="show('account',this)">Account</button>
 </nav>
 <footer>YemBridge Digital Commerce Ltd · Prototype v1.0</footer>
+
 <script>
 function show(id,btn){
-document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
-document.getElementById(id).classList.remove('hidden');
-document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-if(btn)btn.classList.add('active');
-else document.querySelectorAll('nav button')[1].classList.add('active');
+  document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else document.querySelectorAll('nav button')[1].classList.add('active');
 }
+
 function demo(service){
-alert(service+' will be developed in a future YemBridge prototype stage. No real transaction has been made.');
+  alert(service+' will be developed in a future YemBridge prototype stage. No real transaction has been made.');
 }
+
+async function hashPassword(password){
+  const data = new TextEncoder().encode(password);
+  const hash = await crypto.subtle.digest('SHA-256',data);
+  return Array.from(new Uint8Array(hash))
+    .map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function getAccount(){
+  return JSON.parse(localStorage.getItem('yembridgeDemoAccount') || 'null');
+}
+
+function showLoggedIn(account){
+  document.getElementById('loggedOut').classList.add('hidden');
+  document.getElementById('loggedIn').classList.remove('hidden');
+  document.getElementById('displayName').textContent = account.name;
+  document.getElementById('displayEmail').textContent = account.email;
+}
+
+async function registerUser(){
+  const name = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
+  const message = document.getElementById('authMessage');
+
+  if(!name || !email || password.length < 6){
+    message.textContent = 'Enter your name, a valid email and a password of at least 6 characters.';
+    return;
+  }
+
+  if(getAccount()){
+    message.textContent = 'A demo account already exists on this phone. Please sign in.';
+    return;
+  }
+
+  try{
+    const account = {
+      name:name,
+      email:email,
+      passwordHash:await hashPassword(password)
+    };
+    localStorage.setItem('yembridgeDemoAccount',JSON.stringify(account));
+    showLoggedIn(account);
+  }catch(error){
+    message.textContent = 'Registration could not be completed. Please try again.';
+  }
+}
+
+async function loginUser(){
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('loginPassword').value;
+  const message = document.getElementById('authMessage');
+
+  try{
+    const account = getAccount();
+    if(!account || account.email !== email ||
+       account.passwordHash !== await hashPassword(password)){
+      message.textContent = 'Incorrect email or password.';
+      return;
+    }
+    showLoggedIn(account);
+  }catch(error){
+    message.textContent = 'Sign-in could not be completed. Please try again.';
+  }
+}
+
+function logoutUser(){
+  document.getElementById('loggedIn').classList.add('hidden');
+  document.getElementById('loggedOut').classList.remove('hidden');
+  document.getElementById('loginPassword').value = '';
+  document.getElementById('authMessage').textContent = 'You have signed out.';
+}
+
+window.addEventListener('DOMContentLoaded',function(){
+  const account = getAccount();
+  if(account)showLoggedIn(account);
+});
 </script>
+
 </body>
 </html>
