@@ -5,31 +5,225 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>YemBridge Digital Commerce</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#f3f6fa;color:#17243a;font-family:Arial,sans-serif}
-header{background:#102d50;color:white;padding:22px 18px}
-header h2{margin:0;font-size:22px}
-header p{margin:6px 0 0;color:#c9d8e9;font-size:13px}
-main{max-width:650px;margin:auto;padding:16px}
-.card{background:white;border-radius:15px;padding:19px;margin-bottom:15px;box-shadow:0 3px 14px #142b4810}
-.balance{background:linear-gradient(130deg,#12345a,#176b83);color:white}
-.balance small{color:#d5e7f0}
-.amount{font-size:30px;font-weight:bold;margin:12px 0}
-button{border:0;border-radius:9px;padding:12px 15px;background:#147d83;color:white;font-weight:bold;cursor:pointer}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.service{background:white;border:1px solid #e5eaf0;border-radius:13px;padding:17px 10px;text-align:center;cursor:pointer}
-.service span{font-size:25px;display:block;margin-bottom:8px}
-.service b{font-size:14px}
-h3{margin:5px 0 14px}
-.muted{color:#738197;font-size:13px}
-nav{display:flex;justify-content:space-around;background:white;padding:13px 3px;position:sticky;bottom:0;border-top:1px solid #e4eaf0}
-nav button{background:transparent;color:#25415d;padding:8px;font-size:12px}
-nav button.active{color:#07858b}
-input{width:100%;padding:12px;border:1px solid #ccd5df;border-radius:8px;margin:8px 0 13px}
-.hidden{display:none}
-footer{text-align:center;color:#8290a0;font-size:11px;padding:15px}
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --navy: #102B46;
+  --navy-light: #193E5D;
+  --green: #087F68;
+  --green-light: #E5F5EF;
+  --gold: #F2B84B;
+  --ink: #182B3D;
+  --muted: #718092;
+  --background: #F5F8F7;
+  --white: #FFFFFF;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--ink);
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+header {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: white;
+  padding: 27px 20px 30px;
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0 5px 18px #102B4620;
+}
+
+header h2 {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.7px;
+}
+
+header p {
+  margin: 5px 0 0;
+  color: #D4E5EF;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: 19px 16px 25px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid #E9EFEC;
+  border-radius: 20px;
+  padding: 21px;
+  margin-bottom: 17px;
+  box-shadow: 0 5px 20px #193E5D0C;
+}
+
+.balance {
+  background: linear-gradient(135deg, #102B46, #087F68);
+  color: white;
+  border: 0;
+  border-radius: 21px;
+  padding: 23px;
+  position: relative;
+  overflow: hidden;
+}
+
+.balance small {
+  color: #D4EDE5;
+}
+
+.amount {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 13px 0;
+  letter-spacing: -1px;
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 18px;
+  background: var(--green);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.service {
+  background: white;
+  border: 1px solid #E7EEEA;
+  border-radius: 17px;
+  padding: 21px 12px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 3px 12px #193E5D08;
+  transition: 0.2s;
+}
+
+.service:active {
+  background: var(--green-light);
+  transform: scale(0.98);
+}
+
+.service span {
+  font-size: 29px;
+  display: block;
+  margin-bottom: 9px;
+}
+
+.service b {
+  font-size: 14px;
+  color: var(--navy);
+}
+
+h3 {
+  margin: 5px 0 15px;
+  font-size: 20px;
+  color: var(--navy);
+}
+
+h4 {
+  color: var(--navy);
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: white;
+  padding: 11px 3px;
+  position: sticky;
+  bottom: 0;
+  border-top: 1px solid #E8EEEB;
+  box-shadow: 0 -4px 15px #102B4608;
+  z-index: 10;
+}
+
+nav button {
+  background: transparent;
+  color: #607185;
+  padding: 9px 8px;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+nav button.active {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #D7E1DC;
+  border-radius: 11px;
+  margin: 8px 0 13px;
+  font-size: 14px;
+  background: #FCFEFD;
+  color: var(--ink);
+}
+
+input:focus {
+  outline: 2px solid #087F6840;
+  border-color: var(--green);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #E5ECE8;
+  margin: 18px 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+footer {
+  text-align: center;
+  color: #82918C;
+  font-size: 11px;
+  padding: 18px 12px;
+}
+
+@media (max-width: 360px) {
+  nav button {
+    font-size: 11px;
+    padding: 8px 5px;
+  }
+
+  .amount {
+    font-size: 27px;
+  }
+}
 </style>
+
 </head>
 <body>
 <header>
