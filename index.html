@@ -565,6 +565,37 @@ footer {
   }
 }
 
+.service-grid {
+  margin-top: 16px;
+  gap: 12px;
+}
+
+.service-grid .service {
+  min-height: 115px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 7px;
+  padding: 12px 6px;
+  cursor: pointer;
+}
+
+.service-grid .service span {
+  font-size: 27px;
+}
+
+.service-grid .service b {
+  color: #102B46;
+  font-size: 14px;
+}
+
+.service-grid .service small {
+  color: #82918C;
+  font-size: 11px;
+}
+
 
 </style>
 
@@ -654,15 +685,37 @@ footer {
 </section>
 
 
+
 <section id="services" class="hidden">
-<div class="card">
-<h3>Digital Services</h3>
-<p class="muted">Choose a service to explore the prototype.</p>
-<div class="service" onclick="demo('Airtime')">📱 Airtime</div><br>
-<div class="service" onclick="demo('Mobile data')">🌐 Mobile data</div><br>
-<div class="service" onclick="demo('Utility bills')">💡 Utility bills</div>
-</div>
+  <div class="card">
+    <p class="welcome-tag">YEMBRIDGE SERVICES</p>
+    <h3>Digital Services</h3>
+    <p class="muted">Your everyday essentials, all in one place.</p>
+
+    <div class="grid service-grid">
+
+      <div class="service" onclick="demo('Airtime')">
+        <span>📱</span>
+        <b>Airtime</b>
+        <small>Top up your phone</small>
+      </div>
+
+      <div class="service" onclick="demo('Mobile data')">
+        <span>🌐</span>
+        <b>Mobile Data</b>
+        <small>Stay connected</small>
+      </div>
+
+      <div class="service" onclick="demo('Utility bills')">
+        <span>💡</span>
+        <b>Utility Bills</b>
+        <small>Pay your bills</small>
+      </div>
+
+    </div>
+  </div>
 </section>
+
 
 <section id="shop" class="hidden">
 <div class="card">
