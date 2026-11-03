@@ -602,6 +602,100 @@ footer {
   justify-self: center;
 }
 
+.market-intro {
+  background: linear-gradient(120deg, #102B46, #087F68);
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.market-intro b,
+.market-intro small {
+  display: block;
+}
+
+.market-intro b {
+  font-size: 14px;
+}
+
+.market-intro small {
+  color: #D5E8E2;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.market-intro span {
+  font-size: 30px;
+}
+
+.shop-heading {
+  margin: 20px 0 12px;
+}
+
+.shop-grid {
+  gap: 12px;
+}
+
+.product-card {
+  background: white;
+  border: 1px solid #E3EAE7;
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.product-image {
+  background: #F0F6F4;
+  border-radius: 11px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+}
+
+.product-category {
+  color: #087F68;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+
+.product-card b {
+  color: #102B46;
+  font-size: 13px;
+}
+
+.product-card strong {
+  color: #087F68;
+  font-size: 14px;
+}
+
+.product-card > small:last-of-type {
+  color: #82918C;
+  font-size: 10px;
+}
+
+.product-card button {
+  width: 100%;
+  padding: 9px 5px;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.demo-note {
+  font-size: 11px;
+  margin-top: 16px;
+}
+
 
 
 </style>
@@ -724,14 +818,72 @@ footer {
 </section>
 
 
+
 <section id="shop" class="hidden">
-<div class="card">
-<h3>Marketplace</h3>
-<p class="muted">Discover products from approved merchants.</p>
-<div class="service" onclick="demo('Product catalogue')">🛒 Product catalogue</div>
-<p class="muted">Demo marketplace — products and merchants will be added during development.</p>
-</div>
+
+  <div class="card">
+    <p class="welcome-tag">SHOP WITH YEMBRIDGE</p>
+    <h3>Marketplace</h3>
+    <p class="muted">Discover products from local merchants.</p>
+
+    <div class="market-intro">
+      <div>
+        <b>Shop local. Grow together.</b>
+        <small>Explore our demo product collection.</small>
+      </div>
+      <span>🛍️</span>
+    </div>
+
+    <h3 class="shop-heading">Featured products</h3>
+
+    <div class="grid shop-grid">
+
+      <div class="product-card">
+        <div class="product-image">👟</div>
+        <small class="product-category">FASHION</small>
+        <b>Casual Sneakers</b>
+        <strong>UGX 85,000</strong>
+        <small>Demo Merchant</small>
+        <button onclick="demo('Casual Sneakers added to cart')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">🎒</div>
+        <small class="product-category">ACCESSORIES</small>
+        <b>Everyday Backpack</b>
+        <strong>UGX 45,000</strong>
+        <small>Demo Merchant</small>
+        <button onclick="demo('Everyday Backpack added to cart')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">⌚</div>
+        <small class="product-category">ELECTRONICS</small>
+        <b>Smart Watch</b>
+        <strong>UGX 65,000</strong>
+        <small>Demo Merchant</small>
+        <button onclick="demo('Smart Watch added to cart')">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">🎧</div>
+        <small class="product-category">ELECTRONICS</small>
+        <b>Wireless Earphones</b>
+        <strong>UGX 35,000</strong>
+        <small>Demo Merchant</small>
+        <button onclick="demo('Wireless Earphones added to cart')">Add to Cart</button>
+      </div>
+
+    </div>
+
+    <p class="muted demo-note">
+      Demo catalogue only. Products, prices and merchants are illustrative.
+      No real orders or payments are made.
+    </p>
+  </div>
+
 </section>
+
 
 <section id="activity" class="hidden">
 <div class="card">
