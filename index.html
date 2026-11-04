@@ -1025,6 +1025,16 @@ footer {
   background: #A83C3C;
 }
 
+.checkout-button {
+  width: 100%;
+  background: #087F68;
+  color: white;
+  border-radius: 10px;
+  padding: 11px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
 
 </style>
 
@@ -1404,18 +1414,21 @@ footer {
 </nav>
 <footer>YemBridge Digital Commerce Ltd · Prototype v1.0</footer>
 
+
 <script>
 function show(id,btn){
   document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
+  if(btn) btn.classList.add('active');
   else document.querySelectorAll('nav button')[1].classList.add('active');
 }
 
 function demo(service){
-  alert(service+' will be developed in a future YemBridge prototype stage. No real transaction has been made.');
+  alert(service+' is a demonstration only. No real transaction has been made.');
 }
+
+/* DEMO ACCOUNT */
 
 async function hashPassword(password){
   const data = new TextEncoder().encode(password);
@@ -1489,33 +1502,217 @@ function logoutUser(){
   document.getElementById('authMessage').textContent = 'You have signed out.';
 }
 
-window.addEventListener('DOMContentLoaded',function(){
-  const account = getAccount();
-  if(account)showLoggedIn(account);
-});
-  
+/* DEMO WALLET AND SHOPPING BASKET */
+
 let yemCart = [];
 
-function addToCart(name, price) {
-  yemCart.push({name: name, price: price});
-  updateCartSummary();
-  alert(name + " added to your demo basket!");
+let yemWallet = Number(
+  localStorage.getItem('yembridgeDemoBalance')
+);
+
+if(!Number.isFinite(yemWallet)){
+  yemWallet = 250000;
+  localStorage.setItem('yembridgeDemoBalance',yemWallet);
 }
 
-function updateCartSummary() {
+let yemTransactions = [];
+
+try{
+  yemTransactions = JSON.parse(
+    localStorage.getItem('yembridgeDemoTransactions') || '[]'
+  );
+  if(!Array.isArray(yemTransactions)) yemTransactions = [];
+}catch(error){
+  yemTransactions = [];
+}
+
+function saveDemoData(){
+  localStorage.setItem('yembridgeDemoBalance',yemWallet);
+  localStorage.setItem('yembridgeDemoTransactions',
+    JSON.stringify(yemTransactions));
+}
+
+function updateWallet(){
+  const amount = document.querySelector('.balance .amount');
+  if(amount){
+    amount.textContent = 'UGX ' + yemWallet.toLocaleString('en-UG');
+  }
+}
+
+function addToCart(name,price){
+  if(!Number.isFinite(price) || price <= 0){
+    alert('Invalid demo product price.');
+    return;
+  }
+
+  yemCart.push({name:name,price:price});
+  updateCartSummary();
+  alert(name + ' added to your demo basket!');
+}
+
+function updateCartSummary(){
   const count = yemCart.length;
   const total = yemCart.reduce(
-    (sum, item) => sum + item.price, 0
+    (sum,item)=>sum + item.price,0
   );
 
-  document.getElementById("cartCount").textContent =
-    count + (count === 1 ? " item" : " items");
+  const countElement = document.getElementById('cartCount');
+  const totalElement = document.getElementById('cartTotal');
 
-  document.getElementById("cartTotal").textContent =
-    "UGX " + total.toLocaleString("en-UG");
+  if(countElement){
+    countElement.textContent =
+      count + (count === 1 ? ' item' : ' items');
+  }
+
+  if(totalElement){
+    totalElement.textContent =
+      'UGX ' + total.toLocaleString('en-UG');
+  }
+
+  const summary = document.querySelector('.cart-summary');
+
+  if(summary && !document.getElementById('checkoutButton')){
+    const button = document.createElement('button');
+    button.id = 'checkoutButton';
+    button.className = 'checkout-button';
+    button.textContent = 'Checkout';
+    button.onclick = checkoutDemo;
+    summary.appendChild(button);
+  }
+
+  const checkoutButton = document.getElementById('checkoutButton');
+  if(checkoutButton){
+    checkoutButton.disabled = count === 0;
+    checkoutButton.style.opacity = count === 0 ? '0.5' : '1';
+  }
 }
 
+/* DEMO CHECKOUT */
+
+function checkoutDemo(){
+  if(yemCart.length === 0){
+    alert('Your basket is empty.');
+    return;
+  }
+
+  if(!getAccount()){
+    alert('Please create a demo account or sign in before checkout.');
+    return;
+  }
+
+  const total = yemCart.reduce(
+    (sum,item)=>sum + item.price,0
+  );
+
+  if(total > yemWallet){
+    alert('Insufficient demo wallet balance. Your basket has not been charged.');
+    return;
+  }
+
+  const purchaseNames = yemCart.map(item=>item.name).join(', ');
+
+  yemWallet -= total;
+
+  yemTransactions.unshift({
+    description:'Marketplace Purchase',
+    details:purchaseNames,
+    amount:total,
+    status:'Successful',
+    date:new Date().toLocaleString('en-UG')
+  });
+
+  saveDemoData();
+  updateWallet();
+
+  yemCart = [];
+  updateCartSummary();
+  renderActivity();
+
+  alert('Demo purchase successful! UGX ' +
+    total.toLocaleString('en-UG') +
+    ' has been deducted from your demo wallet.');
+}
+
+/* DEMO ACTIVITY HISTORY */
+
+function renderActivity(){
+  const summary = document.querySelectorAll('.activity-summary > div');
+  const heading = document.querySelector('.activity-heading');
+  const note = document.querySelector('.activity-note');
+
+  if(!heading || !note) return;
+
+  const oldRows = document.querySelectorAll('#activity .transaction');
+  oldRows.forEach(row=>row.remove());
+
+  const moneyOut = yemTransactions.reduce(
+    (sum,item)=>sum + item.amount,0
+  );
+
+  if(summary.length >= 2){
+    summary[0].querySelector('b').textContent = 'UGX 0';
+    summary[1].querySelector('b').textContent =
+      'UGX ' + moneyOut.toLocaleString('en-UG');
+  }
+
+  if(yemTransactions.length === 0){
+    const empty = document.createElement('p');
+    empty.className = 'muted';
+    empty.textContent = 'No demo purchases yet.';
+    note.parentNode.insertBefore(empty,note);
+    return;
+  }
+
+  const emptyMessages = document.querySelectorAll(
+    '#activity .empty-activity'
+  );
+  emptyMessages.forEach(item=>item.remove());
+
+  yemTransactions.forEach(item=>{
+    const row = document.createElement('div');
+    row.className = 'transaction';
+
+    const icon = document.createElement('div');
+    icon.className = 'transaction-icon';
+    icon.textContent = '🛍️';
+
+    const info = document.createElement('div');
+    info.className = 'transaction-info';
+
+    const name = document.createElement('b');
+    name.textContent = item.description;
+
+    const details = document.createElement('small');
+    details.textContent = item.details + ' · ' + item.date;
+
+    const status = document.createElement('span');
+    status.className = 'status-success';
+    status.textContent = item.status;
+
+    info.append(name,details,status);
+
+    const amount = document.createElement('strong');
+    amount.className = 'amount-out';
+    amount.textContent =
+      '- UGX ' + item.amount.toLocaleString('en-UG');
+
+    row.append(icon,info,amount);
+    note.parentNode.insertBefore(row,note);
+  });
+}
+
+/* LOAD SAVED DEMO INFORMATION */
+
+window.addEventListener('DOMContentLoaded',function(){
+  const account = getAccount();
+  if(account) showLoggedIn(account);
+
+  updateWallet();
+  updateCartSummary();
+  renderActivity();
+});
 </script>
+
 
 </body>
 </html>
