@@ -1919,6 +1919,8 @@ window.addEventListener('DOMContentLoaded', renderMerchantProducts);
 
 
 function renderMerchantOrders() {
+
+function renderMerchantOrders() {
   const container = document.getElementById('merchantOrders');
   if (!container) return;
 
@@ -1938,7 +1940,7 @@ function renderMerchantOrders() {
 
   orders.forEach((order, index) => {
     const card = document.createElement('div');
-    card.className = 'transaction';
+    card.className = 'merchant-order-card';
 
     const product = document.createElement('b');
     product.textContent = order.product;
@@ -1950,46 +1952,53 @@ function renderMerchantOrders() {
     price.textContent = 'UGX ' +
       Number(order.price).toLocaleString('en-UG');
 
-    const date = document.createElement('small');
-    date.textContent = order.date;
-
     const status = document.createElement('p');
     status.className = 'muted';
     status.textContent = 'Order status: ' + order.status;
 
-    const select = document.createElement('select');
-
-    [
-      'New',
-      'Accepted',
-      'Processing',
-      'Delivered - Awaiting Customer Confirmation',
-      'Cancelled'
-    ].forEach(value => {
-      const option = document.createElement('option');
-      option.value = value;
-      option.textContent = value;
-      select.appendChild(option);
-    });
-
-    select.value = order.status;
-
-    select.addEventListener('change', function() {
-      updateMerchantOrderStatus(index, this.value);
-    });
+    const date = document.createElement('small');
+    date.textContent = order.date;
 
     card.append(
       product,
       customer,
       price,
       status,
-      date,
-      select
+      date
     );
+
+    // Completed orders must not have an editable dropdown
+    if (order.status !== 'Completed') {
+
+      const select = document.createElement('select');
+      select.className = 'merchant-order-select';
+
+      [
+        'New',
+        'Accepted',
+        'Processing',
+        'Delivered - Awaiting Customer Confirmation',
+        'Cancelled'
+      ].forEach(value => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+      });
+
+      select.value = order.status;
+
+      select.addEventListener('change', function() {
+        updateMerchantOrderStatus(index, this.value);
+      });
+
+      card.appendChild(select);
+    }
 
     container.appendChild(card);
   });
 }
+
 
 function updateMerchantOrderStatus(index, newStatus) {
   const orders = JSON.parse(
