@@ -2013,62 +2013,86 @@ function updateMerchantOrderStatus(index, newStatus) {
 
 window.addEventListener('DOMContentLoaded', renderMerchantOrders);
 
-function renderCustomerOrders() {
-  const container = document.getElementById('customerOrders');
+
+function renderMerchantOrders() {
+  const container = document.getElementById('merchantOrders');
   if (!container) return;
-
-  const account = getAccount();
-  container.innerHTML = '';
-
-  if (!account) {
-    container.textContent = 'Please sign in to view your orders.';
-    return;
-  }
 
   const orders = JSON.parse(
     localStorage.getItem('yembridgeMerchantOrders') || '[]'
   );
 
-  const myOrders = orders
-    .map((order, index) => ({...order, index}))
-    .filter(order => order.customer === account.name);
+  container.innerHTML = '';
 
-  if (myOrders.length === 0) {
-    container.textContent = 'No marketplace orders yet.';
+  if (orders.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'muted';
+    empty.textContent = 'No customer orders yet.';
+    container.appendChild(empty);
     return;
   }
 
-  myOrders.forEach(order => {
+  orders.forEach((order, index) => {
     const card = document.createElement('div');
-    card.className = 'transaction';
+    card.className = 'merchant-order-card';
 
     const product = document.createElement('b');
     product.textContent = order.product;
 
-    const price = document.createElement('p');
+    const customer = document.createElement('p');
+    customer.textContent = 'Customer: ' + order.customer;
+
+    const price = document.createElement('strong');
     price.textContent = 'UGX ' +
       Number(order.price).toLocaleString('en-UG');
 
     const status = document.createElement('p');
     status.className = 'muted';
-    status.textContent = 'Status: ' + order.status;
+    status.textContent = 'Order status: ' + order.status;
 
-    card.append(product, price, status);
+    const date = document.createElement('small');
+    date.textContent = order.date;
 
-    if (order.status === 'Delivered - Awaiting Customer Confirmation') {
-      const button = document.createElement('button');
-      button.textContent = 'Confirm Receipt';
+    const select = document.createElement('select');
+    select.className = 'merchant-order-select';
 
-      button.addEventListener('click', function() {
-        confirmCustomerReceipt(order.index);
+    [
+      'New',
+      'Accepted',
+      'Processing',
+      'Delivered - Awaiting Customer Confirmation',
+      'Cancelled',
+      'Completed'
+    ].forEach(value => {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = value;
+      select.appendChild(option);
+    });
+
+    select.value = order.status;
+
+    if (order.status === 'Completed') {
+      select.disabled = true;
+    } else {
+      select.addEventListener('change', function() {
+        updateMerchantOrderStatus(index, this.value);
       });
-
-      card.appendChild(button);
     }
+
+    card.append(
+      product,
+      customer,
+      price,
+      status,
+      date,
+      select
+    );
 
     container.appendChild(card);
   });
 }
+
 
 function confirmCustomerReceipt(index) {
   const orders = JSON.parse(
