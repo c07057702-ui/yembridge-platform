@@ -2080,18 +2080,23 @@ function renderMerchantOrders() {
   });
 }
 
-    card.append(
-      product,
-      customer,
-      price,
-      status,
-      date,
-      select
-    );
+    
+card.append(
+  product,
+  customer,
+  price,
+  status,
+  date
+);
 
-    container.appendChild(card);
+if (order.status !== 'Completed') {
+  select.addEventListener('change', function() {
+    updateMerchantOrderStatus(index, this.value);
   });
+
+  card.appendChild(select);
 }
+
 
 
 function confirmCustomerReceipt(index) {
