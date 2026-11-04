@@ -2073,12 +2073,12 @@ function renderMerchantOrders() {
     select.value = order.status;
 
     if (order.status === 'Completed') {
-      select.disabled = true;
-    } else {
-      select.addEventListener('change', function() {
-        updateMerchantOrderStatus(index, this.value);
-      });
-    }
+  select.remove();
+} else {
+  select.addEventListener('change', function() {
+    updateMerchantOrderStatus(index, this.value);
+  });
+}
 
     card.append(
       product,
