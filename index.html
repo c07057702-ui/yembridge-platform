@@ -1873,6 +1873,52 @@ function renderMerchantProducts() {
 
 window.addEventListener('DOMContentLoaded', renderMerchantProducts);
 
+function renderMerchantOrders() {
+  const container = document.getElementById('merchantOrders');
+  if (!container) return;
+
+  const orders = JSON.parse(
+    localStorage.getItem('yembridgeMerchantOrders') || '[]'
+  );
+
+  container.innerHTML = '';
+
+  if (orders.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'muted';
+    empty.textContent = 'No customer orders yet.';
+    container.appendChild(empty);
+    return;
+  }
+
+  orders.forEach(order => {
+    const card = document.createElement('div');
+    card.className = 'transaction';
+
+    const product = document.createElement('b');
+    product.textContent = order.product;
+
+    const customer = document.createElement('p');
+    customer.textContent = 'Customer: ' + order.customer;
+
+    const price = document.createElement('strong');
+    price.textContent = 'UGX ' +
+      Number(order.price).toLocaleString('en-UG');
+
+    const status = document.createElement('p');
+    status.className = 'muted';
+    status.textContent = 'Status: ' + order.status;
+
+    const date = document.createElement('small');
+    date.textContent = order.date;
+
+    card.append(product, customer, price, status, date);
+    container.appendChild(card);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', renderMerchantOrders);
+
 </script>
 
 
