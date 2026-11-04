@@ -840,6 +840,191 @@ footer {
   margin-top: 16px;
 }
 
+.account-card h4 {
+  color: #102B46;
+  margin: 20px 0 10px;
+  font-size: 15px;
+}
+
+.account-intro,
+.profile-panel {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: #F0F6F4;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 18px 0;
+}
+
+.account-avatar,
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#102B46,#087F68);
+  color: #F2C45C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia,serif;
+  font-size: 22px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.account-intro b,
+.account-intro small {
+  display: block;
+}
+
+.account-intro b {
+  color: #102B46;
+  font-size: 14px;
+}
+
+.account-intro small {
+  color: #82918C;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.account-card input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 6px 0;
+  padding: 13px;
+  border: 1px solid #DCE7E2;
+  border-radius: 11px;
+  background: #FAFCFB;
+  font-size: 14px;
+}
+
+.account-button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
+  border-radius: 11px;
+  background: #087F68;
+  color: white;
+  font-weight: bold;
+}
+
+.secondary-button {
+  background: #102B46;
+}
+
+.account-separator {
+  border-top: 1px solid #E5ECE8;
+  margin: 25px 0 15px;
+  text-align: center;
+}
+
+.account-separator span {
+  display: inline-block;
+  background: white;
+  color: #82918C;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 0 12px;
+  transform: translateY(-9px);
+}
+
+.profile-panel h3 {
+  margin: 3px 0;
+  font-size: 17px;
+}
+
+.profile-panel small {
+  color: #087F68;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.profile-panel p {
+  color: #82918C;
+  font-size: 11px;
+  margin: 3px 0;
+  overflow-wrap: anywhere;
+}
+
+.account-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 0;
+  border-bottom: 1px solid #E8EFEC;
+}
+
+.status-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: #F0F6F4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.account-status > div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+
+.account-status b,
+.account-status small {
+  display: block;
+}
+
+.account-status b {
+  color: #102B46;
+  font-size: 12px;
+}
+
+.account-status small {
+  color: #82918C;
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+.account-status .status-pending {
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.security-note {
+  background: #F0F6F4;
+  border-radius: 12px;
+  padding: 13px;
+  margin-top: 10px;
+}
+
+.security-note b {
+  color: #102B46;
+  font-size: 12px;
+}
+
+.security-note p {
+  color: #71847D;
+  font-size: 11px;
+  margin-bottom: 0;
+}
+
+.demo-warning {
+  color: #A66B12;
+  background: #FFF5DF;
+  border-radius: 9px;
+  padding: 10px;
+  font-size: 10px;
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+.logout-button {
+  background: #A83C3C;
+}
+
 
 </style>
 
@@ -1106,37 +1291,109 @@ footer {
 </section>
 
 
+
 <section id="account" class="hidden">
-  <div class="card">
+
+  <div class="card account-card">
+
+    <p class="welcome-tag">YEMBRIDGE CUSTOMER CENTRE</p>
     <h3>My Account</h3>
+    <p class="muted">Manage your profile and account security.</p>
 
     <div id="loggedOut">
-      <h4>Create a demo account</h4>
-      <input id="fullName" type="text" placeholder="Your full name">
-      <input id="email" type="email" placeholder="Email address">
-      <input id="password" type="password" placeholder="Create a password">
-      <button onclick="registerUser()">Register</button>
 
-      <hr>
+      <div class="account-intro">
+        <div class="account-avatar">YB</div>
+        <div>
+          <b>Welcome to YemBridge</b>
+          <small>Your everyday commerce companion.</small>
+        </div>
+      </div>
 
-      <h4>Already registered?</h4>
-      <input id="loginEmail" type="email" placeholder="Email address">
-      <input id="loginPassword" type="password" placeholder="Password">
-      <button onclick="loginUser()">Sign in</button>
+      <h4>Create your account</h4>
+
+      <input id="fullName" type="text"
+        placeholder="Your full name">
+
+      <input id="email" type="email"
+        placeholder="Email address">
+
+      <input id="password" type="password"
+        placeholder="Create a password">
+
+      <button class="account-button"
+        onclick="registerUser()">Create Account</button>
+
+      <div class="account-separator">
+        <span>ALREADY A MEMBER?</span>
+      </div>
+
+      <h4>Sign in</h4>
+
+      <input id="loginEmail" type="email"
+        placeholder="Email address">
+
+      <input id="loginPassword" type="password"
+        placeholder="Password">
+
+      <button class="account-button secondary-button"
+        onclick="loginUser()">Sign In</button>
 
       <p id="authMessage" class="muted"></p>
+
     </div>
 
     <div id="loggedIn" class="hidden">
-      <h4>Welcome, <span id="displayName"></span>!</h4>
-      <p id="displayEmail" class="muted"></p>
-      <p class="muted">KYC status: Not verified</p>
-      <p class="muted">YEM connection: Not connected</p>
-      <p class="muted">Demo account only. No real funds.</p>
-      <button onclick="logoutUser()">Sign out</button>
+
+      <div class="profile-panel">
+        <div class="profile-avatar">YB</div>
+        <div>
+          <small>WELCOME BACK</small>
+          <h3 id="displayName"></h3>
+          <p id="displayEmail"></p>
+        </div>
+      </div>
+
+      <h4>Account verification</h4>
+
+      <div class="account-status">
+        <div class="status-icon">🪪</div>
+        <div>
+          <b>Identity verification</b>
+          <small>Complete KYC to access eligible services.</small>
+        </div>
+        <span class="status-pending">Not verified</span>
+      </div>
+
+      <div class="account-status">
+        <div class="status-icon">◈</div>
+        <div>
+          <b>YEM connection</b>
+          <small>YEM account integration status.</small>
+        </div>
+        <span class="status-pending">Not connected</span>
+      </div>
+
+      <h4>Account security</h4>
+
+      <div class="security-note">
+        <b>🔒 Your account matters</b>
+        <p>Never share your password, wallet private key or recovery phrase.</p>
+      </div>
+
+      <p class="demo-warning">
+        DEMO ACCOUNT — No real funds or live YEM connection.
+      </p>
+
+      <button class="account-button logout-button"
+        onclick="logoutUser()">Sign Out</button>
+
     </div>
+
   </div>
+
 </section>
+
 </main>
 <nav>
 <button class="active" onclick="show('home',this)">⌂ Home</button>
