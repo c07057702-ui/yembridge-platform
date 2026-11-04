@@ -1762,6 +1762,80 @@ window.addEventListener('DOMContentLoaded',function(){
   updateCartSummary();
   renderActivity();
 });
+  
+let merchantProducts = JSON.parse(
+  localStorage.getItem('yembridgeMerchantProducts') || '[]'
+);
+
+function addMerchantProduct() {
+  const name = document.getElementById('merchantProductName').value.trim();
+  const price = Number(document.getElementById('merchantProductPrice').value);
+  const category = document.getElementById('merchantProductCategory').value.trim();
+  const message = document.getElementById('merchantProductMessage');
+
+  if (!name || !category || !Number.isFinite(price) || price <= 0) {
+    message.textContent = 'Please enter a product name, category and valid price.';
+    return;
+  }
+
+  merchantProducts.push({
+    name: name,
+    price: price,
+    category: category
+  });
+
+  localStorage.setItem(
+    'yembridgeMerchantProducts',
+    JSON.stringify(merchantProducts)
+  );
+
+  renderMerchantProducts();
+
+  document.getElementById('merchantProductName').value = '';
+  document.getElementById('merchantProductPrice').value = '';
+  document.getElementById('merchantProductCategory').value = '';
+
+  message.textContent = 'Product published successfully in the demo marketplace!';
+}
+
+function renderMerchantProducts() {
+  const container = document.getElementById('shopProducts');
+  if (!container) return;
+
+  document.querySelectorAll('.merchant-added-product').forEach(
+    product => product.remove()
+  );
+
+  merchantProducts.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'product-card merchant-added-product';
+
+    const category = document.createElement('small');
+    category.className = 'product-category';
+    category.textContent = product.category.toUpperCase();
+
+    const name = document.createElement('b');
+    name.textContent = product.name;
+
+    const price = document.createElement('strong');
+    price.textContent = 'UGX ' + product.price.toLocaleString('en-UG');
+
+    const merchant = document.createElement('small');
+    merchant.textContent = 'Demo Merchant';
+
+    const button = document.createElement('button');
+    button.textContent = 'Add to Cart';
+    button.addEventListener('click', function() {
+      addToCart(product.name, product.price);
+    });
+
+    card.append(category, name, price, merchant, button);
+    container.appendChild(card);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', renderMerchantProducts);
+
 </script>
 
 
