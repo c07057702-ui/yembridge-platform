@@ -1969,9 +1969,98 @@ function updateMerchantOrderStatus(index, newStatus) {
   );
 
   renderMerchantOrders();
+  renderCustomerOrders();
 }
 
 window.addEventListener('DOMContentLoaded', renderMerchantOrders);
+
+function renderCustomerOrders() {
+  const container = document.getElementById('customerOrders');
+  if (!container) return;
+
+  const account = getAccount();
+  container.innerHTML = '';
+
+  if (!account) {
+    container.textContent = 'Please sign in to view your orders.';
+    return;
+  }
+
+  const orders = JSON.parse(
+    localStorage.getItem('yembridgeMerchantOrders') || '[]'
+  );
+
+  const myOrders = orders
+    .map((order, index) => ({...order, index}))
+    .filter(order => order.customer === account.name);
+
+  if (myOrders.length === 0) {
+    container.textContent = 'No marketplace orders yet.';
+    return;
+  }
+
+  myOrders.forEach(order => {
+    const card = document.createElement('div');
+    card.className = 'transaction';
+
+    const product = document.createElement('b');
+    product.textContent = order.product;
+
+    const price = document.createElement('p');
+    price.textContent = 'UGX ' +
+      Number(order.price).toLocaleString('en-UG');
+
+    const status = document.createElement('p');
+    status.className = 'muted';
+    status.textContent = 'Status: ' + order.status;
+
+    card.append(product, price, status);
+
+    if (order.status === 'Delivered - Awaiting Customer Confirmation') {
+      const button = document.createElement('button');
+      button.textContent = 'Confirm Receipt';
+
+      button.addEventListener('click', function() {
+        confirmCustomerReceipt(order.index);
+      });
+
+      card.appendChild(button);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+function confirmCustomerReceipt(index) {
+  const orders = JSON.parse(
+    localStorage.getItem('yembridgeMerchantOrders') || '[]'
+  );
+
+  if (!orders[index]) return;
+
+  if (orders[index].status !== 'Delivered - Awaiting Customer Confirmation') {
+    alert('This order is not awaiting delivery confirmation.');
+    return;
+  }
+
+  if (!confirm('Have you received this product?')) return;
+
+  orders[index].status = 'Completed';
+  orders[index].customerConfirmed = true;
+  orders[index].confirmedDate = new Date().toLocaleString('en-UG');
+
+  localStorage.setItem(
+    'yembridgeMerchantOrders',
+    JSON.stringify(orders)
+  );
+
+  renderCustomerOrders();
+  renderMerchantOrders();
+
+  alert('Receipt confirmed. Your order is now completed!');
+}
+
+window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 
 </script>
 
