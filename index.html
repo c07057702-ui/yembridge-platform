@@ -1420,6 +1420,29 @@ footer {
   </div>
 
   <div class="card">
+  
+<div class="card">
+  <h3>➕ Add a New Product</h3>
+
+  <input id="merchantProductName"
+         type="text"
+         placeholder="Product name">
+
+  <input id="merchantProductPrice"
+         type="number"
+         placeholder="Price in UGX">
+
+  <input id="merchantProductCategory"
+         type="text"
+         placeholder="Product category">
+
+  <button onclick="addMerchantProduct()">
+    Publish Product
+  </button>
+
+  <p id="merchantProductMessage" class="muted"></p>
+</div>
+
     <h3>Merchant Tools</h3>
     <button onclick="demo('Add Product')">＋ Add Product</button>
     <button onclick="demo('Manage Orders')">📦 Manage Orders</button>
