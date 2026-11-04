@@ -1868,6 +1868,7 @@ function renderMerchantProducts() {
 
 window.addEventListener('DOMContentLoaded', renderMerchantProducts);
 
+
 function renderMerchantOrders() {
   const container = document.getElementById('merchantOrders');
   if (!container) return;
@@ -1886,7 +1887,7 @@ function renderMerchantOrders() {
     return;
   }
 
-  orders.forEach(order => {
+  orders.forEach((order, index) => {
     const card = document.createElement('div');
     card.className = 'transaction';
 
@@ -1900,16 +1901,64 @@ function renderMerchantOrders() {
     price.textContent = 'UGX ' +
       Number(order.price).toLocaleString('en-UG');
 
-    const status = document.createElement('p');
-    status.className = 'muted';
-    status.textContent = 'Status: ' + order.status;
-
     const date = document.createElement('small');
     date.textContent = order.date;
 
-    card.append(product, customer, price, status, date);
+    const status = document.createElement('p');
+    status.className = 'muted';
+    status.textContent = 'Order status: ' + order.status;
+
+    const select = document.createElement('select');
+
+    [
+      'New',
+      'Accepted',
+      'Processing',
+      'Delivered - Awaiting Customer Confirmation',
+      'Cancelled'
+    ].forEach(value => {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = value;
+      select.appendChild(option);
+    });
+
+    select.value = order.status;
+
+    select.addEventListener('change', function() {
+      updateMerchantOrderStatus(index, this.value);
+    });
+
+    card.append(
+      product,
+      customer,
+      price,
+      status,
+      date,
+      select
+    );
+
     container.appendChild(card);
   });
+}
+
+function updateMerchantOrderStatus(index, newStatus) {
+  const orders = JSON.parse(
+    localStorage.getItem('yembridgeMerchantOrders') || '[]'
+  );
+
+  if (!orders[index]) return;
+
+  if (newStatus === 'Completed') return;
+
+  orders[index].status = newStatus;
+
+  localStorage.setItem(
+    'yembridgeMerchantOrders',
+    JSON.stringify(orders)
+  );
+
+  renderMerchantOrders();
 }
 
 window.addEventListener('DOMContentLoaded', renderMerchantOrders);
