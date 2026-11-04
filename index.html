@@ -730,6 +730,116 @@ footer {
   font-size: 15px;
 }
 
+.activity-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.activity-summary > div {
+  background: #F0F6F4;
+  padding: 14px 10px;
+  border-radius: 13px;
+  position: relative;
+}
+
+.activity-summary small,
+.activity-summary b {
+  display: block;
+}
+
+.activity-summary small {
+  color: #71847D;
+  font-size: 11px;
+}
+
+.activity-summary b {
+  color: #102B46;
+  font-size: 14px;
+  margin-top: 7px;
+}
+
+.activity-summary span {
+  color: #087F68;
+  font-size: 18px;
+}
+
+.activity-heading {
+  margin: 20px 0 12px;
+}
+
+.transaction {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 0;
+  border-bottom: 1px solid #E8EFEC;
+}
+
+.transaction-icon {
+  background: #F0F6F4;
+  width: 39px;
+  height: 39px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 19px;
+}
+
+.transaction-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.transaction-info b,
+.transaction-info small {
+  display: block;
+}
+
+.transaction-info b {
+  color: #102B46;
+  font-size: 12px;
+}
+
+.transaction-info small {
+  color: #82918C;
+  font-size: 10px;
+  margin: 4px 0;
+}
+
+.status-success,
+.status-pending {
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.status-success,
+.amount-in {
+  color: #087F68;
+}
+
+.status-pending {
+  color: #D18B19;
+}
+
+.amount-out,
+.amount-in {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.amount-out {
+  color: #102B46;
+}
+
+.activity-note {
+  font-size: 10px;
+  margin-top: 16px;
+}
+
 
 </style>
 
@@ -934,13 +1044,67 @@ footer {
 </section>
 
 
+
 <section id="activity" class="hidden">
-<div class="card">
-<h3>Transaction History</h3>
-<p class="muted">No transactions yet.</p>
-<p>Future purchases and payments will appear here.</p>
-</div>
+
+  <div class="card">
+    <p class="welcome-tag">YOUR ACCOUNT RECORDS</p>
+    <h3>Transaction History</h3>
+    <p class="muted">Track your payments and purchases.</p>
+
+    <div class="activity-summary">
+      <div>
+        <small>Money In</small>
+        <b>UGX 100,000</b>
+        <span>↑</span>
+      </div>
+      <div>
+        <small>Money Out</small>
+        <b>UGX 45,000</b>
+        <span>↓</span>
+      </div>
+    </div>
+
+    <h3 class="activity-heading">Recent Activity</h3>
+
+    <div class="transaction">
+      <div class="transaction-icon">📱</div>
+      <div class="transaction-info">
+        <b>Airtime Purchase</b>
+        <small>Demo transaction · Today</small>
+        <span class="status-success">Successful</span>
+      </div>
+      <strong class="amount-out">- UGX 10,000</strong>
+    </div>
+
+    <div class="transaction">
+      <div class="transaction-icon">🛍️</div>
+      <div class="transaction-info">
+        <b>Marketplace Purchase</b>
+        <small>Demo transaction · Today</small>
+        <span class="status-pending">Pending</span>
+      </div>
+      <strong class="amount-out">- UGX 45,000</strong>
+    </div>
+
+    <div class="transaction">
+      <div class="transaction-icon">💰</div>
+      <div class="transaction-info">
+        <b>Demo Wallet Credit</b>
+        <small>Illustrative entry</small>
+        <span class="status-success">Successful</span>
+      </div>
+      <strong class="amount-in">+ UGX 100,000</strong>
+    </div>
+
+    <p class="muted activity-note">
+      These are sample records for demonstration only.
+      No real money has moved.
+    </p>
+  </div>
+
 </section>
+
 
 <section id="account" class="hidden">
   <div class="card">
