@@ -1919,8 +1919,6 @@ window.addEventListener('DOMContentLoaded', renderMerchantProducts);
 
 
 function renderMerchantOrders() {
-
-function renderMerchantOrders() {
   const container = document.getElementById('merchantOrders');
   if (!container) return;
 
@@ -1959,17 +1957,9 @@ function renderMerchantOrders() {
     const date = document.createElement('small');
     date.textContent = order.date;
 
-    card.append(
-      product,
-      customer,
-      price,
-      status,
-      date
-    );
+    card.append(product, customer, price, status, date);
 
-    // Completed orders must not have an editable dropdown
     if (order.status !== 'Completed') {
-
       const select = document.createElement('select');
       select.className = 'merchant-order-select';
 
@@ -1999,15 +1989,13 @@ function renderMerchantOrders() {
   });
 }
 
-
 function updateMerchantOrderStatus(index, newStatus) {
   const orders = JSON.parse(
     localStorage.getItem('yembridgeMerchantOrders') || '[]'
   );
 
   if (!orders[index]) return;
-
-  if (newStatus === 'Completed') return;
+  if (orders[index].status === 'Completed') return;
 
   orders[index].status = newStatus;
 
@@ -2019,94 +2007,6 @@ function updateMerchantOrderStatus(index, newStatus) {
   renderMerchantOrders();
   renderCustomerOrders();
 }
-
-window.addEventListener('DOMContentLoaded', renderMerchantOrders);
-
-
-function renderMerchantOrders() {
-  const container = document.getElementById('merchantOrders');
-  if (!container) return;
-
-  const orders = JSON.parse(
-    localStorage.getItem('yembridgeMerchantOrders') || '[]'
-  );
-
-  container.innerHTML = '';
-
-  if (orders.length === 0) {
-    const empty = document.createElement('p');
-    empty.className = 'muted';
-    empty.textContent = 'No customer orders yet.';
-    container.appendChild(empty);
-    return;
-  }
-
-  orders.forEach((order, index) => {
-    const card = document.createElement('div');
-    card.className = 'merchant-order-card';
-
-    const product = document.createElement('b');
-    product.textContent = order.product;
-
-    const customer = document.createElement('p');
-    customer.textContent = 'Customer: ' + order.customer;
-
-    const price = document.createElement('strong');
-    price.textContent = 'UGX ' +
-      Number(order.price).toLocaleString('en-UG');
-
-    const status = document.createElement('p');
-    status.className = 'muted';
-    status.textContent = 'Order status: ' + order.status;
-
-    const date = document.createElement('small');
-    date.textContent = order.date;
-
-    const select = document.createElement('select');
-    select.className = 'merchant-order-select';
-
-    [
-      'New',
-      'Accepted',
-      'Processing',
-      'Delivered - Awaiting Customer Confirmation',
-      'Cancelled',
-      'Completed'
-    ].forEach(value => {
-      const option = document.createElement('option');
-      option.value = value;
-      option.textContent = value;
-      select.appendChild(option);
-    });
-
-    select.value = order.status;
-
-    if (order.status === 'Completed') {
-  select.remove();
-} else {
-  select.addEventListener('change', function() {
-    updateMerchantOrderStatus(index, this.value);
-  });
-}
-
-    
-card.append(
-  product,
-  customer,
-  price,
-  status,
-  date
-);
-
-if (order.status !== 'Completed') {
-  select.addEventListener('change', function() {
-    updateMerchantOrderStatus(index, this.value);
-  });
-
-  card.appendChild(select);
-}
-
-
 
 function confirmCustomerReceipt(index) {
   const orders = JSON.parse(
