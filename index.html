@@ -1681,32 +1681,27 @@ function checkoutDemo(){
     date:new Date().toLocaleString('en-UG')
   });
 
-  // Create separate demo merchant orders
+  
+  // Record each purchased item as a demo merchant order
   let merchantOrders = JSON.parse(
     localStorage.getItem('yembridgeMerchantOrders') || '[]'
   );
 
   yemCart.forEach(item => {
-    const merchantProduct = merchantProducts.find(
-      product => product.name === item.name &&
-                 Number(product.price) === Number(item.price)
-    );
-
-    if(merchantProduct){
-      merchantOrders.unshift({
-        product:item.name,
-        price:item.price,
-        customer:getAccount().name,
-        status:'New',
-        date:new Date().toLocaleString('en-UG')
-      });
-    }
+    merchantOrders.unshift({
+      product: item.name,
+      price: item.price,
+      customer: getAccount().name,
+      status: 'New',
+      date: new Date().toLocaleString('en-UG')
+    });
   });
 
   localStorage.setItem(
     'yembridgeMerchantOrders',
     JSON.stringify(merchantOrders)
   );
+
 
   saveDemoData();
   updateWallet();
