@@ -697,6 +697,39 @@ footer {
 }
 
 
+.cart-summary {
+  background: #E8F5F0;
+  border: 1px solid #CDE8DC;
+  border-radius: 14px;
+  padding: 13px;
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cart-summary b,
+.cart-summary small {
+  display: block;
+}
+
+.cart-summary b {
+  color: #102B46;
+  font-size: 13px;
+}
+
+.cart-summary small {
+  color: #71847D;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.cart-summary strong {
+  color: #087F68;
+  font-size: 15px;
+}
+
 
 </style>
 
@@ -835,6 +868,15 @@ footer {
     </div>
 
     <h3 class="shop-heading">Featured products</h3>
+    
+<div class="cart-summary">
+  <div>
+    <b>🛒 My Shopping Basket</b>
+    <small id="cartCount">0 items</small>
+  </div>
+  <strong id="cartTotal">UGX 0</strong>
+</div>
+
 
     <div class="grid shop-grid">
 
@@ -844,8 +886,9 @@ footer {
         <b>Casual Sneakers</b>
         <strong>UGX 85,000</strong>
         <small>Demo Merchant</small>
-        <button onclick="demo('Casual Sneakers added to cart')">Add to Cart</button>
-      </div>
+        <button onclick="addToCart('Casual Sneakers',85000)">
+  Add to Cart
+</button>
 
       <div class="product-card">
         <div class="product-image">🎒</div>
@@ -853,7 +896,9 @@ footer {
         <b>Everyday Backpack</b>
         <strong>UGX 45,000</strong>
         <small>Demo Merchant</small>
-        <button onclick="demo('Everyday Backpack added to cart')">Add to Cart</button>
+        <button onclick="addToCart('Everyday Backpack',45000)">
+  Add to Cart
+</button>
       </div>
 
       <div class="product-card">
@@ -862,7 +907,9 @@ footer {
         <b>Smart Watch</b>
         <strong>UGX 65,000</strong>
         <small>Demo Merchant</small>
-        <button onclick="demo('Smart Watch added to cart')">Add to Cart</button>
+        <button onclick="addToCart('Smart Watch',65000)">
+  Add to Cart
+</button>
       </div>
 
       <div class="product-card">
@@ -871,7 +918,9 @@ footer {
         <b>Wireless Earphones</b>
         <strong>UGX 35,000</strong>
         <small>Demo Merchant</small>
-        <button onclick="demo('Wireless Earphones added to cart')">Add to Cart</button>
+        <button onclick="addToCart('Wireless Earphones',35000)">
+  Add to Cart
+</button>
       </div>
 
     </div>
@@ -1023,6 +1072,28 @@ window.addEventListener('DOMContentLoaded',function(){
   const account = getAccount();
   if(account)showLoggedIn(account);
 });
+  
+let yemCart = [];
+
+function addToCart(name, price) {
+  yemCart.push({name: name, price: price});
+  updateCartSummary();
+  alert(name + " added to your demo basket!");
+}
+
+function updateCartSummary() {
+  const count = yemCart.length;
+  const total = yemCart.reduce(
+    (sum, item) => sum + item.price, 0
+  );
+
+  document.getElementById("cartCount").textContent =
+    count + (count === 1 ? " item" : " items");
+
+  document.getElementById("cartTotal").textContent =
+    "UGX " + total.toLocaleString("en-UG");
+}
+
 </script>
 
 </body>
