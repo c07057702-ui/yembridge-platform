@@ -1845,9 +1845,11 @@ window.addEventListener('DOMContentLoaded',function(){
   const account = getAccount();
   if(account) showLoggedIn(account);
 
-  updateWallet();
+    updateWallet();
   updateCartSummary();
   renderActivity();
+  renderMerchantOrders();
+  renderCustomerOrders();
 });
   
 let merchantProducts = JSON.parse(
