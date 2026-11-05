@@ -1465,6 +1465,31 @@ footer {
     <div class="amount">UGX 0</div>
     <p class="muted">Demo settlement balance — not real money.</p>
   </div>
+  <div class="card">
+  <h3>💸 Merchant Withdrawals</h3>
+
+  <p class="muted">Available for withdrawal (demo):</p>
+  <div class="amount" id="merchantAvailableWithdrawal">
+    UGX 0
+  </div>
+
+  <input
+    id="withdrawalAmount"
+    type="number"
+    placeholder="Enter withdrawal amount in UGX"
+  >
+
+  <button onclick="requestMerchantWithdrawal()">
+    Request Withdrawal
+  </button>
+
+  <p id="withdrawalMessage" class="muted"></p>
+
+  <h3>📋 Withdrawal History</h3>
+  <div id="merchantWithdrawalHistory">
+    <p class="muted">No withdrawal requests yet.</p>
+  </div>
+</div>
 
   <div class="card">
     <h3>📊 Merchant Sales Report</h3>
