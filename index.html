@@ -2017,6 +2017,42 @@ function renderMerchantOrders() {
     container.appendChild(card);
   });
 }
+  function renderMerchantSalesReport() {
+  const orders = JSON.parse(
+    localStorage.getItem('yembridgeMerchantOrders') || '[]'
+  );
+
+  const completedOrders = orders.filter(
+    order => order.status === 'Completed'
+  );
+
+  const pendingOrders = orders.filter(
+    order => order.status !== 'Completed' &&
+             order.status !== 'Cancelled'
+  );
+
+  const totalSales = completedOrders.reduce(
+    (sum, order) => sum + Number(order.price || 0), 0
+  );
+
+  const commission = totalSales * 0.05;
+  const netProceeds = totalSales - commission;
+
+  document.getElementById('merchantTotalSales').textContent =
+    'UGX ' + totalSales.toLocaleString('en-UG');
+
+  document.getElementById('merchantCompletedCount').textContent =
+    completedOrders.length;
+
+  document.getElementById('merchantCommission').textContent =
+    'UGX ' + commission.toLocaleString('en-UG');
+
+  document.getElementById('merchantNetProceeds').textContent =
+    'UGX ' + netProceeds.toLocaleString('en-UG');
+
+  document.getElementById('merchantPendingCount').textContent =
+    pendingOrders.length;
+}
 
 function updateMerchantOrderStatus(index, newStatus) {
   const orders = JSON.parse(
