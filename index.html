@@ -1445,68 +1445,88 @@ footer {
 
 </section>
   
+
 <section id="merchant" class="hidden">
+
   <div class="card">
     <h3>🏪 Merchant Dashboard</h3>
     <p class="muted">Welcome to your YemBridge merchant space.</p>
-<div class="card">
-  <h3>📦 Incoming Customer Orders</h3>
-  <p class="muted">View and manage purchases from customers.</p>
-  <div id="merchantOrders">
-    <p class="muted">No customer orders yet.</p>
-  </div>
-</div>
-    <div class="activity-summary">
-      <div>
-        <small>Total Sales</small>
-        <strong>UGX 0</strong>
-      </div>
-      <div>
-        <small>Orders</small>
-        <strong>0</strong>
-      </div>
+
+    <h3>📦 Incoming Customer Orders</h3>
+    <p class="muted">View and manage purchases from customers.</p>
+
+    <div id="merchantOrders">
+      <p class="muted">No customer orders yet.</p>
     </div>
   </div>
 
   <div class="card">
-    <h3>My Merchant Balance</h3>
+    <h3>💰 My Merchant Balance</h3>
     <div class="amount">UGX 0</div>
     <p class="muted">Demo settlement balance — not real money.</p>
   </div>
 
   <div class="card">
-  
-<div class="card">
-  <h3>➕ Add a New Product</h3>
+    <h3>📊 Merchant Sales Report</h3>
 
-  <input id="merchantProductName"
-         type="text"
-         placeholder="Product name">
+    <div class="activity-summary">
+      <div>
+        <small>Total Sales</small>
+        <strong id="merchantTotalSales">UGX 0</strong>
+      </div>
 
-  <input id="merchantProductPrice"
-         type="number"
-         placeholder="Price in UGX">
+      <div>
+        <small>Completed Orders</small>
+        <strong id="merchantCompletedCount">0</strong>
+      </div>
+    </div>
 
-  <input id="merchantProductCategory"
-         type="text"
-         placeholder="Product category">
+    <div class="activity-summary">
+      <div>
+        <small>Illustrative Commission (5%)</small>
+        <strong id="merchantCommission">UGX 0</strong>
+      </div>
 
-  <button onclick="addMerchantProduct()">
-    Publish Product
-  </button>
+      <div>
+        <small>Net Merchant Proceeds</small>
+        <strong id="merchantNetProceeds">UGX 0</strong>
+      </div>
+    </div>
 
-  <p id="merchantProductMessage" class="muted"></p>
-</div>
+    <p class="muted">
+      Pending Orders:
+      <strong id="merchantPendingCount">0</strong>
+    </p>
 
-<div class="card">
-  <h3>📦 Customer Orders</h3>
-  <p class="muted">Orders for your merchant-listed products.</p>
-  <div id="merchantOrders">
-    <p class="muted">No orders received yet.</p>
+    <p class="muted">
+      Demo report only. These figures are not real earnings.
+    </p>
   </div>
-</div>
 
-    <h3>Merchant Tools</h3>
+  <div class="card">
+    <h3>➕ Add a New Product</h3>
+
+    <input id="merchantProductName"
+           type="text"
+           placeholder="Product name">
+
+    <input id="merchantProductPrice"
+           type="number"
+           placeholder="Price in UGX">
+
+    <input id="merchantProductCategory"
+           type="text"
+           placeholder="Product category">
+
+    <button onclick="addMerchantProduct()">
+      Publish Product
+    </button>
+
+    <p id="merchantProductMessage" class="muted"></p>
+  </div>
+
+  <div class="card">
+    <h3>🛠 Merchant Tools</h3>
     <button onclick="demo('Add Product')">＋ Add Product</button>
     <button onclick="demo('Manage Orders')">📦 Manage Orders</button>
     <button onclick="demo('Sales Reports')">📊 Sales Reports</button>
@@ -1514,6 +1534,7 @@ footer {
   </div>
 
   <p class="muted">Merchant dashboard demonstration only.</p>
+
 </section>
 
 
