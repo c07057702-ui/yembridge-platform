@@ -2079,6 +2079,108 @@ function renderMerchantOrders() {
   document.getElementById('merchantPendingCount').textContent =
     pendingOrders.length;
 }
+  
+function getMerchantAvailableWithdrawal() {
+  const orders = JSON.parse(
+    localStorage.getItem('yembridgeMerchantOrders') || '[]'
+  );
+
+  const withdrawals = JSON.parse(
+    localStorage.getItem('yembridgeWithdrawals') || '[]'
+  );
+
+  const completedSales = orders
+    .filter(order => order.status === 'Completed')
+    .reduce((sum, order) => sum + Number(order.price || 0), 0);
+
+  const netProceeds = completedSales * 0.95;
+
+  const alreadyRequested = withdrawals
+    .filter(item =>
+      item.status === 'Pending' || item.status === 'Approved'
+    )
+    .reduce((sum, item) => sum + Number(item.amount || 0), 0);
+
+  return Math.max(0, netProceeds - alreadyRequested);
+}
+
+function renderMerchantWithdrawals() {
+  const balance = document.getElementById('merchantAvailableWithdrawal');
+  const history = document.getElementById('merchantWithdrawalHistory');
+
+  if (!balance || !history) return;
+
+  balance.textContent =
+    'UGX ' + getMerchantAvailableWithdrawal().toLocaleString('en-UG');
+
+  const withdrawals = JSON.parse(
+    localStorage.getItem('yembridgeWithdrawals') || '[]'
+  );
+
+  history.innerHTML = '';
+
+  if (withdrawals.length === 0) {
+    history.textContent = 'No withdrawal requests yet.';
+    return;
+  }
+
+  withdrawals.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'transaction';
+
+    const amount = document.createElement('strong');
+    amount.textContent =
+      'UGX ' + Number(item.amount).toLocaleString('en-UG');
+
+    const status = document.createElement('p');
+    status.textContent = 'Status: ' + item.status;
+
+    const date = document.createElement('small');
+    date.textContent = item.date;
+
+    card.append(amount, status, date);
+    history.appendChild(card);
+  });
+}
+
+function requestMerchantWithdrawal() {
+  const input = document.getElementById('withdrawalAmount');
+  const message = document.getElementById('withdrawalMessage');
+
+  const amount = Number(input.value);
+  const available = getMerchantAvailableWithdrawal();
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    message.textContent = 'Please enter a valid withdrawal amount.';
+    return;
+  }
+
+  if (amount > available) {
+    message.textContent = 'Insufficient available demo proceeds.';
+    return;
+  }
+
+  const withdrawals = JSON.parse(
+    localStorage.getItem('yembridgeWithdrawals') || '[]'
+  );
+
+  withdrawals.unshift({
+    amount: amount,
+    status: 'Pending',
+    date: new Date().toLocaleString('en-UG')
+  });
+
+  localStorage.setItem(
+    'yembridgeWithdrawals',
+    JSON.stringify(withdrawals)
+  );
+
+  input.value = '';
+  message.textContent = 'Demo withdrawal request submitted successfully.';
+
+  renderMerchantWithdrawals();
+}
+
 
 function updateMerchantOrderStatus(index, newStatus) {
   const orders = JSON.parse(
