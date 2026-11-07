@@ -2317,8 +2317,6 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 
         if (!response.ok || !result.authenticated) {
           throw new Error('Backend authentication was rejected.');
-        }
-
         alert('Backend authentication successful!');
       } catch (error) {
         console.error(error);
