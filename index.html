@@ -2281,13 +2281,35 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
     await Clerk.load({
       ui: { ClerkUI: window.__internal_ClerkUICtor }
     });
-    Clerk.mountSignIn(
-  document.getElementById('clerk-auth'),
-  {
-    forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
-    signUpForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
-  }
-);
+
+    const loggedOut = document.getElementById('loggedOut');
+    const loggedIn = document.getElementById('loggedIn');
+
+    if (Clerk.isSignedIn) {
+      loggedOut.classList.add('hidden');
+      loggedIn.classList.remove('hidden');
+
+      const user = Clerk.user;
+      const firstName = user.firstName || '';
+      const lastName = user.lastName || '';
+
+      document.getElementById('displayName').textContent =
+        (firstName + ' ' + lastName).trim() || 'YemBridge User';
+
+      document.getElementById('displayEmail').textContent =
+        user.primaryEmailAddress?.emailAddress || '';
+    } else {
+      loggedIn.classList.add('hidden');
+      loggedOut.classList.remove('hidden');
+
+      Clerk.mountSignIn(
+        document.getElementById('clerk-auth'),
+        {
+          forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
+          signUpForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
+        }
+      );
+    }
   });
 </script>
 </body>
