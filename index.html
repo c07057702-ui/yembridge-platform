@@ -1361,36 +1361,7 @@ footer {
         </div>
       </div>
 
-      <h4>Create your account</h4>
-
-      <input id="fullName" type="text"
-        placeholder="Your full name">
-
-      <input id="email" type="email"
-        placeholder="Email address">
-
-      <input id="password" type="password"
-        placeholder="Create a password">
-
-      <button class="account-button"
-        onclick="registerUser()">Create Account</button>
-
-      <div class="account-separator">
-        <span>ALREADY A MEMBER?</span>
-      </div>
-
-      <h4>Sign in</h4>
-
-      <input id="loginEmail" type="email"
-        placeholder="Email address">
-
-      <input id="loginPassword" type="password"
-        placeholder="Password">
-
-      <button class="account-button secondary-button"
-        onclick="loginUser()">Sign In</button>
-
-      <p id="authMessage" class="muted"></p>
+      <div id="clerk-auth"></div>
 
     </div>
 
@@ -2311,6 +2282,7 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
       ui: { ClerkUI: window.__internal_ClerkUICtor }
     });
     console.log('ClerkJS is loaded');
+    Clerk.mountSignIn(document.getElementById('clerk-auth'));
   });
 </script>
 </body>
