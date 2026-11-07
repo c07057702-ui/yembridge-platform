@@ -2301,8 +2301,7 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
     const loggedIn = document.getElementById('loggedIn');
 
     if (Clerk.isSignedIn) {
-              try {
-        const token = await Clerk.session.getToken();
+loggedOut.classList.add('hidden');
 
         const response = await fetch(
           'https://yembridge-api.c07057702.workers.dev/auth-check',
