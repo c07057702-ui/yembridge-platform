@@ -1628,11 +1628,14 @@ async function loginUser(){
   }
 }
 
-function logoutUser(){
-  document.getElementById('loggedIn').classList.add('hidden');
-  document.getElementById('loggedOut').classList.remove('hidden');
-  document.getElementById('loginPassword').value = '';
-  document.getElementById('authMessage').textContent = 'You have signed out.';
+async function logoutUser() {
+  try {
+    await Clerk.signOut();
+    window.location.reload();
+  } catch (error) {
+    alert('Sign out failed. Please try again.');
+    console.error(error);
+  }
 }
 
 /* DEMO WALLET AND SHOPPING BASKET */
