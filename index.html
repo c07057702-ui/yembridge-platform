@@ -2281,8 +2281,13 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
     await Clerk.load({
       ui: { ClerkUI: window.__internal_ClerkUICtor }
     });
-    console.log('ClerkJS is loaded');
-    Clerk.mountSignIn(document.getElementById('clerk-auth'));
+    Clerk.mountSignIn(
+  document.getElementById('clerk-auth'),
+  {
+    forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
+    signUpForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
+  }
+);
   });
 </script>
 </body>
