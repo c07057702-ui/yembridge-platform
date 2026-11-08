@@ -2293,57 +2293,42 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 </script>
 <script>
   window.addEventListener('load', async function () {
-    await Clerk.load({
-      ui: { ClerkUI: window.__internal_ClerkUICtor }
-    });
+    try {
+      await Clerk.load({
+        ui: { ClerkUI: window.__internal_ClerkUICtor }
+      });
 
-    const loggedOut = document.getElementById('loggedOut');
-    const loggedIn = document.getElementById('loggedIn');
+      const loggedOut = document.getElementById('loggedOut');
+      const loggedIn = document.getElementById('loggedIn');
 
-    if (Clerk.isSignedIn) {
-loggedOut.classList.add('hidden');
+      if (Clerk.isSignedIn) {
+        loggedOut.classList.add('hidden');
+        loggedIn.classList.remove('hidden');
 
-        const response = await fetch(
-          'https://yembridge-api.c07057702.workers.dev/auth-check',
+        const user = Clerk.user;
+        const firstName = user.firstName || '';
+        const lastName = user.lastName || '';
+
+        document.getElementById('displayName').textContent =
+          (firstName + ' ' + lastName).trim() || 'YemBridge User';
+
+        document.getElementById('displayEmail').textContent =
+          user.primaryEmailAddress?.emailAddress || '';
+
+      } else {
+        loggedIn.classList.add('hidden');
+        loggedOut.classList.remove('hidden');
+
+        Clerk.mountSignIn(
+          document.getElementById('clerk-auth'),
           {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+            forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
+            signUpForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
           }
         );
-
-        const result = await response.json();
-
-        if (!response.ok || !result.authenticated) {
-          throw new Error('Backend authentication was rejected.');
-        alert('Backend authentication successful!');
-      } catch (error) {
-        console.error(error);
-        alert('Backend authentication test failed. Please check the connection.');
       }
-      loggedOut.classList.add('hidden');
-      loggedIn.classList.remove('hidden');
-
-      const user = Clerk.user;
-      const firstName = user.firstName || '';
-      const lastName = user.lastName || '';
-
-      document.getElementById('displayName').textContent =
-        (firstName + ' ' + lastName).trim() || 'YemBridge User';
-
-      document.getElementById('displayEmail').textContent =
-        user.primaryEmailAddress?.emailAddress || '';
-    } else {
-      loggedIn.classList.add('hidden');
-      loggedOut.classList.remove('hidden');
-
-      Clerk.mountSignIn(
-        document.getElementById('clerk-auth'),
-        {
-          forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
-          signUpForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
-        }
-      );
+    } catch (error) {
+      console.error('Clerk initialization failed:', error);
     }
   });
 </script>
