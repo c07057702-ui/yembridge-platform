@@ -2315,20 +2315,50 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
         document.getElementById('displayEmail').textContent =
           user.primaryEmailAddress?.emailAddress || '';
 
-      } else {
-        loggedIn.classList.add('hidden');
-        loggedOut.classList.remove('hidden');
+             } else {
+  loggedIn.classList.add('hidden');
+  loggedOut.classList.remove('hidden');
 
-        Clerk.mountSignIn(
-          document.getElementById('clerk-auth'),
-          {
-  routing: 'hash',
-  forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
-  signUpForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
-  signUpUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
+  const authContainer = document.getElementById('clerk-auth');
+  let mountedAuthForm = null;
+
+  function showAuthForm() {
+    const showSignUp = window.location.hash.startsWith('#/sign-up');
+
+    if (mountedAuthForm === 'sign-in') {
+      Clerk.unmountSignIn(authContainer);
+    }
+
+    if (mountedAuthForm === 'sign-up') {
+      Clerk.unmountSignUp(authContainer);
+    }
+
+    if (showSignUp) {
+      Clerk.mountSignUp(authContainer, {
+        routing: 'hash',
+        signInUrl: '#/sign-in',
+        forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
+        signInForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
+      });
+
+      mountedAuthForm = 'sign-up';
+
+    } else {
+      Clerk.mountSignIn(authContainer, {
+        routing: 'hash',
+        signUpUrl: '#/sign-up',
+        forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
+        signUpForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
+      });
+
+      mountedAuthForm = 'sign-in';
+    }
+  }
+
+  showAuthForm();
+
+  window.addEventListener('hashchange', showAuthForm);
 }
-        );
-      }
     } catch (error) {
       console.error('Clerk initialization failed:', error);
     }
