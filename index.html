@@ -2277,6 +2277,7 @@ function confirmCustomerReceipt(index) {
 window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 
 </script>
+
 <script
   defer
   crossorigin="anonymous"
@@ -2291,14 +2292,21 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
   src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
   type="text/javascript">
 </script>
+
 <script>
   window.addEventListener('load', async function () {
     try {
+      const homeUrl =
+        'https://c07057702-ui.github.io/yembridge-platform/';
+
+      const signInPage = homeUrl + '?auth=sign-in';
+      const signUpPage = homeUrl + '?auth=sign-up';
+
       await Clerk.load({
-  ui: { ClerkUI: window.__internal_ClerkUICtor },
-  signInUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
-  signUpUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
-});
+        ui: { ClerkUI: window.__internal_ClerkUICtor },
+        signInUrl: signInPage,
+        signUpUrl: signUpPage
+      });
 
       const loggedOut = document.getElementById('loggedOut');
       const loggedIn = document.getElementById('loggedIn');
@@ -2317,52 +2325,35 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
         document.getElementById('displayEmail').textContent =
           user.primaryEmailAddress?.emailAddress || '';
 
-             } else {
-  loggedIn.classList.add('hidden');
-  loggedOut.classList.remove('hidden');
+      } else {
+        loggedIn.classList.add('hidden');
+        loggedOut.classList.remove('hidden');
 
-  const authContainer = document.getElementById('clerk-auth');
-  let mountedAuthForm = null;
+        const authContainer = document.getElementById('clerk-auth');
 
-  function showAuthForm() {
-    const showSignUp = window.location.hash.startsWith('#/sign-up');
+        const showSignUp =
+          new URLSearchParams(window.location.search).get('auth') === 'sign-up';
 
-    if (mountedAuthForm === 'sign-in') {
-      Clerk.unmountSignIn(authContainer);
-    }
+        if (showSignUp) {
+          Clerk.mountSignUp(authContainer, {
+            routing: 'hash',
+            signInUrl: signInPage,
+            forceRedirectUrl: homeUrl,
+            signInForceRedirectUrl: homeUrl
+          });
 
-    if (mountedAuthForm === 'sign-up') {
-      Clerk.unmountSignUp(authContainer);
-    }
+        } else {
+          Clerk.mountSignIn(authContainer, {
+            routing: 'hash',
+            signUpUrl: signUpPage,
+            forceRedirectUrl: homeUrl,
+            signUpForceRedirectUrl: homeUrl
+          });
+        }
+      }
 
-    if (showSignUp) {
-      Clerk.mountSignUp(authContainer, {
-        routing: 'hash',
-        signInUrl: 'https://c07057702-ui.github.io/yembridge-platform/#/sign-in',
-        forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
-        signInForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
-      });
-
-      mountedAuthForm = 'sign-up';
-
-    } else {
-      Clerk.mountSignIn(authContainer, {
-        routing: 'hash',
-        signUpUrl: 'https://c07057702-ui.github.io/yembridge-platform/#/sign-up',
-        forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
-        signUpForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
-      });
-
-      mountedAuthForm = 'sign-in';
-    }
-  }
-
-  showAuthForm();
-}
     } catch (error) {
       console.error('Clerk initialization failed:', error);
     }
   });
 </script>
-</body>
-</html>
