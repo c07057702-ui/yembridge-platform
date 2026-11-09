@@ -2295,8 +2295,10 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
   window.addEventListener('load', async function () {
     try {
       await Clerk.load({
-        ui: { ClerkUI: window.__internal_ClerkUICtor }
-      });
+  ui: { ClerkUI: window.__internal_ClerkUICtor },
+  signInUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
+  signUpUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
+});
 
       const loggedOut = document.getElementById('loggedOut');
       const loggedIn = document.getElementById('loggedIn');
