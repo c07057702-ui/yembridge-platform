@@ -2301,13 +2301,24 @@ window.addEventListener('load', async function () {
   const signInPage = homeUrl + '?auth=sign-in';
   const signUpPage = homeUrl + '?auth=sign-up';
 
-  const authMode = new URLSearchParams(
-    window.location.search
-  ).get('auth');
+  const authMode = (
+    new URLSearchParams(window.location.search).get('auth') || ''
+  ).trim().toLowerCase();
 
   const loggedOut = document.getElementById('loggedOut');
   const loggedIn = document.getElementById('loggedIn');
   const authContainer = document.getElementById('clerk-auth');
+
+  // Open Account immediately when a sign-in or sign-up link is visited.
+  if (authMode === 'sign-up' || authMode === 'sign-in') {
+    const accountButton = [
+      ...document.querySelectorAll('nav button')
+    ].find(button =>
+      button.getAttribute('onclick')?.includes("'account'")
+    );
+
+    show('account', accountButton);
+  }
 
   try {
     if (!window.Clerk) {
@@ -2316,16 +2327,6 @@ window.addEventListener('load', async function () {
 
     if (!window.__internal_ClerkUICtor) {
       throw new Error('Clerk UI package did not load.');
-    }
-
-    if (authMode === 'sign-up' || authMode === 'sign-in') {
-      const accountButton = [
-        ...document.querySelectorAll('nav button')
-      ].find(button =>
-        button.getAttribute('onclick')?.includes("'account'")
-      );
-
-      show('account', accountButton);
     }
 
     await Clerk.load({
@@ -2373,9 +2374,11 @@ window.addEventListener('load', async function () {
   } catch (error) {
     console.error('Clerk initialization failed:', error);
 
-    authContainer.textContent =
-      'Clerk error: ' +
-      (error.message || String(error));
+    if (authContainer) {
+      authContainer.textContent =
+        'Clerk error: ' +
+        (error.message || String(error));
+    }
   }
 });
 </script>
