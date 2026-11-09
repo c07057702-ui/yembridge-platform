@@ -2338,7 +2338,7 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
     if (showSignUp) {
       Clerk.mountSignUp(authContainer, {
         routing: 'hash',
-        signInUrl: '#/sign-in',
+        signInUrl: 'https://c07057702-ui.github.io/yembridge-platform/#/sign-in',
         forceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/',
         signInForceRedirectUrl: 'https://c07057702-ui.github.io/yembridge-platform/'
       });
@@ -2358,8 +2358,6 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
   }
 
   showAuthForm();
-
-  window.addEventListener('hashchange', showAuthForm);
 }
     } catch (error) {
       console.error('Clerk initialization failed:', error);
