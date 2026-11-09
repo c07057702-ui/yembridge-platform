@@ -2278,6 +2278,7 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 
 </script>
 
+
 <script
   defer
   crossorigin="anonymous"
@@ -2302,14 +2303,16 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
       const signInPage = homeUrl + '?auth=sign-in';
       const signUpPage = homeUrl + '?auth=sign-up';
 
+      // Initialize Clerk using the main YemBridge website URL.
       await Clerk.load({
         ui: { ClerkUI: window.__internal_ClerkUICtor },
-        signInUrl: signInPage,
-        signUpUrl: signUpPage
+        signInUrl: homeUrl,
+        signUpUrl: homeUrl
       });
 
       const loggedOut = document.getElementById('loggedOut');
       const loggedIn = document.getElementById('loggedIn');
+      const authContainer = document.getElementById('clerk-auth');
 
       if (Clerk.isSignedIn) {
         loggedOut.classList.add('hidden');
@@ -2329,12 +2332,11 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
         loggedIn.classList.add('hidden');
         loggedOut.classList.remove('hidden');
 
-        const authContainer = document.getElementById('clerk-auth');
+        const currentPage = new URLSearchParams(
+          window.location.search
+        ).get('auth');
 
-        const showSignUp =
-          new URLSearchParams(window.location.search).get('auth') === 'sign-up';
-
-        if (showSignUp) {
+        if (currentPage === 'sign-up') {
           Clerk.mountSignUp(authContainer, {
             routing: 'hash',
             signInUrl: signInPage,
@@ -2357,3 +2359,4 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
     }
   });
 </script>
+
