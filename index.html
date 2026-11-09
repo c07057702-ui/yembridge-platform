@@ -2278,8 +2278,6 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 
 </script>
 
-
-
 <script
   defer
   crossorigin="anonymous"
@@ -2305,7 +2303,12 @@ window.addEventListener('load', async function () {
   const authContainer = document.getElementById('clerk-auth');
 
   try {
-    // Open the Account section when an authentication link is visited.
+    if (!window.Clerk) {
+      throw new Error(
+        'Clerk library did not load. Check the Clerk script URL or network connection.'
+      );
+    }
+
     if (authMode === 'sign-up' || authMode === 'sign-in') {
       const accountButton = [
         ...document.querySelectorAll('nav button')
@@ -2316,22 +2319,19 @@ window.addEventListener('load', async function () {
       show('account', accountButton);
     }
 
-    // Initialize Clerk.
-    await Clerk.load({
-      signInUrl: homeUrl,
-      signUpUrl: homeUrl
-    });
+    await window.Clerk.load();
 
-    if (Clerk.isSignedIn) {
+    if (window.Clerk.isSignedIn) {
       loggedOut.classList.add('hidden');
       loggedIn.classList.remove('hidden');
 
-      const user = Clerk.user;
-      const firstName = user.firstName || '';
-      const lastName = user.lastName || '';
+      const user = window.Clerk.user;
 
       document.getElementById('displayName').textContent =
-        (firstName + ' ' + lastName).trim() || 'YemBridge User';
+        (
+          (user.firstName || '') + ' ' +
+          (user.lastName || '')
+        ).trim() || 'YemBridge User';
 
       document.getElementById('displayEmail').textContent =
         user.primaryEmailAddress?.emailAddress || '';
@@ -2341,14 +2341,13 @@ window.addEventListener('load', async function () {
       loggedOut.classList.remove('hidden');
 
       if (authMode === 'sign-up') {
-        Clerk.mountSignUp(authContainer, {
+        window.Clerk.mountSignUp(authContainer, {
           routing: 'hash',
           signInUrl: signInPage,
           forceRedirectUrl: homeUrl
         });
-
       } else {
-        Clerk.mountSignIn(authContainer, {
+        window.Clerk.mountSignIn(authContainer, {
           routing: 'hash',
           signUpUrl: signUpPage,
           forceRedirectUrl: homeUrl
@@ -2358,10 +2357,12 @@ window.addEventListener('load', async function () {
 
   } catch (error) {
     console.error('Clerk initialization failed:', error);
+
     authContainer.textContent =
-      'Unable to load account registration. Please refresh and try again.';
+      'Clerk error: ' +
+      (error.message || String(error));
   }
 });
 </script>
-?
+
 
