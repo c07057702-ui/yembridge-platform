@@ -2279,12 +2279,6 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 </script>
 
 
-<script
-  defer
-  crossorigin="anonymous"
-  src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
-  type="text/javascript">
-</script>
 
 <script
   defer
@@ -2295,68 +2289,79 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 </script>
 
 <script>
-  window.addEventListener('load', async function () {
-    try {
-      const homeUrl =
-        'https://c07057702-ui.github.io/yembridge-platform/';
+window.addEventListener('load', async function () {
+  const homeUrl =
+    'https://c07057702-ui.github.io/yembridge-platform/';
 
-      const signInPage = homeUrl + '?auth=sign-in';
-      const signUpPage = homeUrl + '?auth=sign-up';
+  const signInPage = homeUrl + '?auth=sign-in';
+  const signUpPage = homeUrl + '?auth=sign-up';
 
-      // Initialize Clerk using the main YemBridge website URL.
-      await Clerk.load({
-        ui: { ClerkUI: window.__internal_ClerkUICtor },
-        signInUrl: homeUrl,
-        signUpUrl: homeUrl
-      });
+  const authMode = new URLSearchParams(
+    window.location.search
+  ).get('auth');
 
-      const loggedOut = document.getElementById('loggedOut');
-      const loggedIn = document.getElementById('loggedIn');
-      const authContainer = document.getElementById('clerk-auth');
+  const loggedOut = document.getElementById('loggedOut');
+  const loggedIn = document.getElementById('loggedIn');
+  const authContainer = document.getElementById('clerk-auth');
 
-      if (Clerk.isSignedIn) {
-        loggedOut.classList.add('hidden');
-        loggedIn.classList.remove('hidden');
+  try {
+    // Open the Account section when an authentication link is visited.
+    if (authMode === 'sign-up' || authMode === 'sign-in') {
+      const accountButton = [
+        ...document.querySelectorAll('nav button')
+      ].find(button =>
+        button.getAttribute('onclick')?.includes("'account'")
+      );
 
-        const user = Clerk.user;
-        const firstName = user.firstName || '';
-        const lastName = user.lastName || '';
+      show('account', accountButton);
+    }
 
-        document.getElementById('displayName').textContent =
-          (firstName + ' ' + lastName).trim() || 'YemBridge User';
+    // Initialize Clerk.
+    await Clerk.load({
+      signInUrl: homeUrl,
+      signUpUrl: homeUrl
+    });
 
-        document.getElementById('displayEmail').textContent =
-          user.primaryEmailAddress?.emailAddress || '';
+    if (Clerk.isSignedIn) {
+      loggedOut.classList.add('hidden');
+      loggedIn.classList.remove('hidden');
+
+      const user = Clerk.user;
+      const firstName = user.firstName || '';
+      const lastName = user.lastName || '';
+
+      document.getElementById('displayName').textContent =
+        (firstName + ' ' + lastName).trim() || 'YemBridge User';
+
+      document.getElementById('displayEmail').textContent =
+        user.primaryEmailAddress?.emailAddress || '';
+
+    } else {
+      loggedIn.classList.add('hidden');
+      loggedOut.classList.remove('hidden');
+
+      if (authMode === 'sign-up') {
+        Clerk.mountSignUp(authContainer, {
+          routing: 'hash',
+          signInUrl: signInPage,
+          forceRedirectUrl: homeUrl
+        });
 
       } else {
-        loggedIn.classList.add('hidden');
-        loggedOut.classList.remove('hidden');
-
-        const currentPage = new URLSearchParams(
-          window.location.search
-        ).get('auth');
-
-        if (currentPage === 'sign-up') {
-          Clerk.mountSignUp(authContainer, {
-            routing: 'hash',
-            signInUrl: signInPage,
-            forceRedirectUrl: homeUrl,
-            signInForceRedirectUrl: homeUrl
-          });
-
-        } else {
-          Clerk.mountSignIn(authContainer, {
-            routing: 'hash',
-            signUpUrl: signUpPage,
-            forceRedirectUrl: homeUrl,
-            signUpForceRedirectUrl: homeUrl
-          });
-        }
+        Clerk.mountSignIn(authContainer, {
+          routing: 'hash',
+          signUpUrl: signUpPage,
+          forceRedirectUrl: homeUrl
+        });
       }
-
-    } catch (error) {
-      console.error('Clerk initialization failed:', error);
     }
-  });
+
+  } catch (error) {
+    console.error('Clerk initialization failed:', error);
+    authContainer.textContent =
+      'Unable to load account registration. Please refresh and try again.';
+  }
+});
 </script>
+?
 
