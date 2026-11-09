@@ -2281,6 +2281,13 @@ window.addEventListener('DOMContentLoaded', renderCustomerOrders);
 <script
   defer
   crossorigin="anonymous"
+  src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
+  type="text/javascript">
+</script>
+
+<script
+  defer
+  crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_YWN0aXZlLWVhZ2xlLTM2NC5jbGVyay5hY2NvdW50cy5kZXYk"
   src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
   type="text/javascript">
@@ -2304,9 +2311,11 @@ window.addEventListener('load', async function () {
 
   try {
     if (!window.Clerk) {
-      throw new Error(
-        'Clerk library did not load. Check the Clerk script URL or network connection.'
-      );
+      throw new Error('Clerk JavaScript did not load.');
+    }
+
+    if (!window.__internal_ClerkUICtor) {
+      throw new Error('Clerk UI package did not load.');
     }
 
     if (authMode === 'sign-up' || authMode === 'sign-in') {
@@ -2319,13 +2328,19 @@ window.addEventListener('load', async function () {
       show('account', accountButton);
     }
 
-    await window.Clerk.load();
+    await Clerk.load({
+      ui: {
+        ClerkUI: window.__internal_ClerkUICtor
+      },
+      signInUrl: homeUrl,
+      signUpUrl: homeUrl
+    });
 
-    if (window.Clerk.isSignedIn) {
+    if (Clerk.isSignedIn) {
       loggedOut.classList.add('hidden');
       loggedIn.classList.remove('hidden');
 
-      const user = window.Clerk.user;
+      const user = Clerk.user;
 
       document.getElementById('displayName').textContent =
         (
@@ -2341,13 +2356,13 @@ window.addEventListener('load', async function () {
       loggedOut.classList.remove('hidden');
 
       if (authMode === 'sign-up') {
-        window.Clerk.mountSignUp(authContainer, {
+        Clerk.mountSignUp(authContainer, {
           routing: 'hash',
           signInUrl: signInPage,
           forceRedirectUrl: homeUrl
         });
       } else {
-        window.Clerk.mountSignIn(authContainer, {
+        Clerk.mountSignIn(authContainer, {
           routing: 'hash',
           signUpUrl: signUpPage,
           forceRedirectUrl: homeUrl
@@ -2364,5 +2379,4 @@ window.addEventListener('load', async function () {
   }
 });
 </script>
-
 
