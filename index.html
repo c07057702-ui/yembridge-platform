@@ -1742,10 +1742,28 @@ function checkoutDemo(){
     return;
   }
 
-  if(!getAccount()){
-    alert('Please create a demo account or sign in before checkout.');
+  // Use the actual signed-in Clerk account.
+  if(!window.Clerk?.isSignedIn || !window.Clerk.user){
+    alert('Please sign in to your YemBridge account before checkout.');
+    show('account');
     return;
   }
+
+  const user = window.Clerk.user;
+
+  const customerEmail =
+    user.primaryEmailAddress?.emailAddress?.toLowerCase();
+
+  if(!customerEmail){
+    alert('Your account email could not be verified. Please try again.');
+    return;
+  }
+
+  const customerName =
+    (
+      (user.firstName || '') + ' ' +
+      (user.lastName || '')
+    ).trim() || 'YemBridge Customer';
 
   const total = yemCart.reduce(
     (sum,item)=>sum + item.price,0
@@ -1768,8 +1786,7 @@ function checkoutDemo(){
     date:new Date().toLocaleString('en-UG')
   });
 
-  
-  // Record each purchased item as a demo merchant order
+  // Record each purchased item with the Clerk customer identity.
   let merchantOrders = JSON.parse(
     localStorage.getItem('yembridgeMerchantOrders') || '[]'
   );
@@ -1778,9 +1795,11 @@ function checkoutDemo(){
     merchantOrders.unshift({
       product: item.name,
       price: item.price,
-      customer: getAccount().name,
+      customer: customerName,
+      customerEmail: customerEmail,
+      customerId: user.id,
       status: 'New',
-      date: new Date().toLocaleString('en-UG')
+      date:new Date().toLocaleString('en-UG')
     });
   });
 
@@ -1789,7 +1808,6 @@ function checkoutDemo(){
     JSON.stringify(merchantOrders)
   );
 
-
   saveDemoData();
   updateWallet();
 
@@ -1797,6 +1815,7 @@ function checkoutDemo(){
   updateCartSummary();
   renderActivity();
   renderMerchantOrders();
+  renderCustomerOrders();
 
   alert('Demo purchase successful! UGX ' +
     total.toLocaleString('en-UG') +
