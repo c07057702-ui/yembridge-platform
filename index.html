@@ -2305,20 +2305,42 @@ window.addEventListener('load', async function () {
     new URLSearchParams(window.location.search).get('auth') || ''
   ).trim().toLowerCase();
 
+  const validSections = [
+    'home',
+    'services',
+    'shop',
+    'activity',
+    'account',
+    'merchant'
+  ];
+
   const loggedOut = document.getElementById('loggedOut');
   const loggedIn = document.getElementById('loggedIn');
   const authContainer = document.getElementById('clerk-auth');
 
-  // Open Account immediately when a sign-in or sign-up link is visited.
-  if (authMode === 'sign-up' || authMode === 'sign-in') {
-    const accountButton = [
-      ...document.querySelectorAll('nav button')
-    ].find(button =>
-      button.getAttribute('onclick')?.includes("'account'")
-    );
+  // Remember the section that was open before the page refreshes.
+  window.addEventListener('beforeunload', function () {
+    const visibleSection = [
+      ...document.querySelectorAll('main section')
+    ].find(section => !section.classList.contains('hidden'));
 
-    show('account', accountButton);
-  }
+    if (visibleSection) {
+      sessionStorage.setItem(
+        'yembridgeLastSection',
+        visibleSection.id
+      );
+    }
+  });
+
+  const savedSection =
+    sessionStorage.getItem('yembridgeLastSection') || 'home';
+
+  const sectionToRestore =
+    authMode === 'sign-up' || authMode === 'sign-in'
+      ? 'account'
+      : validSections.includes(savedSection)
+        ? savedSection
+        : 'home';
 
   try {
     if (!window.Clerk) {
@@ -2355,19 +2377,35 @@ window.addEventListener('load', async function () {
     } else {
       loggedIn.classList.add('hidden');
       loggedOut.classList.remove('hidden');
+    }
 
-      if (authMode === 'sign-up') {
-        Clerk.mountSignUp(authContainer, {
-          routing: 'hash',
-          signInUrl: signInPage,
-          forceRedirectUrl: homeUrl
-        });
-      } else {
-        Clerk.mountSignIn(authContainer, {
-          routing: 'hash',
-          signUpUrl: signUpPage,
-          forceRedirectUrl: homeUrl
-        });
+    // Restore the saved section after Clerk has loaded.
+    const sectionButton = [
+      ...document.querySelectorAll('nav button')
+    ].find(button =>
+      button.getAttribute('onclick')?.includes(
+        "'" + sectionToRestore + "'"
+      )
+    );
+
+    show(sectionToRestore, sectionButton);
+
+    // Display the appropriate authentication form when signed out.
+    if (!Clerk.isSignedIn) {
+      if (sectionToRestore === 'account') {
+        if (authMode === 'sign-up') {
+          Clerk.mountSignUp(authContainer, {
+            routing: 'hash',
+            signInUrl: signInPage,
+            forceRedirectUrl: homeUrl
+          });
+        } else {
+          Clerk.mountSignIn(authContainer, {
+            routing: 'hash',
+            signUpUrl: signUpPage,
+            forceRedirectUrl: homeUrl
+          });
+        }
       }
     }
 
