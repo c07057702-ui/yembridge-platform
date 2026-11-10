@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YemBridge Admin Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    h1 { color: #174c35; }
+
+    .notice, .card {
+      background: white;
+      padding: 18px;
+      margin: 16px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .notice {
+      border-left: 5px solid #d69b20;
+      line-height: 1.5;
+    }
+
+    .request {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    .amount {
+      font-size: 22px;
+      font-weight: bold;
+      color: #174c35;
+    }
+
+    .status { font-weight: bold; }
+
+    button {
+      padding: 11px 16px;
+      border: 0;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      margin: 8px 6px 0 0;
+      cursor: pointer;
+    }
+
+    .approve { background: #16834a; }
+    .reject { background: #c0392b; }
+    .refresh { background: #245b9b; }
+
+    .empty { color: #666; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>YemBridge Admin Dashboard</h1>
+    <p>Merchant withdrawal request management</p>
+
+    <div class="notice">
+      <strong>Demo mode only:</strong>
+      This dashboard changes browser-stored demo records.
+      It does not transfer money or provide secure administrator
+      authorization. Use it only for testing on your own device.
+    </div>
+
+    <div class="card">
+      <h2>Withdrawal Requests</h2>
+      <button class="refresh" onclick="renderRequests()">
+        Refresh Requests
+      </button>
+      <div id="requests">
+        Loading requests...
+      </div>
+    </div>
+
+    <p>
+      <a href="index.html">Return to YemBridge website</a>
+    </p>
+  </div>
+
+  <script>
+    function getWithdrawals() {
+      try {
+        const saved = JSON.parse(
+          localStorage.getItem('yembridgeWithdrawals') || '[]'
+        );
+
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function renderRequests() {
+      const container = document.getElementById('requests');
+      const withdrawals = getWithdrawals();
+
+      container.innerHTML = '';
+
+      if (withdrawals.length === 0) {
+        container.textContent = 'No withdrawal requests found.';
+        container.className = 'empty';
+        return;
+      }
+
+      withdrawals.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'request';
+
+        const amount = document.createElement('div');
+        amount.className = 'amount';
+        amount.textContent =
+          'UGX ' + Number(item.amount || 0).toLocaleString('en-UG');
+
+        const status = document.createElement('p');
+        status.className = 'status';
+        status.textContent = 'Status: ' + (item.status || 'Pending');
+
+        const date = document.createElement('p');
+        date.textContent = 'Date: ' + (item.date || 'Not recorded');
+
+        card.append(amount, status, date);
+
+        if (item.status === 'Pending') {
+          const approve = document.createElement('button');
+          approve.className = 'approve';
+          approve.textContent = 'Approve';
+          approve.onclick = function() {
+            updateStatus(index, 'Approved');
+          };
+
+          const reject = document.createElement('button');
+          reject.className = 'reject';
+          reject.textContent = 'Reject';
+          reject.onclick = function() {
+            updateStatus(index, 'Rejected');
+          };
+
+          card.append(approve, reject);
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    function updateStatus(index, newStatus) {
+      const withdrawals = getWithdrawals();
+
+      if (!withdrawals[index] ||
+          withdrawals[index].status !== 'Pending') {
+        alert('This request is no longer pending.');
+        renderRequests();
+        return;
+      }
+
+      const confirmed = confirm(
+        'Are you sure you want to ' +
+        newStatus.toLowerCase() + ' this demo withdrawal?'
+      );
+
+      if (!confirmed) return;
+
+      withdrawals[index].status = newStatus;
+      withdrawals[index].reviewedAt =
+        new Date().toLocaleString('en-UG');
+
+      localStorage.setItem(
+        'yembridgeWithdrawals',
+        JSON.stringify(withdrawals)
+      );
+
+      alert('Demo request updated: ' + newStatus);
+      renderRequests();
+    }
+
+    renderRequests();
+  </script>
+</body>
+</html>
