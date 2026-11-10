@@ -2211,21 +2211,25 @@ function renderCustomerOrders() {
   const container = document.getElementById('customerOrders');
   if (!container) return;
 
-  const account = getAccount();
   container.innerHTML = '';
 
-  if (!account) {
+  // Require an active Clerk session.
+  if (!window.Clerk?.isSignedIn || !window.Clerk.user) {
     container.textContent = 'Please sign in to view your orders.';
     return;
   }
+
+  const user = window.Clerk.user;
+  const customerId = user.id;
 
   const orders = JSON.parse(
     localStorage.getItem('yembridgeMerchantOrders') || '[]'
   );
 
+  // Show only orders belonging to this Clerk account.
   const myOrders = orders
     .map((order, index) => ({...order, index}))
-    .filter(order => order.customer === account.name);
+    .filter(order => order.customerId === customerId);
 
   if (myOrders.length === 0) {
     container.textContent = 'No marketplace orders yet.';
@@ -2237,11 +2241,11 @@ function renderCustomerOrders() {
     card.className = 'transaction';
 
     const product = document.createElement('b');
-    product.textContent = order.product;
+    product.textContent = order.product || 'Marketplace item';
 
     const price = document.createElement('p');
     price.textContent = 'UGX ' +
-      Number(order.price).toLocaleString('en-UG');
+      Number(order.price || 0).toLocaleString('en-UG');
 
     const status = document.createElement('p');
     status.className = 'muted';
@@ -2262,35 +2266,6 @@ function renderCustomerOrders() {
 
     container.appendChild(card);
   });
-}
-function confirmCustomerReceipt(index) {
-  const orders = JSON.parse(
-    localStorage.getItem('yembridgeMerchantOrders') || '[]'
-  );
-
-  if (!orders[index]) return;
-
-  if (orders[index].status !== 'Delivered - Awaiting Customer Confirmation') {
-    alert('This order is not awaiting delivery confirmation.');
-    return;
-  }
-
-  if (!confirm('Have you received this product?')) return;
-
-  orders[index].status = 'Completed';
-  orders[index].customerConfirmed = true;
-  orders[index].confirmedDate = new Date().toLocaleString('en-UG');
-
-  localStorage.setItem(
-    'yembridgeMerchantOrders',
-    JSON.stringify(orders)
-  );
-
-  renderCustomerOrders();
-  renderMerchantOrders();
-  renderMerchantSalesReport();
-
-  alert('Receipt confirmed. Your order is now completed!');
 }
 
 window.addEventListener('DOMContentLoaded', renderCustomerOrders);
