@@ -1567,6 +1567,11 @@ function show(id,btn){
 
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
+
+  // Refresh customer orders whenever Activity is opened.
+  if (id === 'activity' && window.Clerk?.isSignedIn) {
+    renderCustomerOrders();
+  }
 }
 
 function demo(service){
