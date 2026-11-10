@@ -2274,7 +2274,38 @@ function renderCustomerOrders() {
 }
 
 window.addEventListener('DOMContentLoaded', renderCustomerOrders);
+function confirmCustomerReceipt(index) {
+  const orders = JSON.parse(
+    localStorage.getItem('yembridgeMerchantOrders') || '[]'
+  );
 
+  if (!orders[index]) {
+    alert('Order not found. Please refresh the page.');
+    return;
+  }
+
+  if (
+    orders[index].status !==
+    'Delivered - Awaiting Customer Confirmation'
+  ) {
+    alert('This order is not awaiting receipt confirmation.');
+    return;
+  }
+
+  orders[index].status = 'Completed';
+
+  localStorage.setItem(
+    'yembridgeMerchantOrders',
+    JSON.stringify(orders)
+  );
+
+  renderCustomerOrders();
+  renderMerchantOrders();
+  renderMerchantSalesReport();
+  renderMerchantWithdrawals();
+
+  alert('Receipt confirmed! Your demo order is now completed.');
+}
 </script>
 
 <script
