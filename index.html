@@ -2481,11 +2481,16 @@ window.addEventListener('load', async function () {
         );
 
         if (syncMessage) {
-          syncMessage.textContent =
-            'YemBridge account sync error: ' +
-            (syncError.message || String(syncError));
-        }
-      }
+  syncMessage.textContent =
+    'YemBridge account sync error: ' +
+    (syncError.message || String(syncError));
+
+  if (syncError.diagnostic) {
+    syncMessage.textContent +=
+      ' | Database details: ' +
+      JSON.stringify(syncError.diagnostic);
+  }
+}
 
     } else {
       loggedIn.classList.add('hidden');
