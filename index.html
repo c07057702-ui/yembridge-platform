@@ -2323,10 +2323,14 @@ function confirmCustomerReceipt(index) {
   type="text/javascript">
 </script>
 
+
 <script>
 window.addEventListener('load', async function () {
   const homeUrl =
     'https://c07057702-ui.github.io/yembridge-platform/';
+
+  const apiUrl =
+    'https://yembridge-api.c07057702.workers.dev';
 
   const signInPage = homeUrl + '?auth=sign-in';
   const signUpPage = homeUrl + '?auth=sign-up';
@@ -2348,7 +2352,6 @@ window.addEventListener('load', async function () {
   const loggedIn = document.getElementById('loggedIn');
   const authContainer = document.getElementById('clerk-auth');
 
-  // Remember the section that was open before the page refreshes.
   window.addEventListener('beforeunload', function () {
     const visibleSection = [
       ...document.querySelectorAll('main section')
@@ -2404,12 +2407,52 @@ window.addEventListener('load', async function () {
       document.getElementById('displayEmail').textContent =
         user.primaryEmailAddress?.emailAddress || '';
 
+      // Synchronize the verified Clerk account with YemBridge.
+      try {
+        const token = await Clerk.session.getToken();
+
+        if (!token) {
+          throw new Error('Could not obtain a Clerk session token.');
+        }
+
+        const response = await fetch(
+          apiUrl + '/account-sync',
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + token
+            }
+          }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            result.error || 'Account synchronization failed.'
+          );
+        }
+
+        window.yembridgeAccount = result;
+
+        console.log(
+          'YemBridge account synchronized:',
+          result.accountNo
+        );
+
+      } catch (syncError) {
+        console.error(
+          'YemBridge account synchronization failed:',
+          syncError
+        );
+      }
+
     } else {
       loggedIn.classList.add('hidden');
       loggedOut.classList.remove('hidden');
+      window.yembridgeAccount = null;
     }
 
-    // Restore the saved section after Clerk has loaded.
     const sectionButton = [
       ...document.querySelectorAll('nav button')
     ].find(button =>
@@ -2420,7 +2463,6 @@ window.addEventListener('load', async function () {
 
     show(sectionToRestore, sectionButton);
 
-    // Display the appropriate authentication form when signed out.
     if (!Clerk.isSignedIn) {
       if (sectionToRestore === 'account') {
         if (authMode === 'sign-up') {
@@ -2450,4 +2492,5 @@ window.addEventListener('load', async function () {
   }
 });
 </script>
+
 
