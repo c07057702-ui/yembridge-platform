@@ -2324,6 +2324,7 @@ function confirmCustomerReceipt(index) {
 </script>
 
 
+
 <script>
 window.addEventListener('load', async function () {
   const homeUrl =
@@ -2407,12 +2408,16 @@ window.addEventListener('load', async function () {
       document.getElementById('displayEmail').textContent =
         user.primaryEmailAddress?.emailAddress || '';
 
+      window.yembridgeAccount = null;
+
       // Synchronize the verified Clerk account with YemBridge.
       try {
         const token = await Clerk.session.getToken();
 
         if (!token) {
-          throw new Error('Could not obtain a Clerk session token.');
+          throw new Error(
+            'Could not obtain a Clerk session token.'
+          );
         }
 
         const response = await fetch(
@@ -2425,15 +2430,31 @@ window.addEventListener('load', async function () {
           }
         );
 
-        const result = await response.json();
+        const responseText = await response.text();
+
+        let result;
+
+        try {
+          result = JSON.parse(responseText);
+        } catch {
+          throw new Error(
+            'Worker returned an invalid response. HTTP ' +
+            response.status + ': ' + responseText.slice(0, 300)
+          );
+        }
 
         if (!response.ok) {
           throw new Error(
-            result.error || 'Account synchronization failed.'
+            'HTTP ' + response.status + ': ' +
+            (result.error || 'Account synchronization failed.')
           );
         }
 
         window.yembridgeAccount = result;
+
+        authContainer.textContent =
+          'YemBridge database account connected. Account number: ' +
+          result.accountNo;
 
         console.log(
           'YemBridge account synchronized:',
@@ -2445,6 +2466,10 @@ window.addEventListener('load', async function () {
           'YemBridge account synchronization failed:',
           syncError
         );
+
+        authContainer.textContent =
+          'YemBridge account sync error: ' +
+          (syncError.message || String(syncError));
       }
 
     } else {
@@ -2492,5 +2517,4 @@ window.addEventListener('load', async function () {
   }
 });
 </script>
-
 
