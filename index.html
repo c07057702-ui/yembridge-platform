@@ -2330,6 +2330,7 @@ function confirmCustomerReceipt(index) {
 
 
 
+
 <script>
 window.addEventListener('load', async function () {
   const homeUrl =
@@ -2357,6 +2358,7 @@ window.addEventListener('load', async function () {
   const loggedOut = document.getElementById('loggedOut');
   const loggedIn = document.getElementById('loggedIn');
   const authContainer = document.getElementById('clerk-auth');
+  const syncMessage = document.getElementById('accountSyncMessage');
 
   window.addEventListener('beforeunload', function () {
     const visibleSection = [
@@ -2415,7 +2417,11 @@ window.addEventListener('load', async function () {
 
       window.yembridgeAccount = null;
 
-      // Synchronize the verified Clerk account with YemBridge.
+      if (syncMessage) {
+        syncMessage.textContent =
+          'Checking YemBridge database connection...';
+      }
+
       try {
         const token = await Clerk.session.getToken();
 
@@ -2457,9 +2463,11 @@ window.addEventListener('load', async function () {
 
         window.yembridgeAccount = result;
 
-        authContainer.textContent =
-          'YemBridge database account connected. Account number: ' +
-          result.accountNo;
+        if (syncMessage) {
+          syncMessage.textContent =
+            'YemBridge database account connected. Account number: ' +
+            result.accountNo;
+        }
 
         console.log(
           'YemBridge account synchronized:',
@@ -2472,9 +2480,11 @@ window.addEventListener('load', async function () {
           syncError
         );
 
-        authContainer.textContent =
-          'YemBridge account sync error: ' +
-          (syncError.message || String(syncError));
+        if (syncMessage) {
+          syncMessage.textContent =
+            'YemBridge account sync error: ' +
+            (syncError.message || String(syncError));
+        }
       }
 
     } else {
@@ -2522,4 +2532,5 @@ window.addEventListener('load', async function () {
   }
 });
 </script>
+
 
