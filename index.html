@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,24 +26,29 @@ button{border:0;border-radius:11px;padding:11px 15px;background:var(--green);col
 .service{background:white;border:1px solid #E7EEEA;border-radius:15px;padding:14px 8px;text-align:center;cursor:pointer;min-height:100px}.service span{display:block;font-size:25px;margin-bottom:6px}.service b{font-size:13px;color:var(--navy)}.service small{display:block;color:#82918C;font-size:10px;margin-top:4px}
 .section-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}
 .market-banner,.market-intro{background:linear-gradient(120deg,#102B46,#087F68);color:white;border-radius:16px;padding:16px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.market-banner h3{color:white;font-size:20px;margin:6px 0}.market-banner p,.market-intro small{color:#D5E8E2;font-size:11px}.market-banner span{color:var(--gold);font-size:9px;font-weight:bold}.market-intro b,.market-intro small{display:block}.market-intro span{font-size:28px}
-.shop-heading,.activity-heading{margin-top:18px}.product-card{background:white;border:1px solid #E3EAE7;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}.product-image{background:#F0F6F4;border-radius:10px;min-height:80px;display:grid;place-items:center;font-size:38px}.product-category{color:var(--green);font-size:9px;font-weight:bold}.product-card b{font-size:12px;color:var(--navy)}.product-card strong{font-size:13px;color:var(--green)}.product-card button{font-size:10px;padding:9px 4px}
-.cart-summary,.activity-summary>div,.security-note{background:#F0F6F4;border-radius:12px;padding:12px}.cart-summary{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}.cart-summary b,.cart-summary small{display:block}.cart-summary small{font-size:10px;color:var(--muted)}
+.shop-heading,.activity-heading{margin-top:18px}.product-card{background:white;border:1px solid #E3EAE7;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0;overflow-wrap:anywhere}.product-image{background:#F0F6F4;border-radius:10px;min-height:80px;max-height:170px;width:100%;object-fit:cover;display:grid;place-items:center;font-size:38px}.product-category{color:var(--green);font-size:9px;font-weight:bold}.product-card b{font-size:12px;color:var(--navy)}.product-card strong{font-size:13px;color:var(--green)}.product-card button{font-size:10px;padding:9px 4px}
+.cart-summary,.activity-summary>div,.security-note{background:#F0F6F4;border-radius:12px;padding:12px}.cart-summary{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0;flex-wrap:wrap}.cart-summary b,.cart-summary small{display:block}.cart-summary small{font-size:10px;color:var(--muted)}
 .activity-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}.activity-summary small,.activity-summary b{display:block}.activity-summary small{font-size:10px;color:var(--muted)}.activity-summary b{font-size:13px;color:var(--navy);margin-top:5px}
-.transaction{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #E8EFEC}.transaction-icon{width:38px;height:38px;border-radius:11px;background:#F0F6F4;display:grid;place-items:center;flex-shrink:0}.transaction-info{flex:1;min-width:0}.transaction-info b,.transaction-info small{display:block}.transaction-info b{font-size:12px}.transaction-info small{font-size:10px;color:var(--muted);margin:3px 0}.amount-out,.amount-in{font-size:11px;white-space:nowrap}.amount-in,.status-success{color:var(--green)}.status-pending{color:#D18B19}
+.transaction{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #E8EFEC;flex-wrap:wrap}.transaction-icon{width:38px;height:38px;border-radius:11px;background:#F0F6F4;display:grid;place-items:center;flex-shrink:0}.transaction-info{flex:1;min-width:0}.transaction-info b,.transaction-info small{display:block}.transaction-info b{font-size:12px}.transaction-info small{font-size:10px;color:var(--muted);margin:3px 0}.amount-out,.amount-in{font-size:11px;white-space:nowrap}.amount-in,.status-success{color:var(--green)}.status-pending{color:#D18B19}.status-rejected{color:#B42318}
 .account-intro,.profile-panel{display:flex;align-items:center;gap:12px;background:#F0F6F4;padding:14px;border-radius:14px;margin:15px 0}.account-avatar,.profile-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#102B46,#087F68);color:var(--gold);display:grid;place-items:center;font:bold 21px Georgia;flex-shrink:0}.account-intro b,.account-intro small{display:block}.account-intro b{font-size:13px}.account-intro small,.profile-panel p{font-size:10px;color:var(--muted)}.profile-panel h3{margin:2px 0;font-size:16px}.profile-panel p{overflow-wrap:anywhere;margin:3px 0}
 .account-status{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #E8EFEC}.status-icon{width:36px;height:36px;background:#F0F6F4;border-radius:10px;display:grid;place-items:center}.account-status>div:nth-child(2){flex:1}.account-status b,.account-status small{display:block}.account-status b{font-size:12px}.account-status small{font-size:10px;color:var(--muted)}
 .security-note b{font-size:12px}.security-note p{font-size:11px;color:var(--muted);margin-bottom:0}.demo-warning{color:#A66B12;background:#FFF5DF;border-radius:9px;padding:10px;font-size:10px;font-weight:bold;margin-top:15px}.account-button{width:100%;margin-top:12px}.logout-button{background:#A83C3C}.checkout-button{width:100%;margin-top:8px}
-.merchant-order-card{display:flex;flex-direction:column;gap:8px;padding:14px;margin:10px 0;background:#F7FAF9;border:1px solid #E3ECE8;border-radius:13px;overflow-wrap:anywhere}.merchant-order-card p,.merchant-order-card small{margin:2px 0}
-.merchant-order-select,input{width:100%;padding:12px;border:1px solid #D7E1DC;border-radius:10px;margin:7px 0 12px;background:#FCFEFD;font-size:14px}
-button:focus,input:focus,select:focus{outline:2px solid #087F6840}.hidden{display:none!important}
+.merchant-order-card,.listing-card{display:flex;flex-direction:column;gap:8px;padding:14px;margin:10px 0;background:#F7FAF9;border:1px solid #E3ECE8;border-radius:13px;overflow-wrap:anywhere}.merchant-order-card p,.merchant-order-card small{margin:2px 0}
+input,textarea,select{width:100%;padding:12px;border:1px solid #D7E1DC;border-radius:10px;margin:7px 0 12px;background:#FCFEFD;font-size:14px;font-family:Arial,sans-serif}
+textarea{min-height:85px;resize:vertical}label{display:block;font-size:12px;font-weight:bold;color:var(--navy);margin-top:8px}
+button:focus,input:focus,select:focus,textarea:focus{outline:2px solid #087F6840}.hidden{display:none!important}
 nav{display:flex;justify-content:space-around;align-items:center;background:white;padding:7px 3px;position:fixed;bottom:0;left:0;right:0;border-top:1px solid #E8EEEB;z-index:10}nav button{background:transparent;color:#607185;padding:9px 6px;font-size:11px}nav button.active{background:#E5F5EF;color:var(--green)}
 footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.activity-note{font-size:10px;margin-top:14px}#clerk-auth{min-height:80px}#authLoadMessage{min-height:18px}
+.photo-preview{display:flex;gap:8px;flex-wrap:wrap}.photo-preview img{width:85px;height:85px;object-fit:cover;border-radius:8px;border:1px solid #ddd}
+.product-photo-strip{display:flex;gap:5px;overflow-x:auto}.product-photo-strip img{width:70px;height:70px;object-fit:cover;border-radius:7px}
 @media(max-width:360px){nav button{font-size:10px;padding:8px 4px}.amount{font-size:25px}}
 </style>
 </head>
 <body class="starting">
 <div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading YemBridge...</b><small>Checking your secure account</small></div></div>
+
 <header class="site-header"><div class="brand"><div class="brand-mark">YB</div><div class="brand-divider"></div><div class="brand-copy"><h2>YemBridge</h2><p>YOUR EVERYDAY COMMERCE COMPANION</p></div></div><div class="demo-label">DEMO</div></header>
+
 <main>
 <section id="home">
 <div class="card balance"><div class="balance-top"><span>◈ YOUR YEMBRIDGE WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 250,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>YB</b></div></div>
@@ -53,27 +57,45 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 <div class="grid"><div class="service" onclick="show('services')"><span>📱</span><b>Airtime & Data</b><small>Stay connected</small></div><div class="service" onclick="show('services')"><span>💡</span><b>Pay Bills</b><small>Easy payments</small></div><div class="service" onclick="show('shop')"><span>🛍️</span><b>Marketplace</b><small>Shop local</small></div><div class="service" onclick="show('activity')"><span>📋</span><b>Activity</b><small>Track transactions</small></div></div>
 <div class="market-banner" onclick="show('shop')"><div><span>THE YEMBRIDGE MARKETPLACE</span><h3>Shop local.<br>Grow together.</h3><p>Discover products from local merchants.</p><b>Explore marketplace →</b></div><div class="market-symbol">YB</div></div>
 </section>
+
 <section id="services" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE SERVICES</p><h3>Digital Services</h3><p class="muted">Your everyday essentials, all in one place.</p><div class="grid"><div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div><div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div><div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div></div></div></section>
-<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">SHOP WITH YEMBRIDGE</p><h3>Marketplace</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Shop local. Grow together.</b><small>Explore our demo product collection.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div>
-<div class="grid" id="shopProducts">
-<div class="product-card"><div class="product-image">👟</div><small class="product-category">FASHION</small><b>Casual Sneakers</b><strong>UGX 85,000</strong><small>Demo Merchant</small><button onclick="addToCart('Casual Sneakers',85000)">Add to Cart</button></div>
-<div class="product-card"><div class="product-image">🎒</div><small class="product-category">ACCESSORIES</small><b>Everyday Backpack</b><strong>UGX 45,000</strong><small>Demo Merchant</small><button onclick="addToCart('Everyday Backpack',45000)">Add to Cart</button></div>
-<div class="product-card"><div class="product-image">⌚</div><small class="product-category">ELECTRONICS</small><b>Smart Watch</b><strong>UGX 65,000</strong><small>Demo Merchant</small><button onclick="addToCart('Smart Watch',65000)">Add to Cart</button></div>
-<div class="product-card"><div class="product-image">🎧</div><small class="product-category">ELECTRONICS</small><b>Wireless Earphones</b><strong>UGX 35,000</strong><small>Demo Merchant</small><button onclick="addToCart('Wireless Earphones',35000)">Add to Cart</button></div>
-</div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
-<section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 100,000</b><span>↑</span></div><div><small>Money Out</small><b>UGX 45,000</b><span>↓</span></div></div><h3 class="activity-heading">Recent Activity</h3><div class="transaction"><div class="transaction-icon">📱</div><div class="transaction-info"><b>Airtime Purchase</b><small>Demo transaction · Today</small><span class="status-success">Successful</span></div><strong class="amount-out">- UGX 10,000</strong></div><div class="transaction"><div class="transaction-icon">🛍️</div><div class="transaction-info"><b>Marketplace Purchase</b><small>Demo transaction · Today</small><span class="status-pending">Pending</span></div><strong class="amount-out">- UGX 45,000</strong></div><div class="transaction"><div class="transaction-icon">💰</div><div class="transaction-info"><b>Demo Wallet Credit</b><small>Illustrative entry</small><span class="status-success">Successful</span></div><strong class="amount-in">+ UGX 100,000</strong></div><div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p></div></section>
+
+<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">SHOP WITH YEMBRIDGE</p><h3>Marketplace</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Shop local. Grow together.</b><small>Explore approved merchant products.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
+
+<section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 0</b></div><div><small>Money Out</small><b>UGX 0</b></div></div><h3 class="activity-heading">Recent Activity</h3><div id="dynamicActivity"></div><div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p></div></section>
+
 <section id="account" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE CUSTOMER CENTRE</p><h3>My Account</h3><p class="muted">Manage your profile and account security.</p><div id="loggedOut"><div class="account-intro"><div class="account-avatar">YB</div><div><b>Welcome to YemBridge</b><small>Your everyday commerce companion.</small></div></div><div id="clerk-auth"></div><p id="authLoadMessage" class="muted" aria-live="polite">Loading secure sign-in...</p></div><div id="loggedIn" class="hidden"><div class="profile-panel"><div class="profile-avatar">YB</div><div><small>WELCOME BACK</small><h3 id="displayName"></h3><p id="displayEmail"></p></div></div><div id="accountSyncMessage" class="muted" style="margin:15px 0;padding:12px;border:1px solid #ccc;border-radius:8px" aria-live="polite">Checking YemBridge database connection...</div><h4>Account verification</h4><div class="account-status"><div class="status-icon">🪪</div><div><b>Identity verification</b><small>Complete KYC to access eligible services.</small></div><span class="status-pending">Not verified</span></div><div class="account-status"><div class="status-icon">◈</div><div><b>YEM connection</b><small>YEM account integration status.</small></div><span class="status-pending">Not connected</span></div><h4>Account security</h4><div class="security-note"><b>🔒 Your account matters</b><p>Never share your password, wallet private key or recovery phrase.</p></div><p class="demo-warning">DEMO ACCOUNT — No real funds or live YEM connection.</p><button class="account-button logout-button" onclick="logoutUser()">Sign Out</button></div></div></section>
+
 <section id="merchant" class="hidden">
-<div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your YemBridge merchant space.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
+<div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your YemBridge merchant space. This demonstration uses your signed-in account.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
 <div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">UGX 0</div><p class="muted">Demo settlement balance — not real money.</p></div>
 <div class="card"><h3>💸 Merchant Withdrawals</h3><p class="muted">Available for withdrawal (demo):</p><div class="amount" id="merchantAvailableWithdrawal">UGX 0</div><input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX"><button onclick="requestMerchantWithdrawal()">Request Withdrawal</button><p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div></div>
 <div class="card"><h3>📊 Merchant Sales Report</h3><div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div><div class="activity-summary"><div><small>Illustrative Commission (5%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">UGX 0</strong></div></div><p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">Demo report only. These figures are not real earnings.</p></div>
-<div class="card"><h3>➕ Add a New Product</h3><input id="merchantProductName" type="text" placeholder="Product name"><input id="merchantProductPrice" type="number" min="1" placeholder="Price in UGX"><input id="merchantProductCategory" type="text" placeholder="Product category"><button onclick="addMerchantProduct()">Publish Product</button><p id="merchantProductMessage" class="muted"></p></div>
-<div class="card"><h3>🛠 Merchant Tools</h3><button onclick="demo('Add Product')">＋ Add Product</button> <button onclick="demo('Manage Orders')">📦 Manage Orders</button> <button onclick="demo('Sales Reports')">📊 Sales Reports</button> <button onclick="demo('Withdrawals')">Withdrawals</button></div><p class="muted">Merchant dashboard demonstration only.</p>
+
+<div class="card">
+<h3>➕ Submit a Product for Approval</h3>
+<p class="muted">Your product will remain hidden from customers until an administrator approves it. Complete all fields and upload at least two clear photos.</p>
+<label for="merchantProductName">Product name</label><input id="merchantProductName" maxlength="80" placeholder="e.g. Handmade liquid soap">
+<label for="merchantProductDescription">Product description</label><textarea id="merchantProductDescription" maxlength="1000" placeholder="Describe the product, its features and condition"></textarea>
+<label for="merchantProductCategory">Product category</label><input id="merchantProductCategory" maxlength="50" placeholder="e.g. Home care">
+<label for="merchantProductLocation">Product location</label><input id="merchantProductLocation" maxlength="120" placeholder="District, town or area">
+<label for="merchantProductPhone">Contact phone number</label><input id="merchantProductPhone" type="tel" maxlength="25" placeholder="Merchant contact number">
+<label for="merchantProductPrice">Price in UGX</label><input id="merchantProductPrice" type="number" min="1" step="1" placeholder="e.g. 15000">
+<label for="merchantProductQuantity">Available quantity</label><input id="merchantProductQuantity" type="number" min="1" step="1" placeholder="e.g. 20">
+<label for="merchantProductPhotos">Product photos (at least 2)</label><input id="merchantProductPhotos" type="file" accept="image/*" multiple>
+<p class="muted">Choose at least two clear photos of this product. Photos are resized for this browser demonstration.</p>
+<div id="merchantPhotoPreview" class="photo-preview"></div>
+<button id="submitProductButton" onclick="submitMerchantProduct()">Submit Product for Review</button>
+<p id="merchantProductMessage" class="muted" aria-live="polite"></p>
+</div>
+
+<div class="card"><h3>🗂 My Product Submissions</h3><p class="muted">Check whether your submitted products are pending, approved, rejected or awaiting corrections.</p><div id="merchantProductSubmissions">No product submissions yet.</div></div>
+<p class="muted">Merchant dashboard demonstration only.</p>
 </section>
 </main>
+
 <nav aria-label="Main navigation"><button type="button" onclick="show('home',this)">⌂ Home</button><button type="button" onclick="show('services',this)">Services</button><button type="button" onclick="show('shop',this)">Shop</button><button type="button" onclick="show('activity',this)">Activity</button><button type="button" onclick="show('merchant',this)">Merchant</button><button type="button" onclick="show('account',this)">Account</button></nav>
-<footer>YemBridge Digital Commerce Ltd · Prototype v1.0</footer>
+<footer>YemBridge Digital Commerce Ltd · Prototype v1.1</footer>
 
 <script>
 window.yembridgeAuthReady=false;
@@ -83,6 +105,7 @@ const PROTECTED_SECTIONS=['services','shop','activity','merchant'];
 const VALID_SECTIONS=['home','services','shop','activity','account','merchant'];
 const HOME_URL='https://c07057702-ui.github.io/yembridge-platform/';
 const API_URL='https://yembridge-api.c07057702.workers.dev';
+const PRODUCT_KEY='yembridgeProductSubmissions';
 
 function finishStartup(){document.body.classList.remove('starting');const overlay=document.getElementById('startupOverlay');if(overlay)overlay.classList.add('hidden')}
 function navButtonFor(id){return Array.from(document.querySelectorAll('nav button')).find(button=>(button.getAttribute('onclick')||'').includes("'"+id+"'"))}
@@ -95,70 +118,49 @@ function show(id,btn){
  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
  const active=id==='home'&&btn?btn:navButtonFor(id);if(active)active.classList.add('active');
  if(window.yembridgeAuthReady){try{sessionStorage.setItem('yembridgeLastSection',id)}catch(e){}}
- if(id==='activity')renderCustomerOrders();
- if(id==='merchant'){renderMerchantOrders();renderMerchantSalesReport();renderMerchantWithdrawals()}
+ if(id==='activity'){renderCustomerOrders();renderActivity()}
+ if(id==='merchant'){renderMerchantOrders();renderMerchantSalesReport();renderMerchantWithdrawals();renderMerchantProductSubmissions()}
+ if(id==='shop')renderShopProducts();
 }
 function demo(service){alert(service+' is a demonstration only. No real transaction has been made.')}
 async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('account');return}try{try{sessionStorage.setItem('yembridgeLastSection','account')}catch(e){}await window.Clerk.signOut();window.yembridgeAccount=null;window.location.replace(HOME_URL+'?auth=sign-in')}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
 
 function readLocalArray(key){try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(e){console.warn('Could not read demo data:',key,e);return[]}}
-function writeLocalArray(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch(e){console.error(e);alert('This demo information could not be saved on this device.');return false}}
+function writeLocalArray(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch(e){console.error(e);alert('This demo information could not be saved on this device. It may be out of browser storage space.');return false}}
+function getProductSubmissions(){return readLocalArray(PRODUCT_KEY)}
+function saveProductSubmissions(items){return writeLocalArray(PRODUCT_KEY,items)}
 
 const DEMO_WALLET_SETUP_VERSION='2026-11-wallet-start-250000';
 let yemWallet=250000;
-try{
- const setup=localStorage.getItem('yembridgeDemoWalletSetup');
- if(setup!==DEMO_WALLET_SETUP_VERSION){localStorage.setItem('yembridgeDemoBalance','250000');localStorage.setItem('yembridgeDemoWalletSetup',DEMO_WALLET_SETUP_VERSION)}
- const saved=Number(localStorage.getItem('yembridgeDemoBalance'));
- yemWallet=Number.isFinite(saved)&&saved>=0?saved:250000;
- localStorage.setItem('yembridgeDemoBalance',String(yemWallet));
-}catch(e){console.warn('Wallet storage unavailable:',e)}
+try{const setup=localStorage.getItem('yembridgeDemoWalletSetup');if(setup!==DEMO_WALLET_SETUP_VERSION){localStorage.setItem('yembridgeDemoBalance','250000');localStorage.setItem('yembridgeDemoWalletSetup',DEMO_WALLET_SETUP_VERSION)}const saved=Number(localStorage.getItem('yembridgeDemoBalance'));yemWallet=Number.isFinite(saved)&&saved>=0?saved:250000;localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){console.warn('Wallet storage unavailable:',e)}
 let yemCart=[];
 let yemTransactions=readLocalArray('yembridgeDemoTransactions');
-let merchantProducts=readLocalArray('yembridgeMerchantProducts');
 
 function saveDemoData(){try{localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){}writeLocalArray('yembridgeDemoTransactions',yemTransactions)}
 function updateWallet(){const el=document.querySelector('.balance .amount');if(el)el.textContent='UGX '+yemWallet.toLocaleString('en-UG')}
 
-/* REFUND SUPPORT:
-   A cancellation is refunded only once. Existing cancelled orders without
-   a refund marker are recovered once when this version first runs. */
-function applyOrderRefund(order,reason){
+/* Refunds are processed once per cancelled order. */
+function applyOrderRefund(order){
  if(!order||order.refundProcessed)return false;
- const amount=Number(order.price);
- if(!Number.isFinite(amount)||amount<=0)return false;
+ const amount=Number(order.price);if(!Number.isFinite(amount)||amount<=0)return false;
  const refundDate=new Date().toLocaleString('en-UG');
- order.refundProcessed=true;
- order.refundDate=refundDate;
- order.refundAmount=amount;
+ order.refundProcessed=true;order.refundDate=refundDate;order.refundAmount=amount;
  yemWallet+=amount;
- yemTransactions.unshift({
-  type:'refund',
-  description:'Marketplace Order Refund',
-  details:order.product||'Cancelled order',
-  amount:amount,
-  status:'Refund Successful',
-  date:refundDate
- });
+ yemTransactions.unshift({type:'refund',description:'Marketplace Order Refund',details:order.product||'Cancelled order',amount,status:'Refund Successful',date:refundDate});
  return true;
 }
 function recoverOldCancelledRefunds(){
- const orders=readLocalArray('yembridgeMerchantOrders');
- let changed=false;
- orders.forEach(order=>{
-  if(order.status==='Cancelled'&&!order.refundProcessed){
-   if(applyOrderRefund(order,'recovery'))changed=true;
-  }
- });
- if(changed){
-  if(writeLocalArray('yembridgeMerchantOrders',orders)){
-   saveDemoData();
-   console.log('Older cancelled demo orders refunded.');
-  }
- }
+ const orders=readLocalArray('yembridgeMerchantOrders');let changed=false;
+ orders.forEach(order=>{if(order.status==='Cancelled'&&!order.refundProcessed&&applyOrderRefund(order))changed=true});
+ if(changed&&writeLocalArray('yembridgeMerchantOrders',orders))saveDemoData();
 }
+recoverOldCancelledRefunds();
 
-function addToCart(name,price){if(!Number.isFinite(price)||price<=0)return alert('Invalid demo product price.');yemCart.push({name,price});updateCartSummary();alert(name+' added to your demo basket!')}
+function addToCart(name,price,productId=null){
+ if(!Number.isFinite(price)||price<=0)return alert('Invalid demo product price.');
+ if(productId){const p=getProductSubmissions().find(x=>x.id===productId);if(!p||p.status!=='Approved'||Number(p.quantity)<=0)return alert('This product is currently unavailable.')}
+ yemCart.push({name,price,productId});updateCartSummary();alert(name+' added to your demo basket!');
+}
 function updateCartSummary(){
  const count=yemCart.length,total=yemCart.reduce((s,i)=>s+i.price,0);
  const c=document.getElementById('cartCount'),t=document.getElementById('cartTotal');
@@ -175,56 +177,159 @@ function checkoutDemo(){
  const customer=((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge Customer';
  const total=yemCart.reduce((s,i)=>s+i.price,0);
  if(total>yemWallet)return alert('Insufficient demo wallet balance. Your basket has not been charged.');
- const orders=readLocalArray('yembridgeMerchantOrders'),date=new Date().toLocaleString('en-UG');
- const next=orders.slice();
- yemCart.forEach(item=>next.unshift({orderId:'YB-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),product:item.name,price:item.price,customer,customerEmail:email,customerId:user.id,status:'New',date,refundProcessed:false}));
+ const products=getProductSubmissions();
+ for(const item of yemCart){if(item.productId){const p=products.find(x=>x.id===item.productId);if(!p||p.status!=='Approved'||Number(p.quantity)<1)return alert('A product in your basket is no longer available. Please refresh the Shop.');}}
+ const orders=readLocalArray('yembridgeMerchantOrders'),date=new Date().toLocaleString('en-UG'),next=orders.slice();
+ yemCart.forEach(item=>{
+  const p=item.productId?products.find(x=>x.id===item.productId):null;
+  if(p)p.quantity=Number(p.quantity)-1;
+  next.unshift({orderId:'YB-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),product:item.name,productId:item.productId||null,price:item.price,customer,customerEmail:email,customerId:user.id,sellerId:p?.merchantId||'demo-merchant',status:'New',date,refundProcessed:false,stockRestored:false});
+ });
  if(!writeLocalArray('yembridgeMerchantOrders',next))return;
- yemWallet-=total;
- yemTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.name).join(', '),amount:total,status:'Successful',date});
- saveDemoData();updateWallet();yemCart=[];updateCartSummary();renderActivity();renderMerchantOrders();renderCustomerOrders();
+ if(!saveProductSubmissions(products))return;
+ yemWallet-=total;yemTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.name).join(', '),amount:total,status:'Successful',date});
+ saveDemoData();updateWallet();yemCart=[];updateCartSummary();renderActivity();renderMerchantOrders();renderCustomerOrders();renderShopProducts();
  alert('Demo purchase successful! UGX '+total.toLocaleString('en-UG')+' has been deducted from your demo wallet.');
 }
+
 function renderActivity(){
- const activity=document.getElementById('activity');if(!activity)return;
- const heading=activity.querySelector('.activity-heading'),note=activity.querySelector('.activity-note'),summaries=activity.querySelectorAll('.activity-summary>div');
- if(!heading||!note)return;
- activity.querySelectorAll('.dynamic-transaction,.empty-activity').forEach(e=>e.remove());
+ const container=document.getElementById('dynamicActivity');if(!container)return;container.innerHTML='';
+ const summaries=document.querySelectorAll('#activity .activity-summary>div');
  const moneyIn=yemTransactions.filter(i=>i.type==='refund').reduce((s,i)=>s+Number(i.amount||0),0);
  const moneyOut=yemTransactions.filter(i=>i.type!=='refund').reduce((s,i)=>s+Number(i.amount||0),0);
  if(summaries.length>=2){summaries[0].querySelector('b').textContent='UGX '+moneyIn.toLocaleString('en-UG');summaries[1].querySelector('b').textContent='UGX '+moneyOut.toLocaleString('en-UG')}
- if(!yemTransactions.length){const e=document.createElement('p');e.className='muted empty-activity';e.textContent='No demo purchases yet.';note.parentNode.insertBefore(e,note);return}
+ if(!yemTransactions.length){container.textContent='No demo purchases or refunds yet.';return}
  yemTransactions.forEach(item=>{
-  const row=document.createElement('div');row.className='transaction dynamic-transaction';
+  const row=document.createElement('div');row.className='transaction';
   const icon=document.createElement('div');icon.className='transaction-icon';icon.textContent=item.type==='refund'?'↩️':'🛍️';
   const info=document.createElement('div');info.className='transaction-info';
   const name=document.createElement('b');name.textContent=item.description||'Demo transaction';
   const details=document.createElement('small');details.textContent=(item.details||'')+' · '+(item.date||'');
-  const status=document.createElement('span');status.className=item.type==='refund'?'status-success':'status-success';status.textContent=item.status||'Successful';
+  const status=document.createElement('span');status.className='status-success';status.textContent=item.status||'Successful';
   info.append(name,details,status);
   const amount=document.createElement('strong');amount.className=item.type==='refund'?'amount-in':'amount-out';amount.textContent=(item.type==='refund'?'+ ':'- ')+'UGX '+Number(item.amount||0).toLocaleString('en-UG');
-  row.append(icon,info,amount);note.parentNode.insertBefore(row,note);
+  row.append(icon,info,amount);container.appendChild(row);
  });
 }
-function addMerchantProduct(){
- const n=document.getElementById('merchantProductName'),p=document.getElementById('merchantProductPrice'),c=document.getElementById('merchantProductCategory'),m=document.getElementById('merchantProductMessage');
- const name=n.value.trim(),price=Number(p.value),category=c.value.trim();
- if(!name||!category||!Number.isFinite(price)||price<=0){m.textContent='Please enter a product name, category and valid price.';return}
- merchantProducts.push({name,price,category});if(!writeLocalArray('yembridgeMerchantProducts',merchantProducts))return;
- renderMerchantProducts();n.value='';p.value='';c.value='';m.textContent='Product published successfully in the demo marketplace!';
+
+function renderShopProducts(){
+ const container=document.getElementById('shopProducts');if(!container)return;container.innerHTML='';
+ const demoItems=[
+  {name:'Casual Sneakers',price:85000,category:'FASHION',emoji:'👟'},
+  {name:'Everyday Backpack',price:45000,category:'ACCESSORIES',emoji:'🎒'},
+  {name:'Smart Watch',price:65000,category:'ELECTRONICS',emoji:'⌚'},
+  {name:'Wireless Earphones',price:35000,category:'ELECTRONICS',emoji:'🎧'}
+ ];
+ demoItems.forEach(p=>container.appendChild(makeShopCard(p)));
+ const approved=getProductSubmissions().filter(p=>p.status==='Approved');
+ approved.forEach(p=>container.appendChild(makeShopCard(p)));
+ if(!approved.length){const note=document.createElement('p');note.className='muted';note.textContent='Merchant-submitted products will appear here after administrator approval.';container.appendChild(note)}
 }
-function renderMerchantProducts(){
- const container=document.getElementById('shopProducts');if(!container)return;
- container.querySelectorAll('.merchant-added-product').forEach(c=>c.remove());
- merchantProducts.forEach(product=>{
-  const card=document.createElement('div');card.className='product-card merchant-added-product';
-  const category=document.createElement('small');category.className='product-category';category.textContent=String(product.category||'OTHER').toUpperCase();
-  const name=document.createElement('b');name.textContent=product.name||'Product';
-  const price=document.createElement('strong');price.textContent='UGX '+Number(product.price||0).toLocaleString('en-UG');
-  const merchant=document.createElement('small');merchant.textContent='Demo Merchant';
-  const button=document.createElement('button');button.textContent='Add to Cart';button.addEventListener('click',()=>addToCart(product.name,Number(product.price)));
-  card.append(category,name,price,merchant,button);container.appendChild(card);
+function makeShopCard(p){
+ const card=document.createElement('div');card.className='product-card';
+ if(p.photos?.length){const img=document.createElement('img');img.className='product-image';img.src=p.photos[0];img.alt=p.name||'Product photo';card.appendChild(img)}
+ else{const image=document.createElement('div');image.className='product-image';image.textContent=p.emoji||'📦';card.appendChild(image)}
+ const category=document.createElement('small');category.className='product-category';category.textContent=p.category||'PRODUCT';
+ const name=document.createElement('b');name.textContent=p.name||'Product';
+ const price=document.createElement('strong');price.textContent='UGX '+Number(p.price||0).toLocaleString('en-UG');
+ card.append(category,name,price);
+ if(p.description){const description=document.createElement('small');description.textContent=p.description;card.appendChild(description)}
+ if(p.location){const location=document.createElement('small');location.textContent='Location: '+p.location;card.appendChild(location)}
+ if(p.id){
+  const stock=document.createElement('small');const quantity=Number(p.quantity||0);
+  stock.textContent=quantity>0?'Available: '+quantity:'SOLD OUT';stock.className=quantity>0?'status-success':'status-rejected';card.appendChild(stock);
+  const button=document.createElement('button');button.textContent=quantity>0?'Add to Cart':'SOLD OUT';button.disabled=quantity<=0;button.onclick=()=>addToCart(p.name,Number(p.price),p.id);card.appendChild(button);
+ }else{
+  const merchant=document.createElement('small');merchant.textContent='Demo Merchant';const button=document.createElement('button');button.textContent='Add to Cart';button.onclick=()=>addToCart(p.name,p.price);card.append(merchant,button);
+ }
+ return card;
+}
+
+/* Resize uploaded photos before saving them in this browser demo. */
+async function compressPhoto(file){
+ return new Promise((resolve,reject)=>{
+  const reader=new FileReader();
+  reader.onload=()=>{
+   const image=new Image();
+   image.onload=()=>{
+    const max=800,scale=Math.min(1,max/Math.max(image.width,image.height));
+    const canvas=document.createElement('canvas');canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);
+    const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0,canvas.width,canvas.height);
+    resolve(canvas.toDataURL('image/jpeg',0.68));
+   };
+   image.onerror=()=>reject(new Error('Could not read one of the selected photos.'));
+   image.src=reader.result;
+  };
+  reader.onerror=()=>reject(new Error('Could not load the selected photo.'));
+  reader.readAsDataURL(file);
  });
 }
+let selectedProductPhotos=[];
+document.addEventListener('DOMContentLoaded',()=>{
+ const picker=document.getElementById('merchantProductPhotos');
+ if(picker)picker.addEventListener('change',async()=>{
+  selectedProductPhotos=[];const preview=document.getElementById('merchantPhotoPreview');preview.innerHTML='';
+  const files=Array.from(picker.files||[]);
+  if(files.length<2){document.getElementById('merchantProductMessage').textContent='Please select at least two photos.';return}
+  if(files.length>5){picker.value='';document.getElementById('merchantProductMessage').textContent='Please select no more than five photos.';return}
+  if(files.some(f=>!f.type.startsWith('image/'))){picker.value='';document.getElementById('merchantProductMessage').textContent='Please select image files only.';return}
+  document.getElementById('merchantProductMessage').textContent='Preparing photos...';
+  try{
+   for(const file of files){const data=await compressPhoto(file);selectedProductPhotos.push(data);const img=document.createElement('img');img.src=data;img.alt='Selected product photo';preview.appendChild(img)}
+   document.getElementById('merchantProductMessage').textContent=selectedProductPhotos.length+' photos ready.';
+  }catch(e){selectedProductPhotos=[];document.getElementById('merchantProductMessage').textContent=e.message}
+ });
+});
+
+function submitMerchantProduct(){
+ const message=document.getElementById('merchantProductMessage');
+ if(!window.yembridgeAuthReady||!window.Clerk?.isSignedIn||!window.Clerk.user){message.textContent='Please sign in before submitting a product.';show('account');return}
+ const name=document.getElementById('merchantProductName').value.trim();
+ const description=document.getElementById('merchantProductDescription').value.trim();
+ const category=document.getElementById('merchantProductCategory').value.trim();
+ const location=document.getElementById('merchantProductLocation').value.trim();
+ const phone=document.getElementById('merchantProductPhone').value.trim();
+ const price=Number(document.getElementById('merchantProductPrice').value);
+ const quantity=Number(document.getElementById('merchantProductQuantity').value);
+ if(!name||!description||!category||!location||!phone||!Number.isInteger(price)||price<=0||!Number.isInteger(quantity)||quantity<=0){message.textContent='Please complete every field with a valid price and quantity.';return}
+ if(selectedProductPhotos.length<2){message.textContent='At least two product photos are required.';return}
+ const user=window.Clerk.user;
+ const product={
+  id:'YBP-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
+  name,description,category,location,phone,price,quantity,
+  photos:selectedProductPhotos.slice(),
+  merchantId:user.id,
+  merchantName:((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge Merchant',
+  merchantEmail:user.primaryEmailAddress?.emailAddress||'',
+  status:'Pending Review',
+  submittedAt:new Date().toLocaleString('en-UG'),
+  reviewedAt:null,
+  reviewReason:''
+ };
+ const items=getProductSubmissions();items.unshift(product);
+ if(!saveProductSubmissions(items))return;
+ ['merchantProductName','merchantProductDescription','merchantProductCategory','merchantProductLocation','merchantProductPhone','merchantProductPrice','merchantProductQuantity','merchantProductPhotos'].forEach(id=>document.getElementById(id).value='');
+ selectedProductPhotos=[];document.getElementById('merchantPhotoPreview').innerHTML='';
+ message.textContent='Product submitted. It is now Pending Review and will not appear in the Shop until approved.';
+ renderMerchantProductSubmissions();renderShopProducts();
+}
+function renderMerchantProductSubmissions(){
+ const container=document.getElementById('merchantProductSubmissions');if(!container)return;container.innerHTML='';
+ if(!window.Clerk?.user){container.textContent='Sign in to view your product submissions.';return}
+ const mine=getProductSubmissions().filter(p=>p.merchantId===window.Clerk.user.id);
+ if(!mine.length){container.textContent='No product submissions yet.';return}
+ mine.forEach(p=>{
+  const card=document.createElement('div');card.className='listing-card';
+  const title=document.createElement('b');title.textContent=p.name;
+  const status=document.createElement('strong');status.textContent='Status: '+p.status;status.className=p.status==='Approved'?'status-success':(p.status==='Rejected'?'status-rejected':'status-pending');
+  const details=document.createElement('small');details.textContent='UGX '+Number(p.price).toLocaleString('en-UG')+' · Quantity: '+p.quantity+' · Submitted: '+p.submittedAt;
+  card.append(title,status,details);
+  if(p.reviewReason){const reason=document.createElement('p');reason.textContent='Administrator feedback: '+p.reviewReason;card.appendChild(reason)}
+  if(p.photos?.length){const strip=document.createElement('div');strip.className='product-photo-strip';p.photos.forEach(src=>{const img=document.createElement('img');img.src=src;img.alt='Submitted product photo';strip.appendChild(img)});card.appendChild(strip)}
+  container.appendChild(card);
+ });
+}
+
 function renderMerchantOrders(){
  const container=document.getElementById('merchantOrders');if(!container)return;
  const orders=readLocalArray('yembridgeMerchantOrders');container.innerHTML='';
@@ -253,14 +358,16 @@ function updateMerchantOrderStatus(index,newStatus){
   const order=orders[index];
   if(!confirm('Cancel this order and refund UGX '+Number(order.price||0).toLocaleString('en-UG')+' to the demo wallet?')){renderMerchantOrders();return}
   order.status='Cancelled';
-  if(!applyOrderRefund(order,'cancellation')){alert('The refund could not be processed. Please try again.');return}
+  if(!applyOrderRefund(order)){alert('The refund could not be processed. Please try again.');return}
+  if(order.productId&&!order.stockRestored){
+   const products=getProductSubmissions(),p=products.find(x=>x.id===order.productId);
+   if(p){p.quantity=Number(p.quantity||0)+1;saveProductSubmissions(products)}
+   order.stockRestored=true;
+  }
   if(!writeLocalArray('yembridgeMerchantOrders',orders)){alert('Order cancellation could not be saved.');return}
-  saveDemoData();updateWallet();renderActivity();
+  saveDemoData();updateWallet();renderActivity();renderShopProducts();
   alert('Order cancelled. UGX '+Number(order.refundAmount).toLocaleString('en-UG')+' has been returned to the demo wallet.');
- }else{
-  orders[index].status=newStatus;
-  if(!writeLocalArray('yembridgeMerchantOrders',orders))return;
- }
+ }else{orders[index].status=newStatus;if(!writeLocalArray('yembridgeMerchantOrders',orders))return}
  renderMerchantOrders();renderCustomerOrders();renderMerchantSalesReport();renderMerchantWithdrawals();
 }
 function renderMerchantSalesReport(){
@@ -315,11 +422,8 @@ function confirmCustomerReceipt(index){
  renderCustomerOrders();renderMerchantOrders();renderMerchantSalesReport();renderMerchantWithdrawals();alert('Receipt confirmed! Your demo order is now completed.');
 }
 
-/* Recover older cancellations before displaying the wallet. */
-recoverOldCancelledRefunds();
-
 document.addEventListener('DOMContentLoaded',()=>{
- updateWallet();updateCartSummary();renderActivity();renderMerchantProducts();renderMerchantOrders();renderCustomerOrders();renderMerchantSalesReport();renderMerchantWithdrawals();
+ updateWallet();updateCartSummary();renderActivity();renderShopProducts();renderMerchantOrders();renderCustomerOrders();renderMerchantSalesReport();renderMerchantWithdrawals();renderMerchantProductSubmissions();
 });
 
 window.addEventListener('load',async()=>{
@@ -352,7 +456,7 @@ window.addEventListener('load',async()=>{
   }
   show(desired,navButtonFor(desired));finishStartup();
   if(!Clerk.isSignedIn)mountAuth(authMode==='sign-up'?'sign-up':'sign-in');
-  renderCustomerOrders();
+  renderCustomerOrders();renderMerchantProductSubmissions();
   if(Clerk.isSignedIn&&Clerk.user){
    try{
     const token=await Clerk.session.getToken();if(!token)throw new Error('No Clerk session token was returned.');
