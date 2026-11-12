@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,12 +22,13 @@ main{max-width:650px;margin:auto;padding:12px 14px 120px}
 .card{background:white;border:1px solid #E9EFEC;border-radius:18px;padding:18px;margin-bottom:15px;box-shadow:0 5px 20px #193E5D0C}
 .balance{background:linear-gradient(135deg,#102B46,#087F68);color:white;border:0}.balance-top,.balance-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px}.balance-top{font-size:10px;color:#D5E8E2;margin-bottom:14px}.balance .demo-label{background:var(--gold);color:var(--navy)}.amount{font-size:29px;font-weight:800;margin:8px 0}.balance small,.balance-bottom{color:#D5E8E2}.balance-bottom{border-top:1px solid #ffffff35;padding-top:10px;margin-top:15px;font-size:11px}
 .welcome{padding:8px 3px 16px}.welcome-tag,.section-heading span{color:var(--green);font-size:10px;font-weight:bold;letter-spacing:1px}.welcome h3{font-size:23px;line-height:1.2;margin:6px 0}h3{color:var(--navy);margin:5px 0 12px;font-size:19px}h4{color:var(--navy)}.muted{color:var(--muted);font-size:12px}
-button{border:0;border-radius:11px;padding:11px 15px;background:var(--green);color:white;font-weight:bold;font-size:13px;cursor:pointer}button:disabled{opacity:.5}
+button{border:0;border-radius:11px;padding:11px 15px;background:var(--green);color:white;font-weight:bold;font-size:13px;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .service{background:white;border:1px solid #E7EEEA;border-radius:15px;padding:14px 8px;text-align:center;cursor:pointer;min-height:100px}.service span{display:block;font-size:25px;margin-bottom:6px}.service b{font-size:13px;color:var(--navy)}.service small{display:block;color:#82918C;font-size:10px;margin-top:4px}
 .section-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}
 .market-banner,.market-intro{background:linear-gradient(120deg,#102B46,#087F68);color:white;border-radius:16px;padding:16px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.market-banner h3{color:white;font-size:20px;margin:6px 0}.market-banner p,.market-intro small{color:#D5E8E2;font-size:11px}.market-banner span{color:var(--gold);font-size:9px;font-weight:bold}.market-intro b,.market-intro small{display:block}.market-intro span{font-size:28px}
 .shop-heading,.activity-heading{margin-top:18px}.product-card{background:white;border:1px solid #E3EAE7;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0;overflow-wrap:anywhere}.product-image{background:#F0F6F4;border-radius:10px;min-height:80px;max-height:170px;width:100%;object-fit:cover;display:grid;place-items:center;font-size:38px}.product-category{color:var(--green);font-size:9px;font-weight:bold}.product-card b{font-size:12px;color:var(--navy)}.product-card strong{font-size:13px;color:var(--green)}.product-card button{font-size:10px;padding:9px 4px}
+.quantity-label{font-size:10px;font-weight:bold;color:var(--navy);margin-top:5px}.quantity-input{padding:9px;margin:0;font-size:13px}
 .cart-summary,.activity-summary>div,.security-note{background:#F0F6F4;border-radius:12px;padding:12px}.cart-summary{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0;flex-wrap:wrap}.cart-summary b,.cart-summary small{display:block}.cart-summary small{font-size:10px;color:var(--muted)}
 .activity-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}.activity-summary small,.activity-summary b{display:block}.activity-summary small{font-size:10px;color:var(--muted)}.activity-summary b{font-size:13px;color:var(--navy);margin-top:5px}
 .transaction{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #E8EFEC;flex-wrap:wrap}.transaction-icon{width:38px;height:38px;border-radius:11px;background:#F0F6F4;display:grid;place-items:center;flex-shrink:0}.transaction-info{flex:1;min-width:0}.transaction-info b,.transaction-info small{display:block}.transaction-info b{font-size:12px}.transaction-info small{font-size:10px;color:var(--muted);margin:3px 0}.amount-out,.amount-in{font-size:11px;white-space:nowrap}.amount-in,.status-success{color:var(--green)}.status-pending{color:#D18B19}.status-rejected{color:#B42318}
@@ -60,7 +62,7 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 
 <section id="services" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE SERVICES</p><h3>Digital Services</h3><p class="muted">Your everyday essentials, all in one place.</p><div class="grid"><div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div><div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div><div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div></div></div></section>
 
-<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">SHOP WITH YEMBRIDGE</p><h3>Marketplace</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Shop local. Grow together.</b><small>Explore approved merchant products.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
+<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">SHOP WITH YEMBRIDGE</p><h3>Marketplace</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Shop local. Grow together.</b><small>Explore approved merchant products.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="cartItems"></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
 
 <section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 0</b></div><div><small>Money Out</small><b>UGX 0</b></div></div><h3 class="activity-heading">Recent Activity</h3><div id="dynamicActivity"></div><div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p></div></section>
 
@@ -88,14 +90,13 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 <button id="submitProductButton" onclick="submitMerchantProduct()">Submit Product for Review</button>
 <p id="merchantProductMessage" class="muted" aria-live="polite"></p>
 </div>
-
 <div class="card"><h3>🗂 My Product Submissions</h3><p class="muted">Check whether your submitted products are pending, approved, rejected or awaiting corrections.</p><div id="merchantProductSubmissions">No product submissions yet.</div></div>
 <p class="muted">Merchant dashboard demonstration only.</p>
 </section>
 </main>
 
 <nav aria-label="Main navigation"><button type="button" onclick="show('home',this)">⌂ Home</button><button type="button" onclick="show('services',this)">Services</button><button type="button" onclick="show('shop',this)">Shop</button><button type="button" onclick="show('activity',this)">Activity</button><button type="button" onclick="show('merchant',this)">Merchant</button><button type="button" onclick="show('account',this)">Account</button></nav>
-<footer>YemBridge Digital Commerce Ltd · Prototype v1.1</footer>
+<footer>YemBridge Digital Commerce Ltd · Prototype v1.2</footer>
 
 <script>
 window.yembridgeAuthReady=false;
@@ -138,56 +139,111 @@ let yemTransactions=readLocalArray('yembridgeDemoTransactions');
 
 function saveDemoData(){try{localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){}writeLocalArray('yembridgeDemoTransactions',yemTransactions)}
 function updateWallet(){const el=document.querySelector('.balance .amount');if(el)el.textContent='UGX '+yemWallet.toLocaleString('en-UG')}
+function orderQuantity(order){const q=Number(order?.quantity);return Number.isInteger(q)&&q>0?q:1}
+function orderTotal(order){const total=Number(order?.totalAmount);if(Number.isFinite(total)&&total>0)return total;return Number(order?.price||0)*orderQuantity(order)}
 
 /* Refunds are processed once per cancelled order. */
 function applyOrderRefund(order){
  if(!order||order.refundProcessed)return false;
- const amount=Number(order.price);if(!Number.isFinite(amount)||amount<=0)return false;
+ const amount=orderTotal(order);if(!Number.isFinite(amount)||amount<=0)return false;
  const refundDate=new Date().toLocaleString('en-UG');
  order.refundProcessed=true;order.refundDate=refundDate;order.refundAmount=amount;
  yemWallet+=amount;
  yemTransactions.unshift({type:'refund',description:'Marketplace Order Refund',details:order.product||'Cancelled order',amount,status:'Refund Successful',date:refundDate});
  return true;
 }
+function restoreOrderStock(order){
+ if(!order?.productId||order.stockRestored)return true;
+ const products=getProductSubmissions(),p=products.find(x=>x.id===order.productId);
+ if(p){p.quantity=Number(p.quantity||0)+orderQuantity(order);if(!saveProductSubmissions(products))return false}
+ order.stockRestored=true;return true;
+}
 function recoverOldCancelledRefunds(){
  const orders=readLocalArray('yembridgeMerchantOrders');let changed=false;
- orders.forEach(order=>{if(order.status==='Cancelled'&&!order.refundProcessed&&applyOrderRefund(order))changed=true});
- if(changed&&writeLocalArray('yembridgeMerchantOrders',orders))saveDemoData();
+ orders.forEach(order=>{
+  if(order.status==='Cancelled'&&!order.refundProcessed){
+   if(applyOrderRefund(order))changed=true;
+   if(order.productId&&!order.stockRestored){if(restoreOrderStock(order))changed=true}
+  }
+ });
+ if(changed&&writeLocalArray('yembridgeMerchantOrders',orders)){saveDemoData()}
 }
 recoverOldCancelledRefunds();
 
-function addToCart(name,price,productId=null){
+/* Cart quantity is selected by the customer on each product card. */
+function getCartQuantity(productId){return yemCart.filter(i=>i.productId===productId).reduce((s,i)=>s+i.quantity,0)}
+function addToCart(name,price,productId=null,quantity=1){
+ quantity=Number(quantity);
+ if(!Number.isInteger(quantity)||quantity<1)return alert('Please choose a valid quantity.');
  if(!Number.isFinite(price)||price<=0)return alert('Invalid demo product price.');
- if(productId){const p=getProductSubmissions().find(x=>x.id===productId);if(!p||p.status!=='Approved'||Number(p.quantity)<=0)return alert('This product is currently unavailable.')}
- yemCart.push({name,price,productId});updateCartSummary();alert(name+' added to your demo basket!');
+ if(productId){
+  const p=getProductSubmissions().find(x=>x.id===productId);
+  if(!p||p.status!=='Approved')return alert('This product is currently unavailable.');
+  const available=Number(p.quantity)||0;
+  const already=getCartQuantity(productId);
+  if(quantity+already>available)return alert('Only '+Math.max(0,available-already)+' more item(s) are available. Please reduce the quantity.');
+ }
+ const existing=yemCart.find(i=>i.productId===productId&&i.name===name);
+ if(existing)existing.quantity+=quantity;
+ else yemCart.push({name,price,productId,quantity});
+ updateCartSummary();alert(quantity+' × '+name+' added to your demo basket!');
 }
+function removeCartItem(index){if(index<0||index>=yemCart.length)return;yemCart.splice(index,1);updateCartSummary();renderShopProducts()}
 function updateCartSummary(){
- const count=yemCart.length,total=yemCart.reduce((s,i)=>s+i.price,0);
+ const count=yemCart.reduce((s,i)=>s+i.quantity,0),total=yemCart.reduce((s,i)=>s+i.price*i.quantity,0);
  const c=document.getElementById('cartCount'),t=document.getElementById('cartTotal');
  if(c)c.textContent=count+(count===1?' item':' items');if(t)t.textContent='UGX '+total.toLocaleString('en-UG');
+ const list=document.getElementById('cartItems');
+ if(list){
+  list.innerHTML='';
+  yemCart.forEach((item,index)=>{
+   const row=document.createElement('div');row.className='transaction';
+   const info=document.createElement('div');info.className='transaction-info';
+   const title=document.createElement('b');title.textContent=item.name;
+   const detail=document.createElement('small');detail.textContent='Quantity: '+item.quantity+' × UGX '+Number(item.price).toLocaleString('en-UG');
+   info.append(title,detail);
+   const amount=document.createElement('strong');amount.textContent='UGX '+(item.price*item.quantity).toLocaleString('en-UG');
+   const remove=document.createElement('button');remove.textContent='Remove';remove.style.background='#A83C3C';remove.onclick=()=>removeCartItem(index);
+   row.append(info,amount,remove);list.appendChild(row);
+  });
+ }
  const summary=document.querySelector('.cart-summary');
  if(summary&&!document.getElementById('checkoutButton')){const b=document.createElement('button');b.id='checkoutButton';b.className='checkout-button';b.textContent='Checkout';b.onclick=checkoutDemo;summary.appendChild(b)}
  const checkout=document.getElementById('checkoutButton');if(checkout)checkout.disabled=count===0;
 }
+
 function checkoutDemo(){
  if(!yemCart.length)return alert('Your basket is empty.');
  if(!window.yembridgeAuthReady||!window.Clerk?.isSignedIn||!window.Clerk.user){alert('Please sign in to your YemBridge account before checkout.');show('account');return}
  const user=window.Clerk.user,email=user.primaryEmailAddress?.emailAddress?.toLowerCase();
  if(!email)return alert('Your account email could not be verified. Please try again.');
  const customer=((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge Customer';
- const total=yemCart.reduce((s,i)=>s+i.price,0);
+ const total=yemCart.reduce((s,i)=>s+i.price*i.quantity,0);
  if(total>yemWallet)return alert('Insufficient demo wallet balance. Your basket has not been charged.');
  const products=getProductSubmissions();
- for(const item of yemCart){if(item.productId){const p=products.find(x=>x.id===item.productId);if(!p||p.status!=='Approved'||Number(p.quantity)<1)return alert('A product in your basket is no longer available. Please refresh the Shop.');}}
+ for(const item of yemCart){
+  if(item.productId){
+   const p=products.find(x=>x.id===item.productId);
+   if(!p||p.status!=='Approved'||Number(p.quantity)<item.quantity)return alert('Not enough stock remains for '+item.name+'. Please refresh the Shop and adjust your basket.');
+  }
+ }
  const orders=readLocalArray('yembridgeMerchantOrders'),date=new Date().toLocaleString('en-UG'),next=orders.slice();
  yemCart.forEach(item=>{
   const p=item.productId?products.find(x=>x.id===item.productId):null;
-  if(p)p.quantity=Number(p.quantity)-1;
-  next.unshift({orderId:'YB-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),product:item.name,productId:item.productId||null,price:item.price,customer,customerEmail:email,customerId:user.id,sellerId:p?.merchantId||'demo-merchant',status:'New',date,refundProcessed:false,stockRestored:false});
+  if(p)p.quantity=Number(p.quantity)-item.quantity;
+  next.unshift({
+   orderId:'YB-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
+   product:item.name,productId:item.productId||null,
+   price:item.price,quantity:item.quantity,totalAmount:item.price*item.quantity,
+   customer,customerEmail:email,customerId:user.id,
+   sellerId:p?.merchantId||'demo-merchant',
+   status:'New',date,refundProcessed:false,stockRestored:false
+  });
  });
  if(!writeLocalArray('yembridgeMerchantOrders',next))return;
  if(!saveProductSubmissions(products))return;
- yemWallet-=total;yemTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.name).join(', '),amount:total,status:'Successful',date});
+ yemWallet-=total;
+ yemTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.quantity+' × '+i.name).join(', '),amount:total,status:'Successful',date});
  saveDemoData();updateWallet();yemCart=[];updateCartSummary();renderActivity();renderMerchantOrders();renderCustomerOrders();renderShopProducts();
  alert('Demo purchase successful! UGX '+total.toLocaleString('en-UG')+' has been deducted from your demo wallet.');
 }
@@ -236,11 +292,21 @@ function makeShopCard(p){
  if(p.description){const description=document.createElement('small');description.textContent=p.description;card.appendChild(description)}
  if(p.location){const location=document.createElement('small');location.textContent='Location: '+p.location;card.appendChild(location)}
  if(p.id){
-  const stock=document.createElement('small');const quantity=Number(p.quantity||0);
-  stock.textContent=quantity>0?'Available: '+quantity:'SOLD OUT';stock.className=quantity>0?'status-success':'status-rejected';card.appendChild(stock);
-  const button=document.createElement('button');button.textContent=quantity>0?'Add to Cart':'SOLD OUT';button.disabled=quantity<=0;button.onclick=()=>addToCart(p.name,Number(p.price),p.id);card.appendChild(button);
+  const quantityAvailable=Math.max(0,Number(p.quantity)||0);
+  const stock=document.createElement('small');stock.textContent=quantityAvailable>0?'Available: '+quantityAvailable:'SOLD OUT';stock.className=quantityAvailable>0?'status-success':'status-rejected';card.appendChild(stock);
+  if(quantityAvailable>0){
+   const label=document.createElement('label');label.className='quantity-label';label.textContent='Quantity to buy';
+   const input=document.createElement('input');input.className='quantity-input';input.type='number';input.min='1';input.max=String(quantityAvailable);input.step='1';input.value='1';input.inputMode='numeric';input.setAttribute('aria-label','Quantity to buy for '+(p.name||'product'));
+   const button=document.createElement('button');button.textContent='Add to Cart';
+   button.onclick=()=>{const q=Number(input.value);if(!Number.isInteger(q)||q<1||q>quantityAvailable){alert('Choose a quantity from 1 to '+quantityAvailable+'.');return}addToCart(p.name,Number(p.price),p.id,q)};
+   card.append(label,input,button);
+  }else{const sold=document.createElement('button');sold.textContent='SOLD OUT';sold.disabled=true;card.appendChild(sold)}
  }else{
-  const merchant=document.createElement('small');merchant.textContent='Demo Merchant';const button=document.createElement('button');button.textContent='Add to Cart';button.onclick=()=>addToCart(p.name,p.price);card.append(merchant,button);
+  const merchant=document.createElement('small');merchant.textContent='Demo Merchant';
+  const label=document.createElement('label');label.className='quantity-label';label.textContent='Quantity to buy';
+  const input=document.createElement('input');input.className='quantity-input';input.type='number';input.min='1';input.max='99';input.step='1';input.value='1';input.inputMode='numeric';
+  const button=document.createElement('button');button.textContent='Add to Cart';button.onclick=()=>{const q=Number(input.value);if(!Number.isInteger(q)||q<1||q>99){alert('Choose a quantity from 1 to 99.');return}addToCart(p.name,p.price,null,q)};
+  card.append(merchant,label,input,button);
  }
  return card;
 }
@@ -338,11 +404,12 @@ function renderMerchantOrders(){
   const card=document.createElement('div');card.className='merchant-order-card';
   const product=document.createElement('b');product.textContent=order.product||'Product';
   const customer=document.createElement('p');customer.textContent='Customer: '+(order.customer||'Customer');
-  const price=document.createElement('strong');price.textContent='UGX '+Number(order.price||0).toLocaleString('en-UG');
+  const quantity=document.createElement('p');quantity.textContent='Quantity ordered: '+orderQuantity(order);
+  const price=document.createElement('strong');price.textContent='Order total: UGX '+orderTotal(order).toLocaleString('en-UG');
   const status=document.createElement('p');status.className='muted';status.textContent='Order status: '+(order.status||'New');
   const date=document.createElement('small');date.textContent=order.date||'';
-  card.append(product,customer,price,status,date);
-  if(order.status==='Cancelled'&&order.refundProcessed){const refunded=document.createElement('p');refunded.className='status-success';refunded.textContent='Customer refund: UGX '+Number(order.refundAmount||order.price||0).toLocaleString('en-UG')+' — refunded';card.appendChild(refunded)}
+  card.append(product,customer,quantity,price,status,date);
+  if(order.status==='Cancelled'&&order.refundProcessed){const refunded=document.createElement('p');refunded.className='status-success';refunded.textContent='Customer refund: UGX '+Number(order.refundAmount||orderTotal(order)).toLocaleString('en-UG')+' — refunded';card.appendChild(refunded)}
   if(order.status!=='Completed'&&order.status!=='Cancelled'){
    const select=document.createElement('select');select.className='merchant-order-select';
    ['New','Accepted','Processing','Delivered - Awaiting Customer Confirmation','Cancelled'].forEach(value=>{const option=document.createElement('option');option.value=value;option.textContent=value;select.appendChild(option)});
@@ -355,15 +422,11 @@ function updateMerchantOrderStatus(index,newStatus){
  const orders=readLocalArray('yembridgeMerchantOrders');
  if(!orders[index]||orders[index].status==='Completed'||orders[index].status==='Cancelled')return;
  if(newStatus==='Cancelled'){
-  const order=orders[index];
-  if(!confirm('Cancel this order and refund UGX '+Number(order.price||0).toLocaleString('en-UG')+' to the demo wallet?')){renderMerchantOrders();return}
+  const order=orders[index],refund=orderTotal(order);
+  if(!confirm('Cancel this order and refund UGX '+refund.toLocaleString('en-UG')+' to the demo wallet?')){renderMerchantOrders();return}
   order.status='Cancelled';
   if(!applyOrderRefund(order)){alert('The refund could not be processed. Please try again.');return}
-  if(order.productId&&!order.stockRestored){
-   const products=getProductSubmissions(),p=products.find(x=>x.id===order.productId);
-   if(p){p.quantity=Number(p.quantity||0)+1;saveProductSubmissions(products)}
-   order.stockRestored=true;
-  }
+  if(!restoreOrderStock(order)){alert('The stock restoration could not be saved. Please try again.');return}
   if(!writeLocalArray('yembridgeMerchantOrders',orders)){alert('Order cancellation could not be saved.');return}
   saveDemoData();updateWallet();renderActivity();renderShopProducts();
   alert('Order cancelled. UGX '+Number(order.refundAmount).toLocaleString('en-UG')+' has been returned to the demo wallet.');
@@ -372,13 +435,13 @@ function updateMerchantOrderStatus(index,newStatus){
 }
 function renderMerchantSalesReport(){
  const orders=readLocalArray('yembridgeMerchantOrders'),completed=orders.filter(o=>o.status==='Completed'),pending=orders.filter(o=>o.status!=='Completed'&&o.status!=='Cancelled');
- const total=completed.reduce((s,o)=>s+Number(o.price||0),0),commission=total*.05;
+ const total=completed.reduce((s,o)=>s+orderTotal(o),0),commission=total*.05;
  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
  set('merchantTotalSales','UGX '+total.toLocaleString('en-UG'));set('merchantCompletedCount',String(completed.length));set('merchantCommission','UGX '+commission.toLocaleString('en-UG'));set('merchantNetProceeds','UGX '+(total-commission).toLocaleString('en-UG'));set('merchantPendingCount',String(pending.length));
 }
 function getMerchantAvailableWithdrawal(){
  const orders=readLocalArray('yembridgeMerchantOrders'),withdrawals=readLocalArray('yembridgeWithdrawals');
- const sales=orders.filter(o=>o.status==='Completed').reduce((s,o)=>s+Number(o.price||0),0);
+ const sales=orders.filter(o=>o.status==='Completed').reduce((s,o)=>s+orderTotal(o),0);
  const requested=withdrawals.filter(w=>w.status==='Pending'||w.status==='Approved').reduce((s,w)=>s+Number(w.amount||0),0);
  return Math.max(0,sales*.95-requested);
 }
@@ -406,10 +469,11 @@ function renderCustomerOrders(){
  mine.forEach(order=>{
   const card=document.createElement('div');card.className='transaction';
   const product=document.createElement('b');product.textContent=order.product||'Marketplace item';
-  const price=document.createElement('p');price.textContent='UGX '+Number(order.price||0).toLocaleString('en-UG');
+  const quantity=document.createElement('p');quantity.textContent='Quantity: '+orderQuantity(order);
+  const price=document.createElement('p');price.textContent='Order total: UGX '+orderTotal(order).toLocaleString('en-UG');
   const status=document.createElement('p');status.className='muted';status.textContent='Status: '+(order.status||'New');
-  card.append(product,price,status);
-  if(order.status==='Cancelled'&&order.refundProcessed){const refund=document.createElement('p');refund.className='status-success';refund.textContent='Refunded: UGX '+Number(order.refundAmount||order.price||0).toLocaleString('en-UG');card.appendChild(refund)}
+  card.append(product,quantity,price,status);
+  if(order.status==='Cancelled'&&order.refundProcessed){const refund=document.createElement('p');refund.className='status-success';refund.textContent='Refunded: UGX '+Number(order.refundAmount||orderTotal(order)).toLocaleString('en-UG');card.appendChild(refund)}
   if(order.status==='Delivered - Awaiting Customer Confirmation'){const button=document.createElement('button');button.textContent='Confirm Receipt';button.addEventListener('click',()=>confirmCustomerReceipt(order.index));card.appendChild(button)}
   container.appendChild(card);
  });
