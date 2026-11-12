@@ -10,95 +10,62 @@
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.5}
 .site-header{background:linear-gradient(120deg,#05243B,#063C4A);padding:15px;display:flex;align-items:center;justify-content:space-between;border-radius:0 0 20px 20px;color:white}
 .brand{display:flex;align-items:center;gap:10px}.brand-mark,.market-symbol{color:var(--gold);font:bold italic 36px Georgia}
-.brand-divider{width:2px;height:40px;background:#DDAF46}
-.brand-copy h2{font-size:19px;margin:0}.brand-copy p{font-size:8px;color:#F2C45C;margin:4px 0}
+.brand-divider{width:2px;height:40px;background:#DDAF46}.brand-copy h2{font-size:19px;margin:0}.brand-copy p{font-size:8px;color:#F2C45C;margin:4px 0}
 .demo-label{background:#079D83;color:white;font-size:10px;font-weight:bold;padding:6px 9px;border-radius:20px}
 main{max-width:650px;margin:auto;padding:12px 14px 120px}
 .card{background:white;border:1px solid #E9EFEC;border-radius:18px;padding:18px;margin-bottom:15px;box-shadow:0 5px 20px #193E5D0C}
 .balance{background:linear-gradient(135deg,#102B46,#087F68);color:white;border:0}
-.balance-top,.balance-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.balance-top{font-size:10px;color:#D5E8E2;margin-bottom:14px}
-.balance .demo-label{background:var(--gold);color:var(--navy)}
-.amount{font-size:29px;font-weight:800;margin:8px 0}
+.balance-top,.balance-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px}.balance-top{font-size:10px;color:#D5E8E2;margin-bottom:14px}
+.balance .demo-label{background:var(--gold);color:var(--navy)}.amount{font-size:29px;font-weight:800;margin:8px 0}
 .balance small,.balance-bottom{color:#D5E8E2}.balance-bottom{border-top:1px solid #ffffff35;padding-top:10px;margin-top:15px;font-size:11px}
 .welcome{padding:8px 3px 16px}.welcome-tag,.section-heading span{color:var(--green);font-size:10px;font-weight:bold;letter-spacing:1px}
-.welcome h3{font-size:23px;line-height:1.2;margin:6px 0}
-h3{color:var(--navy);margin:5px 0 12px;font-size:19px}h4{color:var(--navy)}
-.muted{color:var(--muted);font-size:12px}
-button{border:0;border-radius:11px;padding:11px 15px;background:var(--green);color:white;font-weight:bold;font-size:13px;cursor:pointer}
-button:disabled{opacity:.5}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.welcome h3{font-size:23px;line-height:1.2;margin:6px 0}h3{color:var(--navy);margin:5px 0 12px;font-size:19px}h4{color:var(--navy)}
+.muted{color:var(--muted);font-size:12px}button{border:0;border-radius:11px;padding:11px 15px;background:var(--green);color:white;font-weight:bold;font-size:13px;cursor:pointer}
+button:disabled{opacity:.5}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .service{background:white;border:1px solid #E7EEEA;border-radius:15px;padding:14px 8px;text-align:center;cursor:pointer;min-height:100px}
 .service span{display:block;font-size:25px;margin-bottom:6px}.service b{font-size:13px;color:var(--navy)}.service small{display:block;color:#82918C;font-size:10px;margin-top:4px}
 .section-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}
 .market-banner,.market-intro{background:linear-gradient(120deg,#102B46,#087F68);color:white;border-radius:16px;padding:16px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .market-banner h3{color:white;font-size:20px;margin:6px 0}.market-banner p,.market-intro small{color:#D5E8E2;font-size:11px}.market-banner span{color:var(--gold);font-size:9px;font-weight:bold}
 .market-intro b,.market-intro small{display:block}.market-intro span{font-size:28px}
-.shop-heading,.activity-heading{margin-top:18px}
-.product-card{background:white;border:1px solid #E3EAE7;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.shop-heading,.activity-heading{margin-top:18px}.product-card{background:white;border:1px solid #E3EAE7;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .product-image{background:#F0F6F4;border-radius:10px;min-height:80px;display:grid;place-items:center;font-size:38px}
-.product-category{color:var(--green);font-size:9px;font-weight:bold}
-.product-card b{font-size:12px;color:var(--navy)}.product-card strong{font-size:13px;color:var(--green)}
-.product-card button{font-size:10px;padding:9px 4px}
+.product-category{color:var(--green);font-size:9px;font-weight:bold}.product-card b{font-size:12px;color:var(--navy)}.product-card strong{font-size:13px;color:var(--green)}.product-card button{font-size:10px;padding:9px 4px}
 .cart-summary,.activity-summary>div,.security-note{background:#F0F6F4;border-radius:12px;padding:12px}
-.cart-summary{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}
-.cart-summary b,.cart-summary small{display:block}.cart-summary small{font-size:10px;color:var(--muted)}
-.activity-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}
-.activity-summary small,.activity-summary b{display:block}.activity-summary small{font-size:10px;color:var(--muted)}
-.activity-summary b{font-size:13px;color:var(--navy);margin-top:5px}
-.transaction{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #E8EFEC}
+.cart-summary{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}.cart-summary b,.cart-summary small{display:block}.cart-summary small{font-size:10px;color:var(--muted)}
+.activity-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}.activity-summary small,.activity-summary b{display:block}.activity-summary small{font-size:10px;color:var(--muted)}
+.activity-summary b{font-size:13px;color:var(--navy);margin-top:5px}.transaction{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #E8EFEC}
 .transaction-icon{width:38px;height:38px;border-radius:11px;background:#F0F6F4;display:grid;place-items:center;flex-shrink:0}
-.transaction-info{flex:1;min-width:0}.transaction-info b,.transaction-info small{display:block}
-.transaction-info b{font-size:12px}.transaction-info small{font-size:10px;color:var(--muted);margin:3px 0}
+.transaction-info{flex:1;min-width:0}.transaction-info b,.transaction-info small{display:block}.transaction-info b{font-size:12px}.transaction-info small{font-size:10px;color:var(--muted);margin:3px 0}
 .amount-out,.amount-in{font-size:11px;white-space:nowrap}.amount-in,.status-success{color:var(--green)}.status-pending{color:#D18B19}
 .account-intro,.profile-panel{display:flex;align-items:center;gap:12px;background:#F0F6F4;padding:14px;border-radius:14px;margin:15px 0}
 .account-avatar,.profile-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#102B46,#087F68);color:var(--gold);display:grid;place-items:center;font:bold 21px Georgia;flex-shrink:0}
 .account-intro b,.account-intro small{display:block}.account-intro b{font-size:13px}.account-intro small,.profile-panel p{font-size:10px;color:var(--muted)}
 .profile-panel h3{margin:2px 0;font-size:16px}.profile-panel p{overflow-wrap:anywhere;margin:3px 0}
-.account-status{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #E8EFEC}
-.status-icon{width:36px;height:36px;background:#F0F6F4;border-radius:10px;display:grid;place-items:center}
+.account-status{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px solid #E8EFEC}.status-icon{width:36px;height:36px;background:#F0F6F4;border-radius:10px;display:grid;place-items:center}
 .account-status>div:nth-child(2){flex:1}.account-status b,.account-status small{display:block}.account-status b{font-size:12px}.account-status small{font-size:10px;color:var(--muted)}
 .security-note b{font-size:12px}.security-note p{font-size:11px;color:var(--muted);margin-bottom:0}
 .demo-warning{color:#A66B12;background:#FFF5DF;border-radius:9px;padding:10px;font-size:10px;font-weight:bold;margin-top:15px}
-.account-button{width:100%;margin-top:12px}.logout-button{background:#A83C3C}
-.checkout-button{width:100%;margin-top:8px}
+.account-button{width:100%;margin-top:12px}.logout-button{background:#A83C3C}.checkout-button{width:100%;margin-top:8px}
 .merchant-order-card{display:flex;flex-direction:column;gap:8px;padding:14px;margin:10px 0;background:#F7FAF9;border:1px solid #E3ECE8;border-radius:13px;overflow-wrap:anywhere}
-.merchant-order-card p,.merchant-order-card small{margin:2px 0}
-.merchant-order-select,input{width:100%;padding:12px;border:1px solid #D7E1DC;border-radius:10px;margin:7px 0 12px;background:#FCFEFD;font-size:14px}
-button:focus,input:focus,select:focus{outline:2px solid #087F6840}
-.hidden{display:none!important}
+.merchant-order-card p,.merchant-order-card small{margin:2px 0}.merchant-order-select,input{width:100%;padding:12px;border:1px solid #D7E1DC;border-radius:10px;margin:7px 0 12px;background:#FCFEFD;font-size:14px}
+button:focus,input:focus,select:focus{outline:2px solid #087F6840}.hidden{display:none!important}
 nav{display:flex;justify-content:space-around;align-items:center;background:white;padding:7px 3px;position:fixed;bottom:0;left:0;right:0;border-top:1px solid #E8EEEB;z-index:10}
-nav button{background:transparent;color:#607185;padding:9px 6px;font-size:11px}
-nav button.active{background:#E5F5EF;color:var(--green)}
-footer{text-align:center;color:#82918C;font-size:10px;padding:15px}
-.demo-note,.activity-note{font-size:10px;margin-top:14px}
+nav button{background:transparent;color:#607185;padding:9px 6px;font-size:11px}nav button.active{background:#E5F5EF;color:var(--green)}
+footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.activity-note{font-size:10px;margin-top:14px}
+#clerk-auth{min-height:80px}#authLoadMessage{min-height:18px}
 @media(max-width:360px){nav button{font-size:10px;padding:8px 4px}.amount{font-size:25px}}
 </style>
 </head>
 <body>
 <header class="site-header">
-  <div class="brand">
-    <div class="brand-mark">YB</div><div class="brand-divider"></div>
-    <div class="brand-copy"><h2>YemBridge</h2><p>YOUR EVERYDAY COMMERCE COMPANION</p></div>
-  </div>
+  <div class="brand"><div class="brand-mark">YB</div><div class="brand-divider"></div><div class="brand-copy"><h2>YemBridge</h2><p>YOUR EVERYDAY COMMERCE COMPANION</p></div></div>
   <div class="demo-label">DEMO</div>
 </header>
-
 <main>
 <section id="home">
-  <div class="card balance">
-    <div class="balance-top"><span>◈ YOUR YEMBRIDGE WALLET</span><span class="demo-label">DEMO</span></div>
-    <small>Available spending balance</small>
-    <div class="amount">UGX 250,000</div>
-    <small>Illustrative demo balance · No real funds</small>
-    <div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>YB</b></div>
-  </div>
-  <div class="welcome">
-    <p class="welcome-tag">WELCOME TO YEMBRIDGE</p>
-    <h3>Everything you need,<br>in one place.</h3>
-    <p class="muted">Pay bills, stay connected and discover great local businesses.</p>
-    <button onclick="show('services')">Explore services →</button>
-  </div>
+  <div class="card balance"><div class="balance-top"><span>◈ YOUR YEMBRIDGE WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 250,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>YB</b></div></div>
+  <div class="welcome"><p class="welcome-tag">WELCOME TO YEMBRIDGE</p><h3>Everything you need,<br>in one place.</h3><p class="muted">Pay bills, stay connected and discover great local businesses.</p><button onclick="show('services')">Explore services →</button></div>
   <div class="section-heading"><h3>Explore services</h3><span>YOUR DAILY ESSENTIALS</span></div>
   <div class="grid">
     <div class="service" onclick="show('services')"><span>📱</span><b>Airtime & Data</b><small>Stay connected</small></div>
@@ -108,946 +75,397 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}
   </div>
   <div class="market-banner" onclick="show('shop')"><div><span>THE YEMBRIDGE MARKETPLACE</span><h3>Shop local.<br>Grow together.</h3><p>Discover products from local merchants.</p><b>Explore marketplace →</b></div><div class="market-symbol">YB</div></div>
 </section>
-
-<section id="services" class="hidden">
-  <div class="card">
-    <p class="welcome-tag">YEMBRIDGE SERVICES</p><h3>Digital Services</h3>
-    <p class="muted">Your everyday essentials, all in one place.</p>
-    <div class="grid">
-      <div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div>
-      <div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div>
-      <div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div>
-    </div>
-  </div>
-</section>
-
-<section id="shop" class="hidden">
-  <div class="card">
-    <p class="welcome-tag">SHOP WITH YEMBRIDGE</p><h3>Marketplace</h3>
-    <p class="muted">Discover products from local merchants.</p>
-    <div class="market-intro"><div><b>Shop local. Grow together.</b><small>Explore our demo product collection.</small></div><span>🛍️</span></div>
-    <h3 class="shop-heading">Featured products</h3>
-    <div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div>
-    <div class="grid" id="shopProducts">
-      <div class="product-card"><div class="product-image">👟</div><small class="product-category">FASHION</small><b>Casual Sneakers</b><strong>UGX 85,000</strong><small>Demo Merchant</small><button onclick="addToCart('Casual Sneakers',85000)">Add to Cart</button></div>
-      <div class="product-card"><div class="product-image">🎒</div><small class="product-category">ACCESSORIES</small><b>Everyday Backpack</b><strong>UGX 45,000</strong><small>Demo Merchant</small><button onclick="addToCart('Everyday Backpack',45000)">Add to Cart</button></div>
-      <div class="product-card"><div class="product-image">⌚</div><small class="product-category">ELECTRONICS</small><b>Smart Watch</b><strong>UGX 65,000</strong><small>Demo Merchant</small><button onclick="addToCart('Smart Watch',65000)">Add to Cart</button></div>
-      <div class="product-card"><div class="product-image">🎧</div><small class="product-category">ELECTRONICS</small><b>Wireless Earphones</b><strong>UGX 35,000</strong><small>Demo Merchant</small><button onclick="addToCart('Wireless Earphones',35000)">Add to Cart</button></div>
-    </div>
-    <p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p>
-  </div>
-</section>
-
-<section id="activity" class="hidden">
-  <div class="card">
-    <p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3>
-    <p class="muted">Track your payments and purchases.</p>
-    <div class="activity-summary">
-      <div><small>Money In</small><b>UGX 100,000</b><span>↑</span></div>
-      <div><small>Money Out</small><b>UGX 45,000</b><span>↓</span></div>
-    </div>
-    <h3 class="activity-heading">Recent Activity</h3>
-    <div class="transaction"><div class="transaction-icon">📱</div><div class="transaction-info"><b>Airtime Purchase</b><small>Demo transaction · Today</small><span class="status-success">Successful</span></div><strong class="amount-out">- UGX 10,000</strong></div>
-    <div class="transaction"><div class="transaction-icon">🛍️</div><div class="transaction-info"><b>Marketplace Purchase</b><small>Demo transaction · Today</small><span class="status-pending">Pending</span></div><strong class="amount-out">- UGX 45,000</strong></div>
-    <div class="transaction"><div class="transaction-icon">💰</div><div class="transaction-info"><b>Demo Wallet Credit</b><small>Illustrative entry</small><span class="status-success">Successful</span></div><strong class="amount-in">+ UGX 100,000</strong></div>
-    <div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div>
-    <p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p>
-  </div>
-</section>
-
-<section id="account" class="hidden">
-  <div class="card">
-    <p class="welcome-tag">YEMBRIDGE CUSTOMER CENTRE</p><h3>My Account</h3>
-    <p class="muted">Manage your profile and account security.</p>
-    <div id="loggedOut">
-      <div class="account-intro"><div class="account-avatar">YB</div><div><b>Welcome to YemBridge</b><small>Your everyday commerce companion.</small></div></div>
-      <div id="clerk-auth"></div>
-      <p id="authLoadMessage" class="muted" aria-live="polite"></p>
-    </div>
-    <div id="loggedIn" class="hidden">
-      <div class="profile-panel"><div class="profile-avatar">YB</div><div><small>WELCOME BACK</small><h3 id="displayName"></h3><p id="displayEmail"></p></div></div>
-      <div id="accountSyncMessage" class="muted" style="margin:15px 0;padding:12px;border:1px solid #ccc;border-radius:8px" aria-live="polite">Checking YemBridge database connection...</div>
-      <h4>Account verification</h4>
-      <div class="account-status"><div class="status-icon">🪪</div><div><b>Identity verification</b><small>Complete KYC to access eligible services.</small></div><span class="status-pending">Not verified</span></div>
-      <div class="account-status"><div class="status-icon">◈</div><div><b>YEM connection</b><small>YEM account integration status.</small></div><span class="status-pending">Not connected</span></div>
-      <h4>Account security</h4>
-      <div class="security-note"><b>🔒 Your account matters</b><p>Never share your password, wallet private key or recovery phrase.</p></div>
-      <p class="demo-warning">DEMO ACCOUNT — No real funds or live YEM connection.</p>
-      <button class="account-button logout-button" onclick="logoutUser()">Sign Out</button>
-    </div>
-  </div>
-</section>
-
-<section id="merchant" class="hidden">
-  <div class="card">
-    <h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your YemBridge merchant space.</p>
-    <h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p>
-    <div id="merchantOrders"><p class="muted">No customer orders yet.</p></div>
-  </div>
-  <div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">UGX 0</div><p class="muted">Demo settlement balance — not real money.</p></div>
-  <div class="card">
-    <h3>💸 Merchant Withdrawals</h3><p class="muted">Available for withdrawal (demo):</p>
-    <div class="amount" id="merchantAvailableWithdrawal">UGX 0</div>
-    <input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX">
-    <button onclick="requestMerchantWithdrawal()">Request Withdrawal</button>
-    <p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3>
-    <div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div>
-  </div>
-  <div class="card">
-    <h3>📊 Merchant Sales Report</h3>
-    <div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div>
-    <div class="activity-summary"><div><small>Illustrative Commission (5%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">UGX 0</strong></div></div>
-    <p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">Demo report only. These figures are not real earnings.</p>
-  </div>
-  <div class="card">
-    <h3>➕ Add a New Product</h3>
-    <input id="merchantProductName" type="text" placeholder="Product name">
-    <input id="merchantProductPrice" type="number" min="1" placeholder="Price in UGX">
-    <input id="merchantProductCategory" type="text" placeholder="Product category">
-    <button onclick="addMerchantProduct()">Publish Product</button>
-    <p id="merchantProductMessage" class="muted"></p>
-  </div>
-  <div class="card"><h3>🛠 Merchant Tools</h3><button onclick="demo('Add Product')">＋ Add Product</button> <button onclick="demo('Manage Orders')">📦 Manage Orders</button> <button onclick="demo('Sales Reports')">📊 Sales Reports</button> <button onclick="demo('Withdrawals')">Withdrawals</button></div>
-  <p class="muted">Merchant dashboard demonstration only.</p>
-</section>
+<section id="services" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE SERVICES</p><h3>Digital Services</h3><p class="muted">Your everyday essentials, all in one place.</p><div class="grid">
+<div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div><div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div><div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div>
+</div></div></section>
+<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">SHOP WITH YEMBRIDGE</p><h3>Marketplace</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Shop local. Grow together.</b><small>Explore our demo product collection.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div>
+<div class="grid" id="shopProducts">
+<div class="product-card"><div class="product-image">👟</div><small class="product-category">FASHION</small><b>Casual Sneakers</b><strong>UGX 85,000</strong><small>Demo Merchant</small><button onclick="addToCart('Casual Sneakers',85000)">Add to Cart</button></div>
+<div class="product-card"><div class="product-image">🎒</div><small class="product-category">ACCESSORIES</small><b>Everyday Backpack</b><strong>UGX 45,000</strong><small>Demo Merchant</small><button onclick="addToCart('Everyday Backpack',45000)">Add to Cart</button></div>
+<div class="product-card"><div class="product-image">⌚</div><small class="product-category">ELECTRONICS</small><b>Smart Watch</b><strong>UGX 65,000</strong><small>Demo Merchant</small><button onclick="addToCart('Smart Watch',65000)">Add to Cart</button></div>
+<div class="product-card"><div class="product-image">🎧</div><small class="product-category">ELECTRONICS</small><b>Wireless Earphones</b><strong>UGX 35,000</strong><small>Demo Merchant</small><button onclick="addToCart('Wireless Earphones',35000)">Add to Cart</button></div>
+</div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
+<section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 100,000</b><span>↑</span></div><div><small>Money Out</small><b>UGX 45,000</b><span>↓</span></div></div><h3 class="activity-heading">Recent Activity</h3>
+<div class="transaction"><div class="transaction-icon">📱</div><div class="transaction-info"><b>Airtime Purchase</b><small>Demo transaction · Today</small><span class="status-success">Successful</span></div><strong class="amount-out">- UGX 10,000</strong></div>
+<div class="transaction"><div class="transaction-icon">🛍️</div><div class="transaction-info"><b>Marketplace Purchase</b><small>Demo transaction · Today</small><span class="status-pending">Pending</span></div><strong class="amount-out">- UGX 45,000</strong></div>
+<div class="transaction"><div class="transaction-icon">💰</div><div class="transaction-info"><b>Demo Wallet Credit</b><small>Illustrative entry</small><span class="status-success">Successful</span></div><strong class="amount-in">+ UGX 100,000</strong></div>
+<div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p></div></section>
+<section id="account" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE CUSTOMER CENTRE</p><h3>My Account</h3><p class="muted">Manage your profile and account security.</p>
+<div id="loggedOut"><div class="account-intro"><div class="account-avatar">YB</div><div><b>Welcome to YemBridge</b><small>Your everyday commerce companion.</small></div></div><div id="clerk-auth"></div><p id="authLoadMessage" class="muted" aria-live="polite">Loading secure sign-in...</p></div>
+<div id="loggedIn" class="hidden"><div class="profile-panel"><div class="profile-avatar">YB</div><div><small>WELCOME BACK</small><h3 id="displayName"></h3><p id="displayEmail"></p></div></div><div id="accountSyncMessage" class="muted" style="margin:15px 0;padding:12px;border:1px solid #ccc;border-radius:8px" aria-live="polite">Checking YemBridge database connection...</div>
+<h4>Account verification</h4><div class="account-status"><div class="status-icon">🪪</div><div><b>Identity verification</b><small>Complete KYC to access eligible services.</small></div><span class="status-pending">Not verified</span></div>
+<div class="account-status"><div class="status-icon">◈</div><div><b>YEM connection</b><small>YEM account integration status.</small></div><span class="status-pending">Not connected</span></div>
+<h4>Account security</h4><div class="security-note"><b>🔒 Your account matters</b><p>Never share your password, wallet private key or recovery phrase.</p></div><p class="demo-warning">DEMO ACCOUNT — No real funds or live YEM connection.</p><button class="account-button logout-button" onclick="logoutUser()">Sign Out</button></div>
+</div></section>
+<section id="merchant" class="hidden"><div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your YemBridge merchant space.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
+<div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">UGX 0</div><p class="muted">Demo settlement balance — not real money.</p></div>
+<div class="card"><h3>💸 Merchant Withdrawals</h3><p class="muted">Available for withdrawal (demo):</p><div class="amount" id="merchantAvailableWithdrawal">UGX 0</div><input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX"><button onclick="requestMerchantWithdrawal()">Request Withdrawal</button><p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div></div>
+<div class="card"><h3>📊 Merchant Sales Report</h3><div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div><div class="activity-summary"><div><small>Illustrative Commission (5%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">UGX 0</strong></div></div><p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">Demo report only. These figures are not real earnings.</p></div>
+<div class="card"><h3>➕ Add a New Product</h3><input id="merchantProductName" type="text" placeholder="Product name"><input id="merchantProductPrice" type="number" min="1" placeholder="Price in UGX"><input id="merchantProductCategory" type="text" placeholder="Product category"><button onclick="addMerchantProduct()">Publish Product</button><p id="merchantProductMessage" class="muted"></p></div>
+<div class="card"><h3>🛠 Merchant Tools</h3><button onclick="demo('Add Product')">＋ Add Product</button> <button onclick="demo('Manage Orders')">📦 Manage Orders</button> <button onclick="demo('Sales Reports')">📊 Sales Reports</button> <button onclick="demo('Withdrawals')">Withdrawals</button></div><p class="muted">Merchant dashboard demonstration only.</p></section>
 </main>
-
-<nav>
-  <button onclick="show('home',this)">⌂ Home</button>
-  <button onclick="show('services',this)">Services</button>
-  <button onclick="show('shop',this)">Shop</button>
-  <button onclick="show('activity',this)">Activity</button>
-  <button onclick="show('merchant',this)">Merchant</button>
-  <button onclick="show('account',this)">Account</button>
+<nav aria-label="Main navigation">
+<button type="button" onclick="show('home',this)">⌂ Home</button><button type="button" onclick="show('services',this)">Services</button><button type="button" onclick="show('shop',this)">Shop</button><button type="button" onclick="show('activity',this)">Activity</button><button type="button" onclick="show('merchant',this)">Merchant</button><button type="button" onclick="show('account',this)">Account</button>
 </nav>
 <footer>YemBridge Digital Commerce Ltd · Prototype v1.0</footer>
+
 <script>
-/* AUTHENTICATION STATE */
+/* NAVIGATION AND AUTHENTICATION STATE */
 window.yembridgeAuthReady = false;
 window.yembridgeAccount = null;
-window.yembridgePendingSection = null;
-
 const PROTECTED_SECTIONS = ['services','shop','activity','merchant'];
+const VALID_SECTIONS = ['home','services','shop','activity','account','merchant'];
+const HOME_URL = 'https://c07057702-ui.github.io/yembridge-platform/';
+const API_URL = 'https://yembridge-api.c07057702.workers.dev';
 
 function navButtonFor(id) {
-  return [...document.querySelectorAll('nav button')].find(button =>
-    button.getAttribute('onclick')?.includes("'" + id + "'")
+  return Array.from(document.querySelectorAll('nav button')).find(button =>
+    (button.getAttribute('onclick') || '').includes("'" + id + "'")
   );
 }
-
 function show(id, btn) {
-  const valid = ['home','services','shop','activity','account','merchant'];
-  if (!valid.includes(id)) id = 'home';
-
-  /* Do not mistake Clerk's loading state for a signed-out user. */
+  if (!VALID_SECTIONS.includes(id)) id = 'home';
   if (!window.yembridgeAuthReady && PROTECTED_SECTIONS.includes(id)) {
     window.yembridgePendingSection = id;
     id = 'account';
-  } else if (
-    window.yembridgeAuthReady &&
-    PROTECTED_SECTIONS.includes(id) &&
-    !window.Clerk?.isSignedIn
-  ) {
+  } else if (window.yembridgeAuthReady && PROTECTED_SECTIONS.includes(id) &&
+             !window.Clerk?.isSignedIn) {
     id = 'account';
   }
-
-  document.querySelectorAll('main section').forEach(section =>
-    section.classList.add('hidden')
-  );
-
-  const section = document.getElementById(id);
-  if (!section) return;
-
-  section.classList.remove('hidden');
-
-  document.querySelectorAll('nav button').forEach(button =>
-    button.classList.remove('active')
-  );
-
-  const activeButton = btn && id !== 'account' ? btn : navButtonFor(id);
-  if (activeButton) activeButton.classList.add('active');
-
+  document.querySelectorAll('main section').forEach(section => section.classList.add('hidden'));
+  const target = document.getElementById(id);
+  if (!target) return;
+  target.classList.remove('hidden');
+  document.querySelectorAll('nav button').forEach(button => button.classList.remove('active'));
+  const active = id === 'home' && btn ? btn : navButtonFor(id);
+  if (active) active.classList.add('active');
   if (window.yembridgeAuthReady) {
-    sessionStorage.setItem('yembridgeLastSection', id);
+    try { sessionStorage.setItem('yembridgeLastSection', id); } catch(e) {}
   }
-
-  if (id === 'activity' && window.Clerk?.isSignedIn) {
-    renderCustomerOrders();
-  }
-
+  if (id === 'activity') renderCustomerOrders();
   if (id === 'merchant') {
-    renderMerchantOrders();
-    renderMerchantSalesReport();
-    renderMerchantWithdrawals();
+    renderMerchantOrders(); renderMerchantSalesReport(); renderMerchantWithdrawals();
   }
 }
-
 function demo(service) {
   alert(service + ' is a demonstration only. No real transaction has been made.');
 }
-
 async function logoutUser() {
   if (!window.Clerk || !window.Clerk.isSignedIn) {
     show('account');
     return;
   }
-
   try {
-    /* Set the destination before signing out or reloading. */
-    sessionStorage.setItem('yembridgeLastSection', 'account');
-    await Clerk.signOut();
+    try { sessionStorage.setItem('yembridgeLastSection', 'account'); } catch(e) {}
+    await window.Clerk.signOut();
     window.yembridgeAccount = null;
-
-    /* Remove any old auth query so the account screen opens normally. */
-    window.location.replace(
-      'https://c07057702-ui.github.io/yembridge-platform/?auth=sign-in'
-    );
+    window.location.replace(HOME_URL + '?auth=sign-in');
   } catch (error) {
     console.error('Sign out failed:', error);
     alert('Sign out failed. Please try again.');
   }
 }
 
-/* SAFE LOCAL STORAGE HELPERS */
+/* SAFE LOCAL DEMO STORAGE */
 function readLocalArray(key) {
   try {
     const value = JSON.parse(localStorage.getItem(key) || '[]');
     return Array.isArray(value) ? value : [];
-  } catch (error) {
-    console.warn('Could not read local demo data:', key, error);
+  } catch(error) {
+    console.warn('Could not read demo data:', key, error);
     return [];
   }
 }
-
 function writeLocalArray(key, value) {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-    return true;
-  } catch (error) {
-    console.error('Could not save local demo data:', key, error);
-    alert('This demo information could not be saved on this device.');
-    return false;
-  }
+  try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+  catch(error) { console.error('Could not save demo data:', error); alert('This demo information could not be saved on this device.'); return false; }
 }
-
-/* DEMO WALLET AND SHOPPING BASKET */
 let yemCart = [];
 let yemWallet = Number(localStorage.getItem('yembridgeDemoBalance'));
-
 if (!Number.isFinite(yemWallet) || yemWallet < 0) {
   yemWallet = 250000;
-  localStorage.setItem('yembridgeDemoBalance', String(yemWallet));
+  try { localStorage.setItem('yembridgeDemoBalance', String(yemWallet)); } catch(e) {}
 }
-
 let yemTransactions = readLocalArray('yembridgeDemoTransactions');
 let merchantProducts = readLocalArray('yembridgeMerchantProducts');
-
 function saveDemoData() {
-  localStorage.setItem('yembridgeDemoBalance', String(yemWallet));
+  try { localStorage.setItem('yembridgeDemoBalance', String(yemWallet)); } catch(e) {}
   writeLocalArray('yembridgeDemoTransactions', yemTransactions);
 }
-
 function updateWallet() {
   const amount = document.querySelector('.balance .amount');
   if (amount) amount.textContent = 'UGX ' + yemWallet.toLocaleString('en-UG');
 }
-
 function addToCart(name, price) {
-  if (!Number.isFinite(price) || price <= 0) {
-    alert('Invalid demo product price.');
-    return;
-  }
-  yemCart.push({name, price});
-  updateCartSummary();
-  alert(name + ' added to your demo basket!');
+  if (!Number.isFinite(price) || price <= 0) return alert('Invalid demo product price.');
+  yemCart.push({name,price}); updateCartSummary(); alert(name + ' added to your demo basket!');
 }
-
 function updateCartSummary() {
-  const count = yemCart.length;
-  const total = yemCart.reduce((sum, item) => sum + item.price, 0);
-  const countElement = document.getElementById('cartCount');
-  const totalElement = document.getElementById('cartTotal');
-
-  if (countElement) countElement.textContent = count + (count === 1 ? ' item' : ' items');
-  if (totalElement) totalElement.textContent = 'UGX ' + total.toLocaleString('en-UG');
-
+  const count = yemCart.length, total = yemCart.reduce((sum,item) => sum + item.price,0);
+  const countEl = document.getElementById('cartCount'), totalEl = document.getElementById('cartTotal');
+  if (countEl) countEl.textContent = count + (count === 1 ? ' item' : ' items');
+  if (totalEl) totalEl.textContent = 'UGX ' + total.toLocaleString('en-UG');
   const summary = document.querySelector('.cart-summary');
   if (summary && !document.getElementById('checkoutButton')) {
     const button = document.createElement('button');
-    button.id = 'checkoutButton';
-    button.className = 'checkout-button';
-    button.textContent = 'Checkout';
-    button.onclick = checkoutDemo;
-    summary.appendChild(button);
+    button.id = 'checkoutButton'; button.className = 'checkout-button'; button.textContent = 'Checkout';
+    button.onclick = checkoutDemo; summary.appendChild(button);
   }
-
-  const checkoutButton = document.getElementById('checkoutButton');
-  if (checkoutButton) checkoutButton.disabled = count === 0;
+  const checkout = document.getElementById('checkoutButton');
+  if (checkout) checkout.disabled = count === 0;
 }
-
 function checkoutDemo() {
-  if (!yemCart.length) {
-    alert('Your basket is empty.');
-    return;
-  }
-
+  if (!yemCart.length) return alert('Your basket is empty.');
   if (!window.yembridgeAuthReady || !window.Clerk?.isSignedIn || !window.Clerk.user) {
-    alert('Please sign in to your YemBridge account before checkout.');
-    show('account');
-    return;
+    alert('Please sign in to your YemBridge account before checkout.'); show('account'); return;
   }
-
   const user = window.Clerk.user;
   const customerEmail = user.primaryEmailAddress?.emailAddress?.toLowerCase();
-
-  if (!customerEmail) {
-    alert('Your account email could not be verified. Please try again.');
-    return;
-  }
-
-  const customerName = (
-    (user.firstName || '') + ' ' + (user.lastName || '')
-  ).trim() || 'YemBridge Customer';
-
-  const total = yemCart.reduce((sum, item) => sum + item.price, 0);
-
-  if (total > yemWallet) {
-    alert('Insufficient demo wallet balance. Your basket has not been charged.');
-    return;
-  }
-
-  const purchaseNames = yemCart.map(item => item.name).join(', ');
+  if (!customerEmail) return alert('Your account email could not be verified. Please try again.');
+  const customerName = ((user.firstName || '') + ' ' + (user.lastName || '')).trim() || 'YemBridge Customer';
+  const total = yemCart.reduce((sum,item) => sum + item.price,0);
+  if (total > yemWallet) return alert('Insufficient demo wallet balance. Your basket has not been charged.');
   const orders = readLocalArray('yembridgeMerchantOrders');
-
+  const date = new Date().toLocaleString('en-UG');
+  const nextOrders = orders.slice();
+  yemCart.forEach(item => nextOrders.unshift({product:item.name,price:item.price,customer:customerName,customerEmail,customerId:user.id,status:'New',date}));
+  if (!writeLocalArray('yembridgeMerchantOrders', nextOrders)) return;
   yemWallet -= total;
-  yemTransactions.unshift({
-    description: 'Marketplace Purchase',
-    details: purchaseNames,
-    amount: total,
-    status: 'Successful',
-    date: new Date().toLocaleString('en-UG')
-  });
-
-  yemCart.forEach(item => {
-    orders.unshift({
-      product: item.name,
-      price: item.price,
-      customer: customerName,
-      customerEmail,
-      customerId: user.id,
-      status: 'New',
-      date: new Date().toLocaleString('en-UG')
-    });
-  });
-
-  if (!writeLocalArray('yembridgeMerchantOrders', orders)) return;
-
-  saveDemoData();
-  updateWallet();
-  yemCart = [];
-  updateCartSummary();
-  renderActivity();
-  renderMerchantOrders();
-  renderCustomerOrders();
-
-  alert('Demo purchase successful! UGX ' + total.toLocaleString('en-UG') +
-    ' has been deducted from your demo wallet.');
+  yemTransactions.unshift({description:'Marketplace Purchase',details:yemCart.map(item => item.name).join(', '),amount:total,status:'Successful',date});
+  saveDemoData(); updateWallet(); yemCart=[]; updateCartSummary(); renderActivity();
+  renderMerchantOrders(); renderCustomerOrders();
+  alert('Demo purchase successful! UGX ' + total.toLocaleString('en-UG') + ' has been deducted from your demo wallet.');
 }
-
-/* DEMO ACTIVITY HISTORY */
 function renderActivity() {
   const activity = document.getElementById('activity');
   if (!activity) return;
-
-  const heading = activity.querySelector('.activity-heading');
-  const note = activity.querySelector('.activity-note');
-  const summary = activity.querySelectorAll('.activity-summary > div');
-
+  const heading = activity.querySelector('.activity-heading'), note = activity.querySelector('.activity-note');
+  const summaries = activity.querySelectorAll('.activity-summary > div');
   if (!heading || !note) return;
-
-  activity.querySelectorAll('.dynamic-transaction,.empty-activity')
-    .forEach(element => element.remove());
-
-  const moneyOut = yemTransactions.reduce(
-    (sum, item) => sum + Number(item.amount || 0), 0
-  );
-
-  if (summary.length >= 2) {
-    summary[0].querySelector('b').textContent = 'UGX 0';
-    summary[1].querySelector('b').textContent =
-      'UGX ' + moneyOut.toLocaleString('en-UG');
+  activity.querySelectorAll('.dynamic-transaction,.empty-activity').forEach(el => el.remove());
+  const moneyOut = yemTransactions.reduce((sum,item) => sum + Number(item.amount || 0),0);
+  if (summaries.length >= 2) {
+    summaries[0].querySelector('b').textContent = 'UGX 0';
+    summaries[1].querySelector('b').textContent = 'UGX ' + moneyOut.toLocaleString('en-UG');
   }
-
   if (!yemTransactions.length) {
-    const empty = document.createElement('p');
-    empty.className = 'muted empty-activity';
-    empty.textContent = 'No demo purchases yet.';
-    note.parentNode.insertBefore(empty, note);
-    return;
+    const empty = document.createElement('p'); empty.className = 'muted empty-activity';
+    empty.textContent = 'No demo purchases yet.'; note.parentNode.insertBefore(empty,note); return;
   }
-
   yemTransactions.forEach(item => {
-    const row = document.createElement('div');
-    row.className = 'transaction dynamic-transaction';
-
-    const icon = document.createElement('div');
-    icon.className = 'transaction-icon';
-    icon.textContent = '🛍️';
-
-    const info = document.createElement('div');
-    info.className = 'transaction-info';
-
-    const name = document.createElement('b');
-    name.textContent = item.description || 'Demo transaction';
-
-    const details = document.createElement('small');
-    details.textContent = (item.details || '') + ' · ' + (item.date || '');
-
-    const status = document.createElement('span');
-    status.className = 'status-success';
-    status.textContent = item.status || 'Successful';
-
-    info.append(name, details, status);
-
-    const amount = document.createElement('strong');
-    amount.className = 'amount-out';
-    amount.textContent = '- UGX ' + Number(item.amount || 0).toLocaleString('en-UG');
-
-    row.append(icon, info, amount);
-    note.parentNode.insertBefore(row, note);
+    const row=document.createElement('div'); row.className='transaction dynamic-transaction';
+    const icon=document.createElement('div'); icon.className='transaction-icon'; icon.textContent='🛍️';
+    const info=document.createElement('div'); info.className='transaction-info';
+    const name=document.createElement('b'); name.textContent=item.description || 'Demo transaction';
+    const details=document.createElement('small'); details.textContent=(item.details || '')+' · '+(item.date || '');
+    const status=document.createElement('span'); status.className='status-success'; status.textContent=item.status || 'Successful';
+    info.append(name,details,status);
+    const amount=document.createElement('strong'); amount.className='amount-out'; amount.textContent='- UGX '+Number(item.amount || 0).toLocaleString('en-UG');
+    row.append(icon,info,amount); note.parentNode.insertBefore(row,note);
   });
 }
-
-/* MERCHANT PRODUCTS */
 function addMerchantProduct() {
-  const nameInput = document.getElementById('merchantProductName');
-  const priceInput = document.getElementById('merchantProductPrice');
-  const categoryInput = document.getElementById('merchantProductCategory');
-  const message = document.getElementById('merchantProductMessage');
-
-  const name = nameInput.value.trim();
-  const price = Number(priceInput.value);
-  const category = categoryInput.value.trim();
-
-  if (!name || !category || !Number.isFinite(price) || price <= 0) {
-    message.textContent = 'Please enter a product name, category and valid price.';
-    return;
-  }
-
-  merchantProducts.push({name, price, category});
-  if (!writeLocalArray('yembridgeMerchantProducts', merchantProducts)) return;
-
-  renderMerchantProducts();
-  nameInput.value = '';
-  priceInput.value = '';
-  categoryInput.value = '';
-  message.textContent = 'Product published successfully in the demo marketplace!';
+  const nameEl=document.getElementById('merchantProductName'), priceEl=document.getElementById('merchantProductPrice');
+  const categoryEl=document.getElementById('merchantProductCategory'), message=document.getElementById('merchantProductMessage');
+  const name=nameEl.value.trim(), price=Number(priceEl.value), category=categoryEl.value.trim();
+  if (!name || !category || !Number.isFinite(price) || price<=0) { message.textContent='Please enter a product name, category and valid price.'; return; }
+  merchantProducts.push({name,price,category});
+  if (!writeLocalArray('yembridgeMerchantProducts',merchantProducts)) return;
+  renderMerchantProducts(); nameEl.value=''; priceEl.value=''; categoryEl.value='';
+  message.textContent='Product published successfully in the demo marketplace!';
 }
-
 function renderMerchantProducts() {
-  const container = document.getElementById('shopProducts');
-  if (!container) return;
-
-  container.querySelectorAll('.merchant-added-product').forEach(card => card.remove());
-
-  merchantProducts.forEach(product => {
-    const card = document.createElement('div');
-    card.className = 'product-card merchant-added-product';
-
-    const category = document.createElement('small');
-    category.className = 'product-category';
-    category.textContent = String(product.category || 'OTHER').toUpperCase();
-
-    const name = document.createElement('b');
-    name.textContent = product.name || 'Product';
-
-    const price = document.createElement('strong');
-    price.textContent = 'UGX ' + Number(product.price || 0).toLocaleString('en-UG');
-
-    const merchant = document.createElement('small');
-    merchant.textContent = 'Demo Merchant';
-
-    const button = document.createElement('button');
-    button.textContent = 'Add to Cart';
-    button.addEventListener('click', () => addToCart(product.name, Number(product.price)));
-
-    card.append(category, name, price, merchant, button);
-    container.appendChild(card);
+  const container=document.getElementById('shopProducts'); if (!container) return;
+  container.querySelectorAll('.merchant-added-product').forEach(card=>card.remove());
+  merchantProducts.forEach(product=>{
+    const card=document.createElement('div'); card.className='product-card merchant-added-product';
+    const category=document.createElement('small'); category.className='product-category'; category.textContent=String(product.category || 'OTHER').toUpperCase();
+    const name=document.createElement('b'); name.textContent=product.name || 'Product';
+    const price=document.createElement('strong'); price.textContent='UGX '+Number(product.price || 0).toLocaleString('en-UG');
+    const merchant=document.createElement('small'); merchant.textContent='Demo Merchant';
+    const button=document.createElement('button'); button.textContent='Add to Cart'; button.addEventListener('click',()=>addToCart(product.name,Number(product.price)));
+    card.append(category,name,price,merchant,button); container.appendChild(card);
   });
 }
-  <script>
-/* MERCHANT ORDERS */
 function renderMerchantOrders() {
-  const container = document.getElementById('merchantOrders');
-  if (!container) return;
-
-  const orders = readLocalArray('yembridgeMerchantOrders');
-  container.innerHTML = '';
-
-  if (!orders.length) {
-    container.textContent = 'No customer orders yet.';
-    return;
-  }
-
-  orders.forEach((order, index) => {
-    const card = document.createElement('div');
-    card.className = 'merchant-order-card';
-
-    const product = document.createElement('b');
-    product.textContent = order.product || 'Product';
-
-    const customer = document.createElement('p');
-    customer.textContent = 'Customer: ' + (order.customer || 'Customer');
-
-    const price = document.createElement('strong');
-    price.textContent = 'UGX ' + Number(order.price || 0).toLocaleString('en-UG');
-
-    const status = document.createElement('p');
-    status.className = 'muted';
-    status.textContent = 'Order status: ' + (order.status || 'New');
-
-    const date = document.createElement('small');
-    date.textContent = order.date || '';
-
-    card.append(product, customer, price, status, date);
-
-    if (order.status !== 'Completed' && order.status !== 'Cancelled') {
-      const select = document.createElement('select');
-      select.className = 'merchant-order-select';
-
-      [
-        'New',
-        'Accepted',
-        'Processing',
-        'Delivered - Awaiting Customer Confirmation',
-        'Cancelled'
-      ].forEach(value => {
-        const option = document.createElement('option');
-        option.value = value;
-        option.textContent = value;
-        select.appendChild(option);
+  const container=document.getElementById('merchantOrders'); if (!container) return;
+  const orders=readLocalArray('yembridgeMerchantOrders'); container.innerHTML='';
+  if (!orders.length) { container.textContent='No customer orders yet.'; return; }
+  orders.forEach((order,index)=>{
+    const card=document.createElement('div'); card.className='merchant-order-card';
+    const product=document.createElement('b'); product.textContent=order.product || 'Product';
+    const customer=document.createElement('p'); customer.textContent='Customer: '+(order.customer || 'Customer');
+    const price=document.createElement('strong'); price.textContent='UGX '+Number(order.price || 0).toLocaleString('en-UG');
+    const status=document.createElement('p'); status.className='muted'; status.textContent='Order status: '+(order.status || 'New');
+    const date=document.createElement('small'); date.textContent=order.date || ''; card.append(product,customer,price,status,date);
+    if (order.status!=='Completed' && order.status!=='Cancelled') {
+      const select=document.createElement('select'); select.className='merchant-order-select';
+      ['New','Accepted','Processing','Delivered - Awaiting Customer Confirmation','Cancelled'].forEach(value=>{
+        const option=document.createElement('option'); option.value=value; option.textContent=value; select.appendChild(option);
       });
-
-      select.value = order.status || 'New';
-      select.addEventListener('change', () =>
-        updateMerchantOrderStatus(index, select.value)
-      );
-      card.appendChild(select);
+      select.value=order.status || 'New'; select.addEventListener('change',()=>updateMerchantOrderStatus(index,select.value)); card.appendChild(select);
     }
-
     container.appendChild(card);
   });
 }
-
-function updateMerchantOrderStatus(index, newStatus) {
-  const orders = readLocalArray('yembridgeMerchantOrders');
-  if (!orders[index] || orders[index].status === 'Completed') return;
-
-  orders[index].status = newStatus;
-  if (!writeLocalArray('yembridgeMerchantOrders', orders)) return;
-
-  renderMerchantOrders();
-  renderCustomerOrders();
-  renderMerchantSalesReport();
-  renderMerchantWithdrawals();
+function updateMerchantOrderStatus(index,newStatus) {
+  const orders=readLocalArray('yembridgeMerchantOrders'); if (!orders[index] || orders[index].status==='Completed') return;
+  orders[index].status=newStatus; if (!writeLocalArray('yembridgeMerchantOrders',orders)) return;
+  renderMerchantOrders(); renderCustomerOrders(); renderMerchantSalesReport(); renderMerchantWithdrawals();
 }
-
-/* MERCHANT SALES REPORT */
 function renderMerchantSalesReport() {
-  const orders = readLocalArray('yembridgeMerchantOrders');
-  const completed = orders.filter(order => order.status === 'Completed');
-  const pending = orders.filter(order =>
-    order.status !== 'Completed' && order.status !== 'Cancelled'
-  );
-
-  const total = completed.reduce(
-    (sum, order) => sum + Number(order.price || 0), 0
-  );
-  const commission = total * 0.05;
-  const proceeds = total - commission;
-
-  const setText = (id, value) => {
-    const element = document.getElementById(id);
-    if (element) element.textContent = value;
-  };
-
-  setText('merchantTotalSales', 'UGX ' + total.toLocaleString('en-UG'));
-  setText('merchantCompletedCount', String(completed.length));
-  setText('merchantCommission', 'UGX ' + commission.toLocaleString('en-UG'));
-  setText('merchantNetProceeds', 'UGX ' + proceeds.toLocaleString('en-UG'));
-  setText('merchantPendingCount', String(pending.length));
+  const orders=readLocalArray('yembridgeMerchantOrders'), completed=orders.filter(o=>o.status==='Completed');
+  const pending=orders.filter(o=>o.status!=='Completed' && o.status!=='Cancelled');
+  const total=completed.reduce((sum,o)=>sum+Number(o.price || 0),0), commission=total*.05;
+  const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+  set('merchantTotalSales','UGX '+total.toLocaleString('en-UG')); set('merchantCompletedCount',String(completed.length));
+  set('merchantCommission','UGX '+commission.toLocaleString('en-UG')); set('merchantNetProceeds','UGX '+(total-commission).toLocaleString('en-UG'));
+  set('merchantPendingCount',String(pending.length));
 }
-
-/* MERCHANT WITHDRAWALS */
 function getMerchantAvailableWithdrawal() {
-  const orders = readLocalArray('yembridgeMerchantOrders');
-  const withdrawals = readLocalArray('yembridgeWithdrawals');
-
-  const completedSales = orders
-    .filter(order => order.status === 'Completed')
-    .reduce((sum, order) => sum + Number(order.price || 0), 0);
-
-  const netProceeds = completedSales * 0.95;
-
-  const requested = withdrawals
-    .filter(item => item.status === 'Pending' || item.status === 'Approved')
-    .reduce((sum, item) => sum + Number(item.amount || 0), 0);
-
-  return Math.max(0, netProceeds - requested);
+  const orders=readLocalArray('yembridgeMerchantOrders'), withdrawals=readLocalArray('yembridgeWithdrawals');
+  const sales=orders.filter(o=>o.status==='Completed').reduce((sum,o)=>sum+Number(o.price || 0),0);
+  const requested=withdrawals.filter(w=>w.status==='Pending'||w.status==='Approved').reduce((sum,w)=>sum+Number(w.amount || 0),0);
+  return Math.max(0,sales*.95-requested);
 }
-
 function renderMerchantWithdrawals() {
-  const balance = document.getElementById('merchantAvailableWithdrawal');
-  const history = document.getElementById('merchantWithdrawalHistory');
+  const balance=document.getElementById('merchantAvailableWithdrawal'), history=document.getElementById('merchantWithdrawalHistory');
   if (!balance || !history) return;
-
-  balance.textContent =
-    'UGX ' + getMerchantAvailableWithdrawal().toLocaleString('en-UG');
-
-  const withdrawals = readLocalArray('yembridgeWithdrawals');
-  history.innerHTML = '';
-
-  if (!withdrawals.length) {
-    history.textContent = 'No withdrawal requests yet.';
-    return;
-  }
-
-  withdrawals.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'transaction';
-
-    const amount = document.createElement('strong');
-    amount.textContent = 'UGX ' + Number(item.amount || 0).toLocaleString('en-UG');
-
-    const status = document.createElement('p');
-    status.textContent = 'Status: ' + (item.status || 'Pending');
-
-    const date = document.createElement('small');
-    date.textContent = item.date || '';
-
-    card.append(amount, status, date);
-    history.appendChild(card);
+  balance.textContent='UGX '+getMerchantAvailableWithdrawal().toLocaleString('en-UG');
+  const withdrawals=readLocalArray('yembridgeWithdrawals'); history.innerHTML='';
+  if (!withdrawals.length) { history.textContent='No withdrawal requests yet.'; return; }
+  withdrawals.forEach(item=>{
+    const card=document.createElement('div'); card.className='transaction';
+    const amount=document.createElement('strong'); amount.textContent='UGX '+Number(item.amount || 0).toLocaleString('en-UG');
+    const status=document.createElement('p'); status.textContent='Status: '+(item.status || 'Pending');
+    const date=document.createElement('small'); date.textContent=item.date || ''; card.append(amount,status,date); history.appendChild(card);
   });
 }
-
 function requestMerchantWithdrawal() {
-  const input = document.getElementById('withdrawalAmount');
-  const message = document.getElementById('withdrawalMessage');
-  const amount = Number(input.value);
-  const available = getMerchantAvailableWithdrawal();
-
-  if (!Number.isFinite(amount) || amount <= 0) {
-    message.textContent = 'Please enter a valid withdrawal amount.';
-    return;
-  }
-
-  if (amount > available) {
-    message.textContent = 'Insufficient available demo proceeds.';
-    return;
-  }
-
-  const withdrawals = readLocalArray('yembridgeWithdrawals');
-  withdrawals.unshift({
-    amount,
-    status: 'Pending',
-    date: new Date().toLocaleString('en-UG')
-  });
-
-  if (!writeLocalArray('yembridgeWithdrawals', withdrawals)) return;
-
-  input.value = '';
-  message.textContent = 'Demo withdrawal request submitted successfully.';
-  renderMerchantWithdrawals();
+  const input=document.getElementById('withdrawalAmount'), message=document.getElementById('withdrawalMessage');
+  const amount=Number(input.value), available=getMerchantAvailableWithdrawal();
+  if (!Number.isFinite(amount)||amount<=0) { message.textContent='Please enter a valid withdrawal amount.'; return; }
+  if (amount>available) { message.textContent='Insufficient available demo proceeds.'; return; }
+  const withdrawals=readLocalArray('yembridgeWithdrawals');
+  withdrawals.unshift({amount,status:'Pending',date:new Date().toLocaleString('en-UG')});
+  if (!writeLocalArray('yembridgeWithdrawals',withdrawals)) return;
+  input.value=''; message.textContent='Demo withdrawal request submitted successfully.'; renderMerchantWithdrawals();
 }
-
-/* CUSTOMER ORDERS */
 function renderCustomerOrders() {
-  const container = document.getElementById('customerOrders');
-  if (!container) return;
-
-  container.innerHTML = '';
-
+  const container=document.getElementById('customerOrders'); if (!container) return;
+  container.innerHTML='';
   if (!window.yembridgeAuthReady || !window.Clerk?.isSignedIn || !window.Clerk.user) {
-    container.textContent = 'Please sign in to view your orders.';
-    return;
+    container.textContent='Please sign in to view your orders.'; return;
   }
-
-  const customerId = window.Clerk.user.id;
-  const orders = readLocalArray('yembridgeMerchantOrders');
-
-  const myOrders = orders
-    .map((order, index) => ({...order, index}))
-    .filter(order => order.customerId === customerId);
-
-  if (!myOrders.length) {
-    container.textContent = 'No marketplace orders yet.';
-    return;
-  }
-
-  myOrders.forEach(order => {
-    const card = document.createElement('div');
-    card.className = 'transaction';
-
-    const product = document.createElement('b');
-    product.textContent = order.product || 'Marketplace item';
-
-    const price = document.createElement('p');
-    price.textContent = 'UGX ' + Number(order.price || 0).toLocaleString('en-UG');
-
-    const status = document.createElement('p');
-    status.className = 'muted';
-    status.textContent = 'Status: ' + (order.status || 'New');
-
-    card.append(product, price, status);
-
-    if (order.status === 'Delivered - Awaiting Customer Confirmation') {
-      const button = document.createElement('button');
-      button.textContent = 'Confirm Receipt';
-      button.addEventListener('click', () => confirmCustomerReceipt(order.index));
-      card.appendChild(button);
+  const customerId=window.Clerk.user.id;
+  const myOrders=readLocalArray('yembridgeMerchantOrders').map((order,index)=>({...order,index})).filter(order=>order.customerId===customerId);
+  if (!myOrders.length) { container.textContent='No marketplace orders yet.'; return; }
+  myOrders.forEach(order=>{
+    const card=document.createElement('div'); card.className='transaction';
+    const product=document.createElement('b'); product.textContent=order.product || 'Marketplace item';
+    const price=document.createElement('p'); price.textContent='UGX '+Number(order.price || 0).toLocaleString('en-UG');
+    const status=document.createElement('p'); status.className='muted'; status.textContent='Status: '+(order.status || 'New');
+    card.append(product,price,status);
+    if (order.status==='Delivered - Awaiting Customer Confirmation') {
+      const button=document.createElement('button'); button.textContent='Confirm Receipt'; button.addEventListener('click',()=>confirmCustomerReceipt(order.index)); card.appendChild(button);
     }
-
     container.appendChild(card);
   });
 }
-
 function confirmCustomerReceipt(index) {
-  const orders = readLocalArray('yembridgeMerchantOrders');
-  const userId = window.Clerk?.user?.id;
-
-  if (!orders[index] || orders[index].customerId !== userId) {
-    alert('Order not found for this account. Please refresh the page.');
-    return;
-  }
-
-  if (orders[index].status !== 'Delivered - Awaiting Customer Confirmation') {
-    alert('This order is not awaiting receipt confirmation.');
-    return;
-  }
-
-  orders[index].status = 'Completed';
-  if (!writeLocalArray('yembridgeMerchantOrders', orders)) return;
-
-  renderCustomerOrders();
-  renderMerchantOrders();
-  renderMerchantSalesReport();
-  renderMerchantWithdrawals();
+  const orders=readLocalArray('yembridgeMerchantOrders'), userId=window.Clerk?.user?.id;
+  if (!orders[index] || orders[index].customerId!==userId) return alert('Order not found for this account. Please refresh the page.');
+  if (orders[index].status!=='Delivered - Awaiting Customer Confirmation') return alert('This order is not awaiting receipt confirmation.');
+  orders[index].status='Completed'; if (!writeLocalArray('yembridgeMerchantOrders',orders)) return;
+  renderCustomerOrders(); renderMerchantOrders(); renderMerchantSalesReport(); renderMerchantWithdrawals();
   alert('Receipt confirmed! Your demo order is now completed.');
 }
 
-/* INITIALIZE LOCAL DEMO DISPLAY */
-window.addEventListener('DOMContentLoaded', function() {
-  updateWallet();
-  updateCartSummary();
-  renderActivity();
-  renderMerchantProducts();
-  renderMerchantOrders();
-  renderCustomerOrders();
-  renderMerchantSalesReport();
-  renderMerchantWithdrawals();
+/* INITIAL DISPLAY */
+document.addEventListener('DOMContentLoaded',()=>{
+  updateWallet(); updateCartSummary(); renderActivity(); renderMerchantProducts();
+  renderMerchantOrders(); renderCustomerOrders(); renderMerchantSalesReport(); renderMerchantWithdrawals();
 });
-</script>
 
-<!-- CLERK LIBRARIES -->
-<script
-  defer
-  crossorigin="anonymous"
-  src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
-  type="text/javascript">
-</script>
-
-<script
-  defer
-  crossorigin="anonymous"
-  data-clerk-publishable-key="pk_test_YWN0aXZlLWVhZ2xlLTM2NC5jbGVyay5hY2NvdW50cy5kZXYk"
-  src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
-  type="text/javascript">
-</script>
-
-<script>
-window.addEventListener('load', async function() {
-  const homeUrl = 'https://c07057702-ui.github.io/yembridge-platform/';
-  const apiUrl = 'https://yembridge-api.c07057702.workers.dev';
-  const signInPage = homeUrl + '?auth=sign-in';
-  const signUpPage = homeUrl + '?auth=sign-up';
-
-  const params = new URLSearchParams(window.location.search);
-  const authMode = (params.get('auth') || '').trim().toLowerCase();
-
-  const validSections = [
-    'home','services','shop','activity','account','merchant'
-  ];
-
-  const loggedOut = document.getElementById('loggedOut');
-  const loggedIn = document.getElementById('loggedIn');
-  const authContainer = document.getElementById('clerk-auth');
-  const syncMessage = document.getElementById('accountSyncMessage');
-  const authLoadMessage = document.getElementById('authLoadMessage');
-
-  /* Do not save the visible section during page unload.
-     The show() function saves the actual selected section instead. */
-  const savedSection = sessionStorage.getItem('yembridgeLastSection') || 'home';
-
-  const sectionToRestore =
-    authMode === 'sign-up' || authMode === 'sign-in'
-      ? 'account'
-      : validSections.includes(savedSection)
-        ? savedSection
-        : 'home';
-
-  let clerkUiMounted = false;
+/* CLERK STARTUP: navigation is enabled only after Clerk finishes loading */
+window.addEventListener('load', async()=>{
+  const authContainer=document.getElementById('clerk-auth');
+  const loggedOut=document.getElementById('loggedOut'), loggedIn=document.getElementById('loggedIn');
+  const authLoadMessage=document.getElementById('authLoadMessage'), syncMessage=document.getElementById('accountSyncMessage');
+  const params=new URLSearchParams(window.location.search);
+  const authMode=(params.get('auth') || '').toLowerCase();
+  let saved='home';
+  try { saved=sessionStorage.getItem('yembridgeLastSection') || 'home'; } catch(e) {}
+  const desiredSection=(authMode==='sign-in'||authMode==='sign-up')?'account':(VALID_SECTIONS.includes(saved)?saved:'home');
+  let authMounted=false;
 
   function mountAuth(mode) {
-    if (!window.Clerk || !authContainer || clerkUiMounted) return;
-
-    authContainer.innerHTML = '';
-
+    if (!window.Clerk || !authContainer || authMounted) return;
+    authContainer.innerHTML='';
     try {
-      if (mode === 'sign-up') {
-        Clerk.mountSignUp(authContainer, {
-          routing: 'hash',
-          signInUrl: signInPage,
-          forceRedirectUrl: homeUrl
-        });
+      if (mode==='sign-up') {
+        Clerk.mountSignUp(authContainer,{routing:'hash',signInUrl:HOME_URL+'?auth=sign-in',forceRedirectUrl:HOME_URL});
       } else {
-        Clerk.mountSignIn(authContainer, {
-          routing: 'hash',
-          signUpUrl: signUpPage,
-          forceRedirectUrl: homeUrl
-        });
+        Clerk.mountSignIn(authContainer,{routing:'hash',signUpUrl:HOME_URL+'?auth=sign-up',forceRedirectUrl:HOME_URL});
       }
-      clerkUiMounted = true;
-    } catch (error) {
-      console.error('Could not mount Clerk authentication:', error);
-      if (authLoadMessage) {
-        authLoadMessage.textContent =
-          'Sign-in could not be displayed. Please refresh and try again.';
-      }
+      authMounted=true;
+      if (authLoadMessage) authLoadMessage.textContent='';
+    } catch(error) {
+      console.error('Clerk auth UI could not mount:',error);
+      if (authLoadMessage) authLoadMessage.textContent='Sign-in could not be displayed. Please refresh and try again.';
     }
   }
 
   try {
-    if (!window.Clerk) {
-      throw new Error('Clerk JavaScript did not load.');
-    }
-
-    if (!window.__internal_ClerkUICtor) {
-      throw new Error('Clerk UI package did not load.');
-    }
-
-    await Clerk.load({
-      ui: {ClerkUI: window.__internal_ClerkUICtor},
-      signInUrl: homeUrl,
-      signUpUrl: homeUrl
-    });
-
-    /* Clerk is now ready. Navigation can safely check sign-in status. */
-    window.yembridgeAuthReady = true;
+    if (!window.Clerk) throw new Error('Clerk JavaScript did not load.');
+    if (!window.__internal_ClerkUICtor) throw new Error('Clerk UI package did not load.');
+    await Clerk.load({ui:{ClerkUI:window.__internal_ClerkUICtor},signInUrl:HOME_URL,signUpUrl:HOME_URL});
+    window.yembridgeAuthReady=true;
 
     if (Clerk.isSignedIn && Clerk.user) {
-      loggedOut.classList.add('hidden');
-      loggedIn.classList.remove('hidden');
-
-      const user = Clerk.user;
-      document.getElementById('displayName').textContent =
-        ((user.firstName || '') + ' ' + (user.lastName || '')).trim() ||
-        'YemBridge User';
-
-      document.getElementById('displayEmail').textContent =
-        user.primaryEmailAddress?.emailAddress || '';
-
-      window.yembridgeAccount = null;
-
-      if (syncMessage) {
-        syncMessage.textContent = 'Checking YemBridge database connection...';
-      }
-
+      loggedOut.classList.add('hidden'); loggedIn.classList.remove('hidden');
+      const user=Clerk.user;
+      document.getElementById('displayName').textContent=((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge User';
+      document.getElementById('displayEmail').textContent=user.primaryEmailAddress?.emailAddress || '';
+      if (syncMessage) syncMessage.textContent='Checking YemBridge database connection...';
       try {
-        const token = await Clerk.session.getToken();
-        if (!token) throw new Error('Could not obtain a Clerk session token.');
-
-        const response = await fetch(apiUrl + '/account-sync', {
-          method: 'POST',
-          headers: {'Authorization': 'Bearer ' + token}
-        });
-
-        const responseText = await response.text();
-        let result;
-
-        try {
-          result = JSON.parse(responseText);
-        } catch (parseError) {
-          throw new Error('The account service returned an unreadable response.');
-        }
-
+        const token=await Clerk.session.getToken();
+        if (!token) throw new Error('No Clerk session token was returned.');
+        const response=await fetch(API_URL+'/account-sync',{method:'POST',headers:{Authorization:'Bearer '+token}});
+        const responseText=await response.text();
+        let result={}; try { result=JSON.parse(responseText); } catch(e) { throw new Error('Unreadable account service response.'); }
         if (!response.ok) {
-          const syncError = new Error(
-            'HTTP ' + response.status + ': ' +
-            (result.error || 'Account synchronization failed.')
-          );
-          syncError.diagnostic = result.diagnostic || null;
-          throw syncError;
+          const err=new Error('Account synchronization failed with HTTP '+response.status);
+          err.diagnostic=result.diagnostic || null; throw err;
         }
-
-        window.yembridgeAccount = result;
-
-        if (syncMessage) {
-          syncMessage.textContent = result.accountNo
-            ? 'YemBridge account connected. Account number: ' + result.accountNo
-            : 'Your YemBridge profile is connected.';
-        }
-
-        console.log('YemBridge account synchronized:', result.accountNo || result);
-
-      } catch (syncError) {
-        console.error('YemBridge account synchronization failed:', syncError);
-        if (syncError.diagnostic) {
-          console.error('Account synchronization diagnostic:', syncError.diagnostic);
-        }
-
-        if (syncMessage) {
-          syncMessage.textContent =
-            'Your profile is signed in, but YemBridge account setup could not be completed. Please try again later.';
-        }
+        window.yembridgeAccount=result;
+        if (syncMessage) syncMessage.textContent=result.accountNo?'YemBridge account connected. Account number: '+result.accountNo:'Your YemBridge profile is connected.';
+      } catch(error) {
+        console.error('YemBridge account synchronization failed:',error);
+        if (error.diagnostic) console.error('Account sync diagnostic:',error.diagnostic);
+        if (syncMessage) syncMessage.textContent='Your profile is signed in, but YemBridge account setup could not be completed. Please try again later.';
       }
-
     } else {
-      loggedIn.classList.add('hidden');
-      loggedOut.classList.remove('hidden');
-      window.yembridgeAccount = null;
-
-      document.getElementById('displayName').textContent = '';
-      document.getElementById('displayEmail').textContent = '';
+      loggedIn.classList.add('hidden'); loggedOut.classList.remove('hidden');
+      window.yembridgeAccount=null;
+      document.getElementById('displayName').textContent='';
+      document.getElementById('displayEmail').textContent='';
     }
 
-    /* Restore the saved section only after Clerk has initialized. */
-    show(sectionToRestore, navButtonFor(sectionToRestore));
-
-    if (!Clerk.isSignedIn) {
-      mountAuth(
-        authMode === 'sign-up' ? 'sign-up' : 'sign-in'
-      );
-    }
-
+    show(desiredSection,navButtonFor(desiredSection));
+    if (!Clerk.isSignedIn) mountAuth(authMode==='sign-up'?'sign-up':'sign-in');
     renderCustomerOrders();
-
-  } catch (error) {
-    console.error('Clerk initialization failed:', error);
-
-    /* Avoid leaving the visitor on a protected section. */
-    window.yembridgeAuthReady = true;
-    loggedIn.classList.add('hidden');
-    loggedOut.classList.remove('hidden');
-    window.yembridgeAccount = null;
-    show('account');
-
-    if (authLoadMessage) {
-      authLoadMessage.textContent =
-        'We could not load sign-in. Check your internet connection and refresh the page.';
-    }
+  } catch(error) {
+    console.error('Clerk initialization failed:',error);
+    window.yembridgeAuthReady=true;
+    loggedIn.classList.add('hidden'); loggedOut.classList.remove('hidden');
+    window.yembridgeAccount=null;
+    show('account',navButtonFor('account'));
+    if (authLoadMessage) authLoadMessage.textContent='We could not load secure sign-in. Check your internet connection and refresh the page.';
   }
 });
 </script>
-
+<script defer crossorigin="anonymous" src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js" type="text/javascript"></script>
+<script defer crossorigin="anonymous" data-clerk-publishable-key="pk_test_YWN0aXZlLWVhZ2xlLTM2NC5jbGVyay5hY2NvdW50cy5kZXYk" src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js" type="text/javascript"></script>
 </body>
 </html>
