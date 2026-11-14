@@ -1743,7 +1743,64 @@ identityRow.addEventListener('keydown',function(event){
 
 })();
 </script>
+<script>
+(function () {
+  function connectIdentityVerification() {
+    const rows = document.querySelectorAll('.account-status');
 
+    rows.forEach(function (row) {
+      if (row.dataset.kycClickReady === 'yes') return;
+
+      const text = (row.innerText || '').toLowerCase();
+
+      if (!text.includes('identity verification')) return;
+
+      row.dataset.kycClickReady = 'yes';
+      row.style.cursor = 'pointer';
+      row.setAttribute('role', 'button');
+      row.setAttribute('tabindex', '0');
+
+      function toggleForm() {
+        const panel = document.getElementById('kycPanel');
+
+        if (!panel) {
+          console.error('YemBridge: KYC panel was not found.');
+          return;
+        }
+
+        panel.hidden = !panel.hidden;
+
+        if (!panel.hidden) {
+          panel.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }
+
+      row.addEventListener('click', toggleForm);
+
+      row.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggleForm();
+        }
+      });
+    });
+  }
+
+  connectIdentityVerification();
+
+  const observer = new MutationObserver(connectIdentityVerification);
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  document.addEventListener('DOMContentLoaded', connectIdentityVerification);
+})();
+</script>
 </body>
 </html>
 
