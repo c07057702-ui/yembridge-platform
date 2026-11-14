@@ -762,8 +762,8 @@ window.addEventListener('load',async()=>{
         </div>
       </form>
     `;
-
-    identityRow.style.cursor = 'pointer';
+identityRow.insertAdjacentElement('afterend',panel);
+identityRow.style.cursor = 'pointer';
 identityRow.setAttribute('role','button');
 identityRow.setAttribute('tabindex','0');
 identityRow.setAttribute('aria-label','Open identity verification form');
