@@ -763,7 +763,26 @@ window.addEventListener('load',async()=>{
       </form>
     `;
 
-    identityRow.insertAdjacentElement('afterend',panel);
+    identityRow.style.cursor = 'pointer';
+identityRow.setAttribute('role','button');
+identityRow.setAttribute('tabindex','0');
+identityRow.setAttribute('aria-label','Open identity verification form');
+
+function toggleKycPanel(){
+  panel.hidden = !panel.hidden;
+  if(!panel.hidden){
+    panel.scrollIntoView({behavior:'smooth',block:'start'});
+    loadKycStatus();
+  }
+}
+
+identityRow.addEventListener('click',toggleKycPanel);
+identityRow.addEventListener('keydown',function(event){
+  if(event.key === 'Enter' || event.key === ' '){
+    event.preventDefault();
+    toggleKycPanel();
+  }
+});
 
     kycElement('kycRefreshButton').addEventListener('click',loadKycStatus);
     kycElement('kycForm').addEventListener('submit',submitKycApplication);
