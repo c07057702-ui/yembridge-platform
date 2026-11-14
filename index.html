@@ -763,6 +763,19 @@ window.addEventListener('load',async()=>{
       </form>
     `;
 identityRow.insertAdjacentElement('afterend',panel);
+       const openKycButton = document.createElement('button');
+    openKycButton.type = 'button';
+    openKycButton.textContent = 'Open verification form';
+    openKycButton.style.cssText = 'display:block;width:100%;padding:14px;margin:10px 0;border:0;border-radius:10px;background:#1457d9;color:white;font-weight:bold;cursor:pointer;';
+
+    identityRow.insertAdjacentElement('afterend',openKycButton);
+
+    openKycButton.addEventListener('click',function(){
+      panel.hidden = false;
+      panel.style.display = 'block';
+      panel.scrollIntoView({behavior:'smooth',block:'start'});
+      loadKycStatus();
+    });
 identityRow.style.cursor = 'pointer';
 identityRow.setAttribute('role','button');
 identityRow.setAttribute('tabindex','0');
