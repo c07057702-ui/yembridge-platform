@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YemBridge Database Diagnostic</title>
+  <script defer crossorigin="anonymous"
+    src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js">
+  </script>
+  <script defer crossorigin="anonymous"
+    data-clerk-publishable-key="pk_test_YWN0aXZlLWVhZ2xlLTM2NC5jbGVyay5hY2NvdW50cy5kZXYk"
+    src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js">
+  </script>
+</head>
+<body style="font-family:Arial,sans-serif;padding:24px;line-height:1.5">
+  <h2>YemBridge Database Check</h2>
+  <p id="status">Checking your signed-in session...</p>
+  <pre id="result" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre>
+
+  <script>
+    window.addEventListener("load", async () => {
+      const status = document.getElementById("status");
+      const result = document.getElementById("result");
+
+      try {
+        if (!window.Clerk) {
+          throw new Error("Clerk did not load. Refresh and try again.");
+        }
+
+        await Clerk.load({
+          ui: { ClerkUI: window.__internal_ClerkUICtor },
+          signInUrl: "https://c07057702-ui.github.io/yembridge-platform/",
+          signUpUrl: "https://c07057702-ui.github.io/yembridge-platform/"
+        });
+
+        if (!Clerk.isSignedIn || !Clerk.session) {
+          throw new Error("Please sign in to YemBridge first.");
+        }
+
+        const token = await Clerk.session.getToken();
+
+        if (!token) {
+          throw new Error("No signed-in session token was available.");
+        }
+
+        status.textContent = "Contacting YemBridge database...";
+
+        const response = await fetch(
+          "https://807d833e-yembridge-api.c07057702.workers.dev/db-role-check",
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + token
+            }
+          }
+        );
+
+        const data = await response.json();
+
+        result.textContent = JSON.stringify(data, null, 2);
+        status.textContent = "Diagnostic request completed. HTTP " + response.status;
+      } catch (error) {
+        status.textContent = "Diagnostic could not complete.";
+        result.textContent = error.message;
+      }
+    });
+  </script>
+</body>
+</html>
