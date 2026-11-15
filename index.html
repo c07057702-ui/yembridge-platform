@@ -138,7 +138,7 @@ function show(id,btn){
  if(id==='shop')renderShopProducts();
 }
 function demo(service){alert(service+' is a demonstration only. No real transaction has been made.')}
-async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('account');return}try{try{sessionStorage.setItem('yembridgeLastSection','account')}catch(e){}await window.Clerk.signOut();window.yembridgeAccount=null;window.location.replace(HOME_URL+'?auth=sign-in')}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
+async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('account');return}try{try{sessionStorage.setItem('yembridgeLastSection','account')}catch(e){}await window.Clerk.signOut();window.yembridgeAccount=null;updateYemBridgeAccountDisplay();window.location.replace(HOME_URL+'?auth=sign-in')}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
 
 function readLocalArray(key){try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(e){console.warn('Could not read demo data:',key,e);return[]}}
 function writeLocalArray(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch(e){console.error(e);alert('This demo information could not be saved on this device. It may be out of browser storage space.');return false}}
@@ -542,12 +542,14 @@ window.addEventListener('load',async()=>{
     const responseText=await response.text();let result={};try{result=JSON.parse(responseText)}catch(e){throw new Error('Unreadable account service response.')}
     if(!response.ok){const err=new Error('Account synchronization failed with HTTP '+response.status);err.diagnostic=result.diagnostic||null;throw err}
     window.yembridgeAccount=result;
+    updateYemBridgeAccountDisplay();
     if(syncMessage)syncMessage.textContent=result.accountNo?'YemBridge account connected. Account number: '+result.accountNo:'Your YemBridge profile is connected.';
    }catch(error){console.error('YemBridge account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent='Your profile is signed in, but YemBridge account setup could not be completed. Please try again later.'}
   }
  }catch(error){
   console.error('Clerk initialization failed:',error);window.yembridgeAuthReady=true;window.yembridgeAccount=null;
   loggedIn.classList.add('hidden');loggedOut.classList.remove('hidden');show('account',navButtonFor('account'));finishStartup();
+  updateYemBridgeAccountDisplay();
   if(authLoadMessage)authLoadMessage.textContent='We could not load secure sign-in. Check your internet connection and refresh the page.';
  }
 });
@@ -600,36 +602,27 @@ window.addEventListener('load',async()=>{
     const number = document.getElementById('yembridgeAccountNumber');
 
     if (account && account.accountNo) {
-      number.textContent = String(account.accountNo);
+      const accountNo = String(account.accountNo);
+      if (number.textContent !== accountNo) number.textContent = accountNo;
       panel.classList.remove('hidden');
     } else {
-      number.textContent = 'Awaiting connection';
+      const waitingText = 'Awaiting connection';
+      if (number.textContent !== waitingText) number.textContent = waitingText;
       panel.classList.add('hidden');
     }
   }
 
-  // Watch for Clerk and account-sync elements appearing later.
-  const accountObserver = new MutationObserver(function () {
-    updateYemBridgeAccountDisplay();
-  });
+  // Expose a safe updater so account sync can refresh the display directly.
+  // Deliberately do not observe the whole document: observing text changes
+  // here caused this function to trigger itself repeatedly.
+  window.updateYemBridgeAccountDisplay = updateYemBridgeAccountDisplay;
 
   function startAccountDisplay() {
-    if (document.body && !accountObserverStarted) {
-      accountObserver.observe(document.body, {
-        childList: true,
-        subtree: true,
-        characterData: true
-      });
-      accountObserverStarted = true;
-    }
-
     updateYemBridgeAccountDisplay();
   }
 
-  let accountObserverStarted = false;
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startAccountDisplay);
+    document.addEventListener('DOMContentLoaded', startAccountDisplay, { once: true });
   } else {
     startAccountDisplay();
   }
@@ -861,7 +854,6 @@ window.addEventListener('load',async()=>{
 
     if (!identityRow) return false;
 
-    // Preserve all existing row contents.
     let badge = el('kycStatusBadge');
 
     if (!badge) {
@@ -1334,7 +1326,7 @@ window.addEventListener('load',async()=>{
 
 })();
 </script>
-  
+
 <script>
 (function () {
   function releaseStartupScreen() {
@@ -1357,6 +1349,3 @@ window.addEventListener('load',async()=>{
 </script>
 </body>
 </html>
-
-
-  
