@@ -1,4 +1,4 @@
-DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1332,6 +1332,31 @@ window.addEventListener('load',async()=>{
     initialiseKyc();
   }
 
+})();
+</script>
+  <script>
+(function () {
+  function releaseStartupScreen() {
+    document.body.classList.remove('starting');
+
+    const overlay = document.getElementById('startupOverlay');
+    if (overlay) overlay.classList.add('hidden');
+
+    const message = document.getElementById('authLoadMessage');
+
+    if (message && !window.yembridgeAuthReady) {
+      message.textContent =
+        'Secure sign-in is taking longer than expected. Please refresh or check your connection.';
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(releaseStartupScreen, 10000);
+    });
+  } else {
+    setTimeout(releaseStartupScreen, 10000);
+  }
 })();
 </script>
 </body>
