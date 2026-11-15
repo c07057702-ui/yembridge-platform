@@ -780,6 +780,7 @@ window.addEventListener('load',async()=>{
   }
 </style>
 
+
 <script>
 (function () {
   'use strict';
@@ -790,9 +791,9 @@ window.addEventListener('load',async()=>{
 
   let kycStatus = null;
   let kycLoading = false;
-  let kycInstalled = false;
   let kycTimer = null;
   let kycObserver = null;
+  let delegatedHandlersInstalled = false;
 
   function el(id) {
     return document.getElementById(id);
@@ -840,17 +841,21 @@ window.addEventListener('load',async()=>{
   }
 
   // ==========================================
-  // 3. INSTALL KYC WITHOUT REPLACING ACCOUNT HTML
+  // INSTALL THE KYC PANEL
   // ==========================================
 
-  function installKycInterface() {
-    if (kycInstalled) return true;
+  function findIdentityRow() {
+    const rows = Array.from(
+      document.querySelectorAll('#loggedIn .account-status, .account-status')
+    );
 
-    const rows = Array.from(document.querySelectorAll('.account-status'));
-
-    const identityRow = rows.find(function (row) {
-      return row.textContent.toLowerCase().includes('identity verification');
+    return rows.find(function (row) {
+      return /identity\s+verification/i.test(row.textContent);
     });
+  }
+
+  function installKycInterface() {
+    const identityRow = findIdentityRow();
 
     if (!identityRow) return false;
 
@@ -964,47 +969,98 @@ window.addEventListener('load',async()=>{
     identityRow.setAttribute('role', 'button');
     identityRow.setAttribute('tabindex', '0');
     identityRow.setAttribute('aria-label', 'Open identity verification form');
-    identityRow.setAttribute('aria-expanded', 'false');
+    identityRow.setAttribute('aria-expanded', String(!panel.hidden));
+    identityRow.setAttribute('title', 'Tap to open identity verification');
+    identityRow.style.cursor = 'pointer';
+    identityRow.style.touchAction = 'manipulation';
 
-    function togglePanel() {
-  const opening = panel.hidden;
+    const refresh = el('kycRefreshButton');
+    if (refresh && refresh.dataset.kycBound !== 'yes') {
+      refresh.dataset.kycBound = 'yes';
+      refresh.addEventListener('click', loadKycStatus);
+    }
 
-  panel.hidden = !opening;
-  panel.style.removeProperty('display');
+    const form = el('kycForm');
+    if (form && form.dataset.kycBound !== 'yes') {
+      form.dataset.kycBound = 'yes';
+      form.addEventListener('submit', submitKycApplication);
+    }
 
-  identityRow.setAttribute('aria-expanded', String(opening));
-
-  if (opening) {
-    panel.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest'
-    });
-
-    loadKycStatus();
-  }
-}
-
-identityRow.addEventListener('click', togglePanel);
-
-identityRow.addEventListener('keydown', function (event) {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    togglePanel();
-  }
-});
-
-identityRow.style.cursor = 'pointer';
-identityRow.setAttribute('title', 'Tap to open identity verification');
-
-    el('kycRefreshButton').addEventListener('click', loadKycStatus);
-    el('kycForm').addEventListener('submit', submitKycApplication);
-
-    kycInstalled = true;
     return true;
   }
 
   // ==========================================
-  // 4. DISPLAY KYC STATUS
+  // OPEN AND CLOSE THE KYC PANEL
+  // ==========================================
+
+  function toggleKycPanel() {
+    if (!installKycInterface()) return;
+
+    const panel = el('kycFormPanel');
+    const identityRow = findIdentityRow();
+
+    if (!panel || !identityRow) return;
+
+    const opening = panel.hidden;
+
+    panel.hidden = !opening;
+    panel.style.removeProperty('display');
+
+    identityRow.setAttribute('aria-expanded', String(opening));
+
+    if (opening) {
+      loadKycStatus();
+
+      setTimeout(function () {
+        panel.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        });
+      }, 100);
+    }
+  }
+
+  // Install delegated handlers once.
+  // This still works if the account row is replaced later.
+
+  function installDelegatedHandlers() {
+    if (delegatedHandlersInstalled) return;
+
+    document.addEventListener('click', function (event) {
+      const target = event.target;
+      if (!target || !target.closest) return;
+
+      const row = target.closest('.account-status');
+
+      if (!row || !/identity\s+verification/i.test(row.textContent)) {
+        return;
+      }
+
+      event.preventDefault();
+      toggleKycPanel();
+    }, true);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+
+      const target = event.target;
+      if (!target || !target.closest) return;
+
+      const row = target.closest('.account-status');
+
+      if (!row || !/identity\s+verification/i.test(row.textContent)) {
+        return;
+      }
+
+      event.preventDefault();
+      toggleKycPanel();
+    }, true);
+
+    delegatedHandlersInstalled = true;
+  }
+
+  // ==========================================
+  // DISPLAY KYC STATUS
   // ==========================================
 
   function renderKycStatus() {
@@ -1056,6 +1112,7 @@ identityRow.setAttribute('title', 'Tap to open identity verification');
     if (kyc.reviewedAt) lines.push('Last reviewed: ' + String(kyc.reviewedAt));
 
     const contact = kyc.contactDetails || {};
+
     const names = {
       phoneNumber: 'Phone',
       village: 'Village',
@@ -1081,7 +1138,7 @@ identityRow.setAttribute('title', 'Tap to open identity verification');
   }
 
   // ==========================================
-  // 5. LOAD KYC STATUS
+  // LOAD KYC STATUS
   // ==========================================
 
   async function loadKycStatus() {
@@ -1128,7 +1185,7 @@ identityRow.setAttribute('title', 'Tap to open identity verification');
   }
 
   // ==========================================
-  // 6. SUBMIT KYC APPLICATION
+  // SUBMIT KYC APPLICATION
   // ==========================================
 
   async function submitKycApplication(event) {
@@ -1276,11 +1333,11 @@ identityRow.setAttribute('title', 'Tap to open identity verification');
   window.submitKycApplication = submitKycApplication;
 
   // ==========================================
-  // 7. START KYC AFTER ACCOUNT SECTION EXISTS
+  // START KYC
   // ==========================================
 
   function startKyc() {
-    if (!installKycInterface()) return false;
+    installKycInterface();
 
     if (kycTimer) {
       clearInterval(kycTimer);
@@ -1292,6 +1349,8 @@ identityRow.setAttribute('title', 'Tap to open identity verification');
     kycTimer = setInterval(function () {
       attempts++;
 
+      installKycInterface();
+
       if (window.yembridgeAccount) {
         clearInterval(kycTimer);
         kycTimer = null;
@@ -1301,6 +1360,7 @@ identityRow.setAttribute('title', 'Tap to open identity verification');
         kycTimer = null;
 
         const details = el('kycStatusDetails');
+
         if (details) {
           details.textContent =
             'Connect your YemBridge account to load your verification status.';
@@ -1312,11 +1372,12 @@ identityRow.setAttribute('title', 'Tap to open identity verification');
   }
 
   function initialiseKyc() {
+    installDelegatedHandlers();
     startKyc();
 
     if (!kycObserver && document.body) {
       kycObserver = new MutationObserver(function () {
-        if (!kycInstalled) startKyc();
+        installKycInterface();
       });
 
       kycObserver.observe(document.body, {
@@ -1334,6 +1395,7 @@ identityRow.setAttribute('title', 'Tap to open identity verification');
 
 })();
 </script>
+
 
 <script>
 (function () {
