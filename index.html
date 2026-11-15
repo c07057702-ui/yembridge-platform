@@ -538,410 +538,82 @@ window.addEventListener('load',async()=>{
  }
 });
 </script>
-<script defer crossorigin="anonymous" src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js" type="text/javascript"></script>
-<script defer crossorigin="anonymous" data-clerk-publishable-key="pk_test_YWN0aXZlLWVhZ2xlLTM2NC5jbGVyay5hY2NvdW50cy5kZXYk" src="https://active-eagle-364.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js" type="text/javascript"></script>
- 
- 
+
 <script>
 (function () {
+  'use strict';
+
   function updateYemBridgeAccountDisplay() {
-    const loggedIn = document.getElementById("loggedIn");
-    const profile = document.querySelector("#loggedIn .profile-panel");
-    const sync = document.getElementById("accountSyncMessage");
+    const loggedIn = document.getElementById('loggedIn');
+    const profile = document.querySelector('#loggedIn .profile-panel');
+    const sync = document.getElementById('accountSyncMessage');
 
     if (!loggedIn || !profile || !sync) return;
 
-    let panel = document.getElementById("yembridgeAccountNumberPanel");
+    let panel = document.getElementById('yembridgeAccountNumberPanel');
 
     if (!panel) {
-      panel = document.createElement("div");
-      panel.id = "yembridgeAccountNumberPanel";
+      panel = document.createElement('div');
+      panel.id = 'yembridgeAccountNumberPanel';
       panel.style.cssText =
-        "background:#102B46;color:white;border-radius:15px;padding:18px;margin:15px 0;text-align:center;";
+        'background:#102B46;color:white;border-radius:15px;padding:18px;margin:15px 0;text-align:center;';
 
-      const heading = document.createElement("small");
-      heading.textContent = "YOUR PERMANENT YEMBRIDGE ACCOUNT NUMBER";
-      heading.style.cssText = "display:block;color:#D5E8E2;font-size:10px;font-weight:bold;";
+      const heading = document.createElement('small');
+      heading.textContent = 'YOUR PERMANENT YEMBRIDGE ACCOUNT NUMBER';
+      heading.style.cssText =
+        'display:block;color:#D5E8E2;font-size:10px;font-weight:bold;';
 
-      const number = document.createElement("div");
-      number.id = "yembridgeAccountNumber";
-      number.style.cssText = "font-size:32px;font-weight:bold;letter-spacing:3px;color:#F2B84B;margin:10px 0;";
+      const number = document.createElement('div');
+      number.id = 'yembridgeAccountNumber';
+      number.style.cssText =
+        'font-size:32px;font-weight:bold;letter-spacing:3px;color:#F2B84B;margin:10px 0;';
 
-      const note = document.createElement("small");
-      note.textContent = "Your unique eight-digit customer account ID";
-      note.style.cssText = "display:block;color:#D5E8E2;font-size:11px;";
+      const note = document.createElement('small');
+      note.textContent = 'Your unique eight-digit customer account ID';
+      note.style.cssText =
+        'display:block;color:#D5E8E2;font-size:11px;';
 
       panel.append(heading, number, note);
-      profile.insertAdjacentElement("afterend", panel);
+      profile.insertAdjacentElement('afterend', panel);
     }
 
     const account = window.yembridgeAccount;
-    const number = document.getElementById("yembridgeAccountNumber");
+    const number = document.getElementById('yembridgeAccountNumber');
 
     if (account && account.accountNo) {
       number.textContent = String(account.accountNo);
-      panel.classList.remove("hidden");
+      panel.classList.remove('hidden');
     } else {
-      number.textContent = "Awaiting connection";
-      panel.classList.add("hidden");
+      number.textContent = 'Awaiting connection';
+      panel.classList.add('hidden');
     }
   }
 
-  const sync = document.getElementById("accountSyncMessage");
+  function startAccountDisplay() {
+    const sync = document.getElementById('accountSyncMessage');
 
-  if (sync) {
-    new MutationObserver(updateYemBridgeAccountDisplay).observe(sync, {
-      childList: true,
-      characterData: true,
-      subtree: true
-    });
+    if (sync && !sync.dataset.accountObserverReady) {
+      sync.dataset.accountObserverReady = 'yes';
+
+      new MutationObserver(updateYemBridgeAccountDisplay).observe(sync, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
+
+    updateYemBridgeAccountDisplay();
   }
 
-  updateYemBridgeAccountDisplay();
-  window.addEventListener("load", updateYemBridgeAccountDisplay);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startAccountDisplay);
+  } else {
+    startAccountDisplay();
+  }
+
+  window.addEventListener('load', updateYemBridgeAccountDisplay);
 })();
 </script>
-
-<style>
-  .kyc-panel{margin:16px 0;padding:18px;border:1px solid #dce7e3;border-radius:14px;background:#fff}
-  .kyc-panel h4{margin:0 0 12px;color:#102B46}
-  .kyc-status-chip{display:inline-block;padding:6px 11px;border-radius:20px;background:#edf1f4;color:#405466;font-size:12px;font-weight:700}
-  .kyc-status-chip.status-success{background:#e1f4eb;color:#08734f}
-  .kyc-status-chip.status-pending{background:#fff3d8;color:#8a5b00}
-  .kyc-status-chip.status-rejected{background:#fde8e7;color:#a52d29}
-  .kyc-form{display:grid;gap:12px;margin-top:16px}
-  .kyc-form label{display:grid;gap:6px;font-size:13px;font-weight:600;color:#24394a}
-  .kyc-form input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #cbd8d3;border-radius:8px;font:inherit;background:#fff}
-  .kyc-field-note{font-size:12px;color:#718092;font-weight:400}
-  .kyc-message{margin:12px 0;padding:10px;border-radius:8px;font-size:13px;display:none}
-  .kyc-message.error{display:block;background:#fde8e7;color:#942c27}
-  .kyc-message.success{display:block;background:#e1f4eb;color:#08734f}
-  .kyc-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-  .kyc-actions button{padding:11px 16px;border:0;border-radius:8px;background:#087F68;color:white;font-weight:700;cursor:pointer}
-  .kyc-actions button:disabled{opacity:.55;cursor:not-allowed}
-  .kyc-actions button.kyc-secondary{background:#e9f0ed;color:#183c35}
-  .kyc-photo-field{padding:12px;background:#f5f8f7;border-radius:9px}
-  #kycStatusDetails{font-size:13px;color:#526678;line-height:1.6;margin-top:10px}
-</style>
-
-<script>
-(function(){
-  'use strict';
-
-  const KYC_API = 'https://yembridge-api.c07057702.workers.dev';
-  const MAX_PHOTO_SIZE = 4 * 1024 * 1024;
-  const ALLOWED_TYPES = ['image/jpeg','image/png','image/webp'];
-
-  let yembridgeKycStatus = null;
-  let kycLoading = false;
-  let kycInstalled = false;
-
-  function kycElement(id){
-    return document.getElementById(id);
-  }
-
-  function kycMessage(message,type){
-    const box = kycElement('kycMessage');
-    if(!box) return;
-    box.textContent = message;
-    box.className = 'kyc-message ' + (type || '');
-  }
-
-  async function getKycAuthToken(){
-    if(!window.Clerk || !window.Clerk.isSignedIn || !window.Clerk.session){
-      throw new Error('Please sign in to your YemBridge account.');
-    }
-    const token = await window.Clerk.session.getToken();
-    if(!token){
-      throw new Error('Your secure session could not be verified. Please sign in again.');
-    }
-    return token;
-  }
-
-  async function kycReadResponse(response){
-    let result = {};
-    try{
-      result = await response.json();
-    }catch(e){
-      throw new Error('The server returned an unreadable response. Please try again.');
-    }
-    if(!response.ok){
-      throw new Error(result.error || 'The request could not be completed. Please try again.');
-    }
-    return result;
-  }
-
-  function installKycInterface(){
-    if(kycInstalled) return true;
-
-    const rows = Array.from(document.querySelectorAll('.account-status'));
-    const identityRow = rows.find(row =>
-      row.textContent.toLowerCase().includes('identity verification')
-    );
-
-    if(!identityRow) return false;
-
-    identityRow.innerHTML = `
-      <div class="status-icon">🪪</div>
-      <div>
-        <b>Identity verification</b>
-        <small>Submit your identity details and documents for verification.</small>
-      </div>
-      <span id="kycStatusBadge" class="kyc-status-chip">Checking status</span>
-    `;
-
-    const panel = document.createElement('section');
-    panel.className = 'kyc-panel';
-    panel.id = 'kycFormPanel';
-    panel.hidden = true;
-
-    panel.innerHTML = `
-      <h4>Identity verification (KYC)</h4>
-      <p id="kycStatusDetails" aria-live="polite">Your verification status will appear here.</p>
-
-      <div class="kyc-actions">
-        <button type="button" class="kyc-secondary" id="kycRefreshButton">Refresh status</button>
-      </div>
-
-      <form id="kycForm" class="kyc-form" novalidate>
-        <h4>Submit your identity details</h4>
-
-        <label>
-          National Identification Number (NIN)
-          <input id="kycNin" type="text" autocomplete="off" required maxlength="32">
-          <span class="kyc-field-note">Your full NIN is sent securely for verification and is never displayed back in full.</span>
-        </label>
-
-        <label>
-          Phone number
-          <input id="kycPhoneNumber" type="tel" placeholder="+256..." required>
-          <span class="kyc-field-note">Use international format, for example +256 followed by your number.</span>
-        </label>
-
-        <label>Village
-          <input id="kycVillage" type="text" required>
-        </label>
-
-        <label>Ward
-          <input id="kycWard" type="text" required>
-        </label>
-
-        <label>District
-          <input id="kycDistrict" type="text" required>
-        </label>
-
-        <label>Town
-          <input id="kycTown" type="text" required>
-        </label>
-
-        <label>Country that issued your ID
-          <input id="kycIdCountry" type="text" value="Uganda" required>
-        </label>
-
-        <label class="kyc-photo-field">
-          National ID — Front
-          <input id="kycNationalIdFront" type="file" accept="image/jpeg,image/png,image/webp" required>
-        </label>
-
-        <label class="kyc-photo-field">
-          National ID — Back
-          <input id="kycNationalIdBack" type="file" accept="image/jpeg,image/png,image/webp" required>
-        </label>
-
-        <label class="kyc-photo-field">
-          Selfie photograph
-          <input id="kycSelfie" type="file" accept="image/jpeg,image/png,image/webp" required>
-        </label>
-
-        <p class="kyc-field-note">All three photographs must be JPEG, PNG or WebP and no larger than 4 MB each. Make sure your ID details are clear and readable.</p>
-
-        <div id="kycMessage" class="kyc-message" aria-live="polite"></div>
-
-        <div class="kyc-actions">
-          <button type="submit" id="kycSubmitButton">Submit for verification</button>
-        </div>
-      </form>
-    `;
-identityRow.insertAdjacentElement('afterend',panel);
-       const openKycButton = document.createElement('button');
-    openKycButton.type = 'button';
-    openKycButton.textContent = 'Open verification form';
-    openKycButton.style.cssText = 'display:block;width:100%;padding:14px;margin:10px 0;border:0;border-radius:10px;background:#1457d9;color:white;font-weight:bold;cursor:pointer;';
-
-    identityRow.insertAdjacentElement('afterend',openKycButton);
-
-    openKycButton.addEventListener('click',function(){
-      panel.hidden = false;
-      panel.style.display = 'block';
-      panel.scrollIntoView({behavior:'smooth',block:'start'});
-      loadKycStatus();
-    });
-identityRow.style.cursor = 'pointer';
-identityRow.setAttribute('role','button');
-identityRow.setAttribute('tabindex','0');
-identityRow.setAttribute('aria-label','Open identity verification form');
-
-function toggleKycPanel(){
-  panel.hidden = !panel.hidden;
-  if(!panel.hidden){
-    panel.scrollIntoView({behavior:'smooth',block:'start'});
-    loadKycStatus();
-  }
-}
-
-identityRow.addEventListener('click',toggleKycPanel);
-identityRow.addEventListener('keydown',function(event){
-  if(event.key === 'Enter' || event.key === ' '){
-    event.preventDefault();
-    toggleKycPanel();
-  }
-});
-
-    kycElement('kycRefreshButton').addEventListener('click',loadKycStatus);
-    kycElement('kycForm').addEventListener('submit',submitKycApplication);
-
-    kycInstalled = true;
-    return true;
-  }
-
-  function renderKycStatus(){
-    const badge = kycElement('kycStatusBadge');
-    const details = kycElement('kycStatusDetails');
-    const panel = kycElement('kycFormPanel');
-    const form = kycElement('kycForm');
-
-    if(!badge || !details || !panel || !form) return;
-
-    const kyc = yembridgeKycStatus || {status:'unverified'};
-    const status = String(kyc.status || 'unverified').toLowerCase();
-
-    const labels = {
-      unverified:'Unverified',
-      pending:'Pending',
-      under_review:'Under Review',
-      approved:'Verified',
-      rejected:'Verification Rejected',
-      requires_information:'More Information Required'
-    };
-
-    const knownStatuses = Object.keys(labels);
-    const label = labels[status] || 'Status unavailable';
-
-    badge.textContent = label;
-    badge.className = 'kyc-status-chip';
-
-    if(status === 'approved') badge.classList.add('status-success');
-    else if(status === 'pending' || status === 'under_review') badge.classList.add('status-pending');
-    else if(status === 'rejected' || status === 'requires_information') badge.classList.add('status-rejected');
-
-    details.textContent = '';
-
-    const lines = [];
-
-    if(kyc.maskedNin){
-      lines.push('NIN: ' + String(kyc.maskedNin));
-    }
-    if(kyc.submittedAt){
-      lines.push('Submitted: ' + String(kyc.submittedAt));
-    }
-    if(kyc.reviewedAt){
-      lines.push('Last reviewed: ' + String(kyc.reviewedAt));
-    }
-
-    const contact = kyc.contactDetails || {};
-    ['phoneNumber','village','ward','district','town','idCountry'].forEach(key=>{
-      if(contact[key]){
-        const names = {
-          phoneNumber:'Phone',
-          village:'Village',
-          ward:'Ward',
-          district:'District',
-          town:'Town',
-          idCountry:'ID country'
-        };
-        lines.push(names[key] + ': ' + String(contact[key]));
-      }
-    });
-
-    if(status === 'approved'){
-      lines.unshift('Your identity has been verified.');
-    }else if(status === 'pending' || status === 'under_review'){
-      lines.unshift('Your documents have been received. Please wait while they are reviewed.');
-    }else if(status === 'rejected' || status === 'requires_information'){
-      lines.unshift('Please correct your details and submit again.');
-    }else if(status === 'unverified'){
-      lines.unshift('Complete the form below to submit your identity documents.');
-    }else if(!knownStatuses.includes(status)){
-      lines.unshift('We could not identify your current verification status. Please refresh.');
-    }
-
-    details.textContent = lines.join('\n');
-    details.style.whiteSpace = 'pre-line';
-
-    const canSubmit = ['unverified','rejected','requires_information'].includes(status);
-    form.hidden = !canSubmit;
-  }
-
-  async function loadKycStatus(){
-    if(!window.yembridgeAccount){
-      if(kycElement('kycStatusDetails')){
-        kycElement('kycStatusDetails').textContent = 'Connect your YemBridge account first.';
-      }
-      return;
-    }
-
-    if(kycLoading) return;
-    kycLoading = true;
-
-    const refresh = kycElement('kycRefreshButton');
-    if(refresh) refresh.disabled = true;
-
-    try{
-      const token = await getKycAuthToken();
-      const response = await fetch(KYC_API + '/kyc-status',{
-        method:'GET',
-        headers:{Authorization:'Bearer ' + token}
-      });
-
-      const result = await kycReadResponse(response);
-      yembridgeKycStatus = result.kyc || {status:'unverified'};
-      renderKycStatus();
-    }catch(error){
-      const details = kycElement('kycStatusDetails');
-      if(details) details.textContent = error.message || 'Unable to load verification status. Please try again.';
-    }finally{
-      kycLoading = false;
-      if(refresh) refresh.disabled = false;
-    }
-  }
-
-  async function submitKycApplication(event){
-    event.preventDefault();
-
-    const form = kycElement('kycForm');
-    const button = kycElement('kycSubmitButton');
-
-    if(!window.yembridgeAccount){
-      kycMessage('Connect your YemBridge account before submitting KYC.','error');
-      return;
-    }
-
-    if(!window.Clerk || !window.Clerk.isSignedIn){
-      kycMessage('Please sign in before submitting your documents.','error');
-      return;
-    }
-
-    const currentStatus = yembridgeKycStatus && yembridgeKycStatus.status;
-    if(currentStatus && !['unverified','rejected','requires_information'].includes(currentStatus)){
-      kycMessage('Your current application cannot be resubmitted. Refresh your status for details.','error');
-      return;
-    }
-
-    const value = id => kycElement(id).value.trim();
-    const nin = value('kycNin').toUpperCase();
-    const phone = value('kycPhoneNumber');
-
-    if(!/^[A-Z0-9]{5,32}$/.test(nin)){
 
 <style>
   .kyc-panel {
@@ -1075,6 +747,7 @@ identityRow.addEventListener('keydown',function(event){
     color: #526678;
     line-height: 1.6;
     margin-top: 10px;
+    white-space: pre-line;
   }
 
   .account-status[role="button"] {
@@ -1088,7 +761,7 @@ identityRow.addEventListener('keydown',function(event){
 </style>
 
 <script>
-(function(){
+(function () {
   'use strict';
 
   const KYC_API = 'https://yembridge-api.c07057702.workers.dev';
@@ -1098,81 +771,75 @@ identityRow.addEventListener('keydown',function(event){
   let yembridgeKycStatus = null;
   let kycLoading = false;
   let kycInstalled = false;
+  let kycStartTimer = null;
 
-  function kycElement(id){
+  function el(id) {
     return document.getElementById(id);
   }
 
-  function kycMessage(message, type){
-    const box = kycElement('kycMessage');
-    if(!box) return;
+  function showMessage(message, type) {
+    const box = el('kycMessage');
+    if (!box) return;
 
     box.textContent = message;
     box.className = 'kyc-message ' + (type || '');
   }
 
-  async function getKycAuthToken(){
-    if(
+  async function getKycAuthToken() {
+    if (
       !window.Clerk ||
       !window.Clerk.isSignedIn ||
       !window.Clerk.session
-    ){
+    ) {
       throw new Error('Please sign in to your YemBridge account.');
     }
 
     const token = await window.Clerk.session.getToken();
 
-    if(!token){
+    if (!token) {
       throw new Error('Your secure session could not be verified. Please sign in again.');
     }
 
     return token;
   }
 
-  async function kycReadResponse(response){
+  async function readResponse(response) {
     let result = {};
 
-    try{
+    try {
       result = await response.json();
-    }catch(e){
+    } catch (error) {
       throw new Error('The server returned an unreadable response. Please try again.');
     }
 
-    if(!response.ok){
-      throw new Error(
-        result.error || 'The request could not be completed. Please try again.'
-      );
+    if (!response.ok) {
+      throw new Error(result.error || 'The request could not be completed. Please try again.');
     }
 
     return result;
   }
 
-  function installKycInterface(){
-    if(kycInstalled) return true;
+  function installKycInterface() {
+    if (kycInstalled) return true;
 
-    const rows = Array.from(
-      document.querySelectorAll('.account-status')
-    );
+    const rows = Array.from(document.querySelectorAll('.account-status'));
 
     const identityRow = rows.find(row =>
       row.textContent.toLowerCase().includes('identity verification')
     );
 
-    if(!identityRow) return false;
+    if (!identityRow) return false;
 
     identityRow.innerHTML = `
       <div class="status-icon">🪪</div>
       <div>
         <b>Identity verification</b>
-        <small>Submit your identity details and documents for verification.</small>
+        <small>Tap to submit your identity details and documents.</small>
       </div>
-      <span id="kycStatusBadge" class="kyc-status-chip">
-        Checking status
-      </span>
+      <span id="kycStatusBadge" class="kyc-status-chip">Checking status</span>
     `;
 
     const panel = document.createElement('section');
-
     panel.className = 'kyc-panel';
     panel.id = 'kycFormPanel';
     panel.hidden = true;
@@ -1185,11 +852,7 @@ identityRow.addEventListener('keydown',function(event){
       </p>
 
       <div class="kyc-actions">
-        <button
-          type="button"
-          class="kyc-secondary"
-          id="kycRefreshButton"
-        >
+        <button type="button" class="kyc-secondary" id="kycRefreshButton">
           Refresh status
         </button>
       </div>
@@ -1199,101 +862,64 @@ identityRow.addEventListener('keydown',function(event){
 
         <label>
           National Identification Number (NIN)
-          <input
-            id="kycNin"
-            type="text"
-            autocomplete="off"
-            required
-            maxlength="32"
-          >
+          <input id="kycNin" type="text" autocomplete="off" required maxlength="32">
           <span class="kyc-field-note">
-            Your full NIN is sent securely for verification and is never displayed back in full.
+            Your NIN is submitted securely and is not displayed back in full.
           </span>
         </label>
 
         <label>
           Phone number
-          <input
-            id="kycPhoneNumber"
-            type="tel"
-            placeholder="+256..."
-            required
-          >
+          <input id="kycPhoneNumber" type="tel" placeholder="+256..." required>
           <span class="kyc-field-note">
             Use international format, for example +256 followed by your number.
           </span>
         </label>
 
-        <label>
-          Village
+        <label>Village
           <input id="kycVillage" type="text" required>
         </label>
 
-        <label>
-          Ward
+        <label>Ward
           <input id="kycWard" type="text" required>
         </label>
 
-        <label>
-          District
+        <label>District
           <input id="kycDistrict" type="text" required>
         </label>
 
-        <label>
-          Town
+        <label>Town
           <input id="kycTown" type="text" required>
         </label>
 
-        <label>
-          Country that issued your ID
-          <input
-            id="kycIdCountry"
-            type="text"
-            value="Uganda"
-            required
-          >
+        <label>Country that issued your ID
+          <input id="kycIdCountry" type="text" value="Uganda" required>
         </label>
 
         <label class="kyc-photo-field">
           National ID — Front
-          <input
-            id="kycNationalIdFront"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            required
-          >
+          <input id="kycNationalIdFront" type="file"
+            accept="image/jpeg,image/png,image/webp" required>
         </label>
 
         <label class="kyc-photo-field">
           National ID — Back
-          <input
-            id="kycNationalIdBack"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            required
-          >
+          <input id="kycNationalIdBack" type="file"
+            accept="image/jpeg,image/png,image/webp" required>
         </label>
 
         <label class="kyc-photo-field">
           Selfie photograph
-          <input
-            id="kycSelfie"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            required
-          >
+          <input id="kycSelfie" type="file"
+            accept="image/jpeg,image/png,image/webp" required>
         </label>
 
         <p class="kyc-field-note">
-          All three photographs must be JPEG, PNG or WebP and no larger than 4 MB each.
+          Each photograph must be JPEG, PNG or WebP and no larger than 4 MB.
           Make sure your ID details are clear and readable.
         </p>
 
-        <div
-          id="kycMessage"
-          class="kyc-message"
-          aria-live="polite"
-        ></div>
+        <div id="kycMessage" class="kyc-message" aria-live="polite"></div>
 
         <div class="kyc-actions">
           <button type="submit" id="kycSubmitButton">
@@ -1305,19 +931,17 @@ identityRow.addEventListener('keydown',function(event){
 
     identityRow.insertAdjacentElement('afterend', panel);
 
-    // Make the Identity Verification row the single form opener.
     identityRow.style.cursor = 'pointer';
     identityRow.setAttribute('role', 'button');
     identityRow.setAttribute('tabindex', '0');
-    identityRow.setAttribute(
-      'aria-label',
-      'Open identity verification form'
-    );
+    identityRow.setAttribute('aria-label', 'Open identity verification form');
+    identityRow.setAttribute('aria-expanded', 'false');
 
-    function toggleKycPanel(){
+    function toggleKycPanel() {
       panel.hidden = !panel.hidden;
+      identityRow.setAttribute('aria-expanded', String(!panel.hidden));
 
-      if(!panel.hidden){
+      if (!panel.hidden) {
         panel.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
@@ -1329,41 +953,29 @@ identityRow.addEventListener('keydown',function(event){
 
     identityRow.addEventListener('click', toggleKycPanel);
 
-    identityRow.addEventListener('keydown', function(event){
-      if(event.key === 'Enter' || event.key === ' '){
+    identityRow.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         toggleKycPanel();
       }
     });
 
-    kycElement('kycRefreshButton').addEventListener(
-      'click',
-      loadKycStatus
-    );
-
-    kycElement('kycForm').addEventListener(
-      'submit',
-      submitKycApplication
-    );
+    el('kycRefreshButton').addEventListener('click', loadKycStatus);
+    el('kycForm').addEventListener('submit', submitKycApplication);
 
     kycInstalled = true;
     return true;
   }
 
-  function renderKycStatus(){
-    const badge = kycElement('kycStatusBadge');
-    const details = kycElement('kycStatusDetails');
-    const form = kycElement('kycForm');
+  function renderKycStatus() {
+    const badge = el('kycStatusBadge');
+    const details = el('kycStatusDetails');
+    const form = el('kycForm');
 
-    if(!badge || !details || !form) return;
+    if (!badge || !details || !form) return;
 
-    const kyc = yembridgeKycStatus || {
-      status: 'unverified'
-    };
-
-    const status = String(
-      kyc.status || 'unverified'
-    ).toLowerCase();
+    const kyc = yembridgeKycStatus || { status: 'unverified' };
+    const status = String(kyc.status || 'unverified').toLowerCase();
 
     const labels = {
       unverified: 'Unverified',
@@ -1374,40 +986,37 @@ identityRow.addEventListener('keydown',function(event){
       requires_information: 'More Information Required'
     };
 
-    const knownStatuses = Object.keys(labels);
-    const label = labels[status] || 'Status unavailable';
-
-    badge.textContent = label;
+    badge.textContent = labels[status] || 'Status unavailable';
     badge.className = 'kyc-status-chip';
 
-    if(status === 'approved'){
+    if (status === 'approved') {
       badge.classList.add('status-success');
-    }else if(status === 'pending' || status === 'under_review'){
+    } else if (status === 'pending' || status === 'under_review') {
       badge.classList.add('status-pending');
-    }else if(
-      status === 'rejected' ||
-      status === 'requires_information'
-    ){
+    } else if (status === 'rejected' || status === 'requires_information') {
       badge.classList.add('status-rejected');
     }
 
     const lines = [];
 
-    if(kyc.maskedNin){
-      lines.push('NIN: ' + String(kyc.maskedNin));
+    if (status === 'approved') {
+      lines.push('Your identity has been verified.');
+    } else if (status === 'pending' || status === 'under_review') {
+      lines.push('Your documents have been received. Please wait while they are reviewed.');
+    } else if (status === 'rejected' || status === 'requires_information') {
+      lines.push('Please correct your details and submit again.');
+    } else if (status === 'unverified') {
+      lines.push('Complete the form below to submit your identity documents.');
+    } else {
+      lines.push('We could not identify your current verification status. Please refresh.');
     }
 
-    if(kyc.submittedAt){
-      lines.push('Submitted: ' + String(kyc.submittedAt));
-    }
-
-    if(kyc.reviewedAt){
-      lines.push('Last reviewed: ' + String(kyc.reviewedAt));
-    }
+    if (kyc.maskedNin) lines.push('NIN: ' + String(kyc.maskedNin));
+    if (kyc.submittedAt) lines.push('Submitted: ' + String(kyc.submittedAt));
+    if (kyc.reviewedAt) lines.push('Last reviewed: ' + String(kyc.reviewedAt));
 
     const contact = kyc.contactDetails || {};
-
-    const contactNames = {
+    const names = {
       phoneNumber: 'Phone',
       village: 'Village',
       ward: 'Ward',
@@ -1416,125 +1025,75 @@ identityRow.addEventListener('keydown',function(event){
       idCountry: 'ID country'
     };
 
-    Object.keys(contactNames).forEach(key => {
-      if(contact[key]){
-        lines.push(
-          contactNames[key] + ': ' + String(contact[key])
-        );
-      }
+    Object.keys(names).forEach(key => {
+      if (contact[key]) lines.push(names[key] + ': ' + String(contact[key]));
     });
 
-    if(status === 'approved'){
-      lines.unshift('Your identity has been verified.');
-    }else if(status === 'pending' || status === 'under_review'){
-      lines.unshift(
-        'Your documents have been received. Please wait while they are reviewed.'
-      );
-    }else if(
-      status === 'rejected' ||
-      status === 'requires_information'
-    ){
-      lines.unshift(
-        'Please correct your details and submit again.'
-      );
-    }else if(status === 'unverified'){
-      lines.unshift(
-        'Complete the form below to submit your identity documents.'
-      );
-    }else if(!knownStatuses.includes(status)){
-      lines.unshift(
-        'We could not identify your current verification status. Please refresh.'
-      );
-    }
-
     details.textContent = lines.join('\n');
-    details.style.whiteSpace = 'pre-line';
 
-    const canSubmit = [
+    form.hidden = ![
       'unverified',
       'rejected',
       'requires_information'
     ].includes(status);
-
-    form.hidden = !canSubmit;
   }
 
-  async function loadKycStatus(){
-    if(!window.yembridgeAccount){
-      const details = kycElement('kycStatusDetails');
+  async function loadKycStatus() {
+    const details = el('kycStatusDetails');
 
-      if(details){
-        details.textContent =
-          'Connect your YemBridge account first.';
+    if (!window.yembridgeAccount) {
+      if (details) {
+        details.textContent = 'Connect your YemBridge account first.';
       }
-
       return;
     }
 
-    if(kycLoading) return;
+    if (kycLoading) return;
 
     kycLoading = true;
 
-    const refresh = kycElement('kycRefreshButton');
+    const refresh = el('kycRefreshButton');
+    if (refresh) refresh.disabled = true;
 
-    if(refresh) refresh.disabled = true;
-
-    try{
+    try {
       const token = await getKycAuthToken();
 
-      const response = await fetch(
-        KYC_API + '/kyc-status',
-        {
-          method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
+      const response = await fetch(KYC_API + '/kyc-status', {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + token
         }
-      );
+      });
 
-      const result = await kycReadResponse(response);
+      const result = await readResponse(response);
 
-      yembridgeKycStatus = result.kyc || {
-        status: 'unverified'
-      };
-
+      yembridgeKycStatus = result.kyc || { status: 'unverified' };
       renderKycStatus();
 
-    }catch(error){
-      const details = kycElement('kycStatusDetails');
-
-      if(details){
-        details.textContent =
-          error.message ||
+    } catch (error) {
+      if (details) {
+        details.textContent = error.message ||
           'Unable to load verification status. Please try again.';
       }
-
-    }finally{
+    } finally {
       kycLoading = false;
-
-      if(refresh) refresh.disabled = false;
+      if (refresh) refresh.disabled = false;
     }
   }
 
-  async function submitKycApplication(event){
+  async function submitKycApplication(event) {
     event.preventDefault();
 
-    const form = kycElement('kycForm');
-    const button = kycElement('kycSubmitButton');
+    const form = el('kycForm');
+    const button = el('kycSubmitButton');
 
-    if(!window.yembridgeAccount){
-      kycMessage(
-        'Connect your YemBridge account before submitting KYC.',
-        'error'
-      );
+    if (!window.yembridgeAccount) {
+      showMessage('Connect your YemBridge account before submitting KYC.', 'error');
       return;
     }
 
-    if(!window.Clerk || !window.Clerk.isSignedIn){
-      kycMessage(
-        'Please sign in before submitting your documents.',
-        'error'
-      );
+    if (!window.Clerk || !window.Clerk.isSignedIn) {
+      showMessage('Please sign in before submitting your documents.', 'error');
       return;
     }
 
@@ -1542,39 +1101,26 @@ identityRow.addEventListener('keydown',function(event){
       yembridgeKycStatus?.status || 'unverified'
     ).toLowerCase();
 
-    if(![
-      'unverified',
-      'rejected',
-      'requires_information'
-    ].includes(currentStatus)){
-      kycMessage(
-        'Your current application cannot be resubmitted. Refresh your status for details.',
-        'error'
-      );
+    if (!['unverified', 'rejected', 'requires_information'].includes(currentStatus)) {
+      showMessage('Your current application cannot be resubmitted. Refresh your status for details.', 'error');
       return;
     }
 
     const value = id => {
-      const element = kycElement(id);
-      return element ? element.value.trim() : '';
+      const input = el(id);
+      return input ? input.value.trim() : '';
     };
 
     const nin = value('kycNin').toUpperCase();
     const phone = value('kycPhoneNumber');
 
-    if(!/^[A-Z0-9]{5,32}$/.test(nin)){
-      kycMessage(
-        'Please enter a valid NIN using 5 to 32 letters or numbers.',
-        'error'
-      );
+    if (!/^[A-Z0-9]{5,32}$/.test(nin)) {
+      showMessage('Please enter a valid NIN using 5 to 32 letters or numbers.', 'error');
       return;
     }
 
-    if(!/^\+[1-9][0-9]{7,14}$/.test(phone)){
-      kycMessage(
-        'Enter your phone number in international format, for example +256XXXXXXXXX.',
-        'error'
-      );
+    if (!/^\+[1-9][0-9]{7,14}$/.test(phone)) {
+      showMessage('Enter your phone number in international format, for example +256XXXXXXXXX.', 'error');
       return;
     }
 
@@ -1586,45 +1132,30 @@ identityRow.addEventListener('keydown',function(event){
       'kycIdCountry'
     ];
 
-    if(requiredFields.some(id => !value(id))){
-      kycMessage(
-        'Please complete all the required address and country fields.',
-        'error'
-      );
+    if (requiredFields.some(id => !value(id))) {
+      showMessage('Please complete all the required address and country fields.', 'error');
       return;
     }
 
     const files = {
-      nationalIdFront:
-        kycElement('kycNationalIdFront').files[0],
-      nationalIdBack:
-        kycElement('kycNationalIdBack').files[0],
-      selfie:
-        kycElement('kycSelfie').files[0]
+      nationalIdFront: el('kycNationalIdFront').files[0],
+      nationalIdBack: el('kycNationalIdBack').files[0],
+      selfie: el('kycSelfie').files[0]
     };
 
-    for(const [name, file] of Object.entries(files)){
-      if(!file){
-        kycMessage(
-          'Please select all three required photographs.',
-          'error'
-        );
+    for (const file of Object.values(files)) {
+      if (!file) {
+        showMessage('Please select all three required photographs.', 'error');
         return;
       }
 
-      if(!ALLOWED_TYPES.includes(file.type)){
-        kycMessage(
-          'All photographs must be JPEG, PNG or WebP.',
-          'error'
-        );
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        showMessage('All photographs must be JPEG, PNG or WebP.', 'error');
         return;
       }
 
-      if(file.size > MAX_PHOTO_SIZE){
-        kycMessage(
-          'Each photograph must be no larger than 4 MB.',
-          'error'
-        );
+      if (file.size > MAX_PHOTO_SIZE) {
+        showMessage('Each photograph must be no larger than 4 MB.', 'error');
         return;
       }
     }
@@ -1645,61 +1176,51 @@ identityRow.addEventListener('keydown',function(event){
     button.disabled = true;
     button.textContent = 'Submitting...';
 
-    kycMessage(
-      'Securely submitting your documents. Please wait.',
-      ''
-    );
+    showMessage('Securely submitting your documents. Please wait.', '');
 
-    try{
+    try {
       const token = await getKycAuthToken();
 
-      const response = await fetch(
-        KYC_API + '/kyc-submit',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: 'Bearer ' + token
-          },
-          body: data
-        }
-      );
+      const response = await fetch(KYC_API + '/kyc-submit', {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + token
+        },
+        body: data
+      });
 
-      const result = await kycReadResponse(response);
+      const result = await readResponse(response);
 
-      yembridgeKycStatus = result.kyc || {
-        status: 'pending'
-      };
+      yembridgeKycStatus = result.kyc || { status: 'pending' };
 
+      form.reset();
       renderKycStatus();
 
-      const details = kycElement('kycStatusDetails');
-
-      if(details){
-        details.textContent =
-          result.message ||
+      const details = el('kycStatusDetails');
+      if (details) {
+        details.textContent = result.message ||
           'Your identity documents have been submitted for review.';
       }
 
-      form.reset();
+      showMessage(
+        'Your application has been submitted. You can refresh your status to check for updates.',
+        'success'
+      );
 
       await loadKycStatus();
 
-    }catch(error){
-      let message =
-        error.message ||
-        'Your submission could not be completed.';
+    } catch (error) {
+      let message = error.message || 'Your submission could not be completed.';
 
-      if(message.toLowerCase().includes('duplicate')){
-        message =
-          'This NIN is already registered. Please contact YemBridge support if you believe this is an error.';
-      }else if(message.toLowerCase().includes('already submitted')){
-        message =
-          'An application has already been submitted. Please refresh your verification status.';
+      if (message.toLowerCase().includes('duplicate')) {
+        message = 'This NIN is already registered. Please contact YemBridge support if you believe this is an error.';
+      } else if (message.toLowerCase().includes('already submitted')) {
+        message = 'An application has already been submitted. Please refresh your verification status.';
       }
 
-      kycMessage(message, 'error');
+      showMessage(message, 'error');
 
-    }finally{
+    } finally {
       button.disabled = false;
       button.textContent = 'Submit for verification';
     }
@@ -1708,99 +1229,57 @@ identityRow.addEventListener('keydown',function(event){
   window.loadKycStatus = loadKycStatus;
   window.submitKycApplication = submitKycApplication;
 
-  function startKyc(){
-    if(!installKycInterface()) return false;
-
-    let attempts = 0;
-
-    const timer = setInterval(async function(){
-      attempts++;
-
-      if(window.yembridgeAccount){
-        clearInterval(timer);
-        await loadKycStatus();
-
-      }else if(attempts >= 120){
-        clearInterval(timer);
-
-        const details = kycElement('kycStatusDetails');
-
-        if(details){
-          details.textContent =
-            'Connect your YemBridge account to load your verification status.';
-        }
+  function startKyc() {
+    if (installKycInterface()) {
+      if (kycStartTimer) {
+        clearInterval(kycStartTimer);
+        kycStartTimer = null;
       }
-    }, 1000);
 
-    return true;
+      let attempts = 0;
+
+      kycStartTimer = setInterval(function () {
+        attempts++;
+
+        if (window.yembridgeAccount) {
+          clearInterval(kycStartTimer);
+          kycStartTimer = null;
+          loadKycStatus();
+        } else if (attempts >= 120) {
+          clearInterval(kycStartTimer);
+          kycStartTimer = null;
+
+          const details = el('kycStatusDetails');
+          if (details) {
+            details.textContent =
+              'Connect your YemBridge account to load your verification status.';
+          }
+        }
+      }, 1000);
+
+      return true;
+    }
+
+    return false;
   }
 
-  if(document.readyState === 'loading'){
+  if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startKyc);
-  }else{
+  } else {
     startKyc();
   }
 
-})();
-</script>
-<script>
-(function () {
-  function connectIdentityVerification() {
-    const rows = document.querySelectorAll('.account-status');
-
-    rows.forEach(function (row) {
-      if (row.dataset.kycClickReady === 'yes') return;
-
-      const text = (row.innerText || '').toLowerCase();
-
-      if (!text.includes('identity verification')) return;
-
-      row.dataset.kycClickReady = 'yes';
-      row.style.cursor = 'pointer';
-      row.setAttribute('role', 'button');
-      row.setAttribute('tabindex', '0');
-
-      function toggleForm() {
-        const panel = document.getElementById('kycPanel');
-
-        if (!panel) {
-          console.error('YemBridge: KYC panel was not found.');
-          return;
-        }
-
-        panel.hidden = !panel.hidden;
-
-        if (!panel.hidden) {
-          panel.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      }
-
-      row.addEventListener('click', toggleForm);
-
-      row.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          toggleForm();
-        }
-      });
-    });
-  }
-
-  connectIdentityVerification();
-
-  const observer = new MutationObserver(connectIdentityVerification);
+  // Retry if the account section is inserted after the page first loads.
+  const observer = new MutationObserver(function () {
+    if (!kycInstalled) startKyc();
+  });
 
   observer.observe(document.body, {
     childList: true,
     subtree: true
   });
 
-  document.addEventListener('DOMContentLoaded', connectIdentityVerification);
 })();
 </script>
 </body>
 </html>
-
