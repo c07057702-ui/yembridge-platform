@@ -560,7 +560,7 @@ window.addEventListener('load',async()=>{
      }catch(adminError){
       console.error('Administrator status check failed:',adminError);
       let diagnostic='Network/CORS error';
-      if(adminError && /^Administrator check returned HTTP \\d+$/.test(adminError.message)){
+      if(adminError && typeof adminError.message === 'string' && adminError.message.startsWith('Administrator check returned HTTP ')){
        diagnostic=adminError.message.replace('Administrator check returned ','');
       }else if(adminError && adminError.message==='Unreadable administrator response.'){
        diagnostic='Unreadable server response';
