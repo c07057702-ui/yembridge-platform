@@ -967,17 +967,22 @@ window.addEventListener('load',async()=>{
     identityRow.setAttribute('aria-expanded', 'false');
 
     function togglePanel() {
-      panel.hidden = !panel.hidden;
-      identityRow.setAttribute('aria-expanded', String(!panel.hidden));
+  const opening = panel.hidden;
 
-      if (!panel.hidden) {
-        panel.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-        loadKycStatus();
-      }
-    }
+  panel.hidden = false;
+  panel.style.display = opening ? 'block' : 'none';
+
+  identityRow.setAttribute('aria-expanded', String(opening));
+
+  if (opening) {
+    panel.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
+    });
+
+    loadKycStatus();
+  }
+}
 
     identityRow.onclick = togglePanel;
 
