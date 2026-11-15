@@ -644,10 +644,23 @@ window.addEventListener('load',async()=>{
     background: #fff;
   }
 
-  .kyc-panel[hidden],
-  .kyc-form[hidden] {
-    display: none !important;
-  }
+  
+.kyc-panel[hidden],
+.kyc-form[hidden] {
+  display: none !important;
+}
+
+.kyc-panel:not([hidden]) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
 
   .kyc-panel h4 {
     margin: 0 0 12px;
@@ -781,6 +794,7 @@ window.addEventListener('load',async()=>{
 </style>
 
 
+
 <script>
 (function () {
   'use strict';
@@ -840,19 +854,19 @@ window.addEventListener('load',async()=>{
     return result;
   }
 
-  // ==========================================
-  // INSTALL THE KYC PANEL
-  // ==========================================
+  // FIND IDENTITY VERIFICATION ROW
 
   function findIdentityRow() {
     const rows = Array.from(
-      document.querySelectorAll('#loggedIn .account-status, .account-status')
+      document.querySelectorAll('.account-status')
     );
 
     return rows.find(function (row) {
       return /identity\s+verification/i.test(row.textContent);
     });
   }
+
+  // INSTALL KYC INTERFACE
 
   function installKycInterface() {
     const identityRow = findIdentityRow();
@@ -875,7 +889,8 @@ window.addEventListener('load',async()=>{
       panel = document.createElement('section');
       panel.className = 'kyc-panel';
       panel.id = 'kycFormPanel';
-      panel.hidden = true;
+
+      panel.setAttribute('hidden', '');
 
       panel.innerHTML = `
         <h4>Identity verification (KYC)</h4>
@@ -895,7 +910,8 @@ window.addEventListener('load',async()=>{
 
           <label>
             National Identification Number (NIN)
-            <input id="kycNin" type="text" autocomplete="off" required maxlength="32">
+            <input id="kycNin" type="text" autocomplete="off"
+              required maxlength="32">
             <span class="kyc-field-note">
               Your NIN is submitted securely and is not displayed back in full.
             </span>
@@ -903,7 +919,8 @@ window.addEventListener('load',async()=>{
 
           <label>
             Phone number
-            <input id="kycPhoneNumber" type="tel" placeholder="+256..." required>
+            <input id="kycPhoneNumber" type="tel"
+              placeholder="+256..." required>
             <span class="kyc-field-note">
               Use international format, for example +256 followed by your number.
             </span>
@@ -926,7 +943,8 @@ window.addEventListener('load',async()=>{
           </label>
 
           <label>Country that issued your ID
-            <input id="kycIdCountry" type="text" value="Uganda" required>
+            <input id="kycIdCountry" type="text"
+              value="Uganda" required>
           </label>
 
           <label class="kyc-photo-field">
@@ -952,7 +970,8 @@ window.addEventListener('load',async()=>{
             Make sure your ID details are clear and readable.
           </p>
 
-          <div id="kycMessage" class="kyc-message" aria-live="polite"></div>
+          <div id="kycMessage" class="kyc-message"
+            aria-live="polite"></div>
 
           <div class="kyc-actions">
             <button type="submit" id="kycSubmitButton">
@@ -968,19 +987,22 @@ window.addEventListener('load',async()=>{
     identityRow.classList.add('kyc-clickable');
     identityRow.setAttribute('role', 'button');
     identityRow.setAttribute('tabindex', '0');
-    identityRow.setAttribute('aria-label', 'Open identity verification form');
-    identityRow.setAttribute('aria-expanded', String(!panel.hidden));
-    identityRow.setAttribute('title', 'Tap to open identity verification');
+    identityRow.setAttribute('aria-label',
+      'Open identity verification form');
+    identityRow.setAttribute('aria-expanded',
+      String(!panel.hasAttribute('hidden')));
     identityRow.style.cursor = 'pointer';
     identityRow.style.touchAction = 'manipulation';
 
     const refresh = el('kycRefreshButton');
+
     if (refresh && refresh.dataset.kycBound !== 'yes') {
       refresh.dataset.kycBound = 'yes';
       refresh.addEventListener('click', loadKycStatus);
     }
 
     const form = el('kycForm');
+
     if (form && form.dataset.kycBound !== 'yes') {
       form.dataset.kycBound = 'yes';
       form.addEventListener('submit', submitKycApplication);
@@ -989,9 +1011,7 @@ window.addEventListener('load',async()=>{
     return true;
   }
 
-  // ==========================================
-  // OPEN AND CLOSE THE KYC PANEL
-  // ==========================================
+  // OPEN AND CLOSE PANEL
 
   function toggleKycPanel() {
     if (!installKycInterface()) return;
@@ -1001,10 +1021,17 @@ window.addEventListener('load',async()=>{
 
     if (!panel || !identityRow) return;
 
-    const opening = panel.hidden;
+    const opening = panel.hasAttribute('hidden');
 
-    panel.hidden = !opening;
-    panel.style.removeProperty('display');
+    if (opening) {
+      panel.removeAttribute('hidden');
+      panel.style.setProperty('display', 'block', 'important');
+      panel.style.setProperty('visibility', 'visible', 'important');
+      panel.style.setProperty('opacity', '1', 'important');
+    } else {
+      panel.setAttribute('hidden', '');
+      panel.style.setProperty('display', 'none', 'important');
+    }
 
     identityRow.setAttribute('aria-expanded', String(opening));
 
@@ -1016,27 +1043,29 @@ window.addEventListener('load',async()=>{
           behavior: 'smooth',
           block: 'nearest'
         });
-      }, 100);
+      }, 150);
     }
   }
 
-  // Install delegated handlers once.
-  // This still works if the account row is replaced later.
+  // DELEGATED TAP HANDLER
 
   function installDelegatedHandlers() {
     if (delegatedHandlersInstalled) return;
 
     document.addEventListener('click', function (event) {
       const target = event.target;
+
       if (!target || !target.closest) return;
 
       const row = target.closest('.account-status');
 
-      if (!row || !/identity\s+verification/i.test(row.textContent)) {
+      if (!row ||
+          !/identity\s+verification/i.test(row.textContent)) {
         return;
       }
 
       event.preventDefault();
+      event.stopPropagation();
       toggleKycPanel();
     }, true);
 
@@ -1044,11 +1073,13 @@ window.addEventListener('load',async()=>{
       if (event.key !== 'Enter' && event.key !== ' ') return;
 
       const target = event.target;
+
       if (!target || !target.closest) return;
 
       const row = target.closest('.account-status');
 
-      if (!row || !/identity\s+verification/i.test(row.textContent)) {
+      if (!row ||
+          !/identity\s+verification/i.test(row.textContent)) {
         return;
       }
 
@@ -1059,9 +1090,7 @@ window.addEventListener('load',async()=>{
     delegatedHandlersInstalled = true;
   }
 
-  // ==========================================
   // DISPLAY KYC STATUS
-  // ==========================================
 
   function renderKycStatus() {
     const badge = el('kycStatusBadge');
@@ -1137,9 +1166,7 @@ window.addEventListener('load',async()=>{
     ].includes(status);
   }
 
-  // ==========================================
   // LOAD KYC STATUS
-  // ==========================================
 
   async function loadKycStatus() {
     const details = el('kycStatusDetails');
@@ -1184,9 +1211,7 @@ window.addEventListener('load',async()=>{
     }
   }
 
-  // ==========================================
   // SUBMIT KYC APPLICATION
-  // ==========================================
 
   async function submitKycApplication(event) {
     event.preventDefault();
@@ -1332,9 +1357,7 @@ window.addEventListener('load',async()=>{
   window.loadKycStatus = loadKycStatus;
   window.submitKycApplication = submitKycApplication;
 
-  // ==========================================
   // START KYC
-  // ==========================================
 
   function startKyc() {
     installKycInterface();
