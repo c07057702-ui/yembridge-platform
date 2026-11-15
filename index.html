@@ -557,7 +557,16 @@ window.addEventListener('load',async()=>{
       }else{
        adminPanel.textContent='Administrator access: Not assigned. Your account is currently not an administrator.';
       }
-     }catch(adminError){console.error('Administrator status check failed:',adminError);adminPanel.textContent='Administrator status could not be checked. Your normal account remains available.'}
+     }catch(adminError){
+      console.error('Administrator status check failed:',adminError);
+      let diagnostic='Network/CORS error';
+      if(adminError && /^Administrator check returned HTTP \\d+$/.test(adminError.message)){
+       diagnostic=adminError.message.replace('Administrator check returned ','');
+      }else if(adminError && adminError.message==='Unreadable administrator response.'){
+       diagnostic='Unreadable server response';
+      }
+      adminPanel.textContent='Administrator status could not be checked ('+diagnostic+'). Your normal account remains available.';
+     }
     }
    }catch(error){console.error('YemBridge account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent='Your profile is signed in, but YemBridge account setup could not be completed. Please try again later.'}
   }
