@@ -466,13 +466,28 @@ function updateMerchantOrderStatus(index,newStatus){
  if(newStatus==='Cancelled'){
   const order=orders[index],refund=orderTotal(order);
   if(!confirm('Cancel this order and refund UGX '+refund.toLocaleString('en-UG')+' to the demo wallet?')){renderMerchantOrders();return}
-  order.status='Cancelled';
-  if(!applyOrderRefund(order)){alert('The refund could not be processed. Please try again.');return}
-  if(!restoreOrderStock(order)){alert('The stock restoration could not be saved. Please try again.');return}
-  if(!writeLocalArray('yembridgeMerchantOrders',orders)){alert('Order cancellation could not be saved.');return}
-  saveDemoData();updateWallet();renderActivity();renderShopProducts();
-  alert('Order cancelled. UGX '+Number(order.refundAmount).toLocaleString('en-UG')+' has been returned to the demo wallet.');
- }else{orders[index].status=newStatus;if(!writeLocalArray('yembridgeMerchantOrders',orders))return}
+  if(order.refundProcessed)return alert('This order has already been refunded.');
+  if(!Number.isFinite(refund)||refund<=0)return alert('The refund amount is invalid.');
+  const nextOrders=orders.slice(),nextOrder={...order};
+  const refundDate=new Date().toLocaleString('en-UG');
+  nextOrder.status='Cancelled';nextOrder.refundProcessed=true;nextOrder.refundDate=refundDate;nextOrder.refundAmount=refund;
+  nextOrders[index]=nextOrder;
+  const nextProducts=getProductSubmissions();
+  if(nextOrder.productId&&!nextOrder.stockRestored){
+   const product=nextProducts.find(p=>p.id===nextOrder.productId);
+   if(product)product.quantity=Number(product.quantity||0)+orderQuantity(nextOrder);
+   nextOrder.stockRestored=true;
+  }
+  const nextBalance=yemWallet+refund,nextTransactions=yemTransactions.slice();
+  nextTransactions.unshift({type:'refund',description:'Marketplace Order Refund',details:nextOrder.product||'Cancelled order',amount:refund,status:'Refund Successful',date:refundDate});
+  if(!persistDemoCheckout(nextProducts,nextOrders,nextBalance,nextTransactions))return;
+  yemWallet=nextBalance;yemTransactions=nextTransactions;
+  updateWallet();renderActivity();renderShopProducts();
+  alert('Order cancelled. UGX '+refund.toLocaleString('en-UG')+' has been returned to the demo wallet.');
+ }else{
+  if(!['New','Accepted','Processing','Delivered - Awaiting Customer Confirmation'].includes(newStatus))return;
+  orders[index].status=newStatus;if(!writeLocalArray('yembridgeMerchantOrders',orders))return
+ }
  renderMerchantOrders();renderCustomerOrders();renderMerchantSalesReport();renderMerchantWithdrawals();
 }
 function renderMerchantSalesReport(){
