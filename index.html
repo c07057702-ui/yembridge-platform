@@ -505,13 +505,6 @@ function renderMerchantSalesReport(){
  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
  set('merchantTotalSales','UGX '+total.toLocaleString('en-UG'));set('merchantCompletedCount',String(completed.length));set('merchantCommission','Not configured');set('merchantNetProceeds','Not configured');set('merchantPendingCount',String(pending.length));
 }
-function getMerchantAvailableWithdrawal(){
- const userId=window.Clerk?.user?.id;if(!userId)return 0;
- const orders=readLocalArray('yembridgeMerchantOrders').filter(o=>o.sellerId===userId),withdrawals=readLocalArray('yembridgeWithdrawals').filter(w=>w.merchantId===userId);
- const sales=orders.filter(o=>o.status==='Completed').reduce((s,o)=>s+orderTotal(o),0);
- const requested=withdrawals.filter(w=>w.status==='Pending'||w.status==='Approved').reduce((s,w)=>s+Number(w.amount||0),0);
- return Math.max(0,sales*.95-requested);
-}
 function renderMerchantWithdrawals(){
  const balance=document.getElementById('merchantAvailableWithdrawal'),history=document.getElementById('merchantWithdrawalHistory');if(!balance||!history)return;
  const userId=window.Clerk?.user?.id;balance.textContent='Not available';history.innerHTML='';
