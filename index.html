@@ -1026,6 +1026,7 @@ window.addEventListener('load',async()=>{
 
           <div class="kyc-photo-field">
             <strong>National ID — Back</strong>
+            <video id="kycCameraVideoBack" playsinline autoplay hidden style="width:100%;max-height:260px;border-radius:9px;background:#102B46"></video>
             <img id="kycBackPreview" alt="Back of National ID preview" hidden style="width:100%;max-height:180px;object-fit:contain;border-radius:9px">
             <div class="kyc-actions">
               <button type="button" data-kyc-camera="back">Open camera</button>
@@ -1038,6 +1039,7 @@ window.addEventListener('load',async()=>{
 
           <div class="kyc-photo-field">
             <strong>Selfie holding the front of your National ID</strong>
+            <video id="kycCameraVideoSelfie" playsinline autoplay hidden style="width:100%;max-height:260px;border-radius:9px;background:#102B46"></video>
             <img id="kycSelfiePreview" alt="Selfie holding National ID preview" hidden style="width:100%;max-height:180px;object-fit:contain;border-radius:9px">
             <div class="kyc-actions">
               <button type="button" data-kyc-camera="selfie">Open front camera</button>
@@ -1302,12 +1304,14 @@ window.addEventListener('load',async()=>{
       cameraStream.getTracks().forEach(function (track) { track.stop(); });
       cameraStream = null;
     }
-    const video = el('kycCameraVideo');
-    if (video) {
-      video.pause();
-      video.srcObject = null;
-      video.hidden = true;
-    }
+    ['Front', 'Back', 'Selfie'].forEach(function (part) {
+      const video = el('kycCameraVideo' + part);
+      if (video) {
+        video.pause();
+        video.srcObject = null;
+        video.hidden = true;
+      }
+    });
     activeCameraType = null;
   }
 
@@ -1344,22 +1348,11 @@ window.addEventListener('load',async()=>{
         }
       });
 
-      if (type === 'front') {
-        const video = el('kycCameraVideo');
-        video.srcObject = cameraStream;
-        video.hidden = false;
-        await video.play();
-      } else {
-        const video = document.createElement('video');
-        video.id = 'kycCameraVideo';
-        video.playsInline = true;
-        video.autoplay = true;
-        video.srcObject = cameraStream;
-        video.style.cssText = 'width:100%;max-height:260px;border-radius:9px;background:#102B46';
-        const field = document.querySelector('[data-kyc-camera="' + type + '"]').closest('.kyc-photo-field');
-        field.insertBefore(video, field.querySelector('.kyc-actions'));
-        await video.play();
-      }
+      const videoId = type === 'front' ? 'kycCameraVideo' : type === 'back' ? 'kycCameraVideoBack' : 'kycCameraVideoSelfie';
+      const video = el(videoId);
+      video.srcObject = cameraStream;
+      video.hidden = false;
+      await video.play();
 
       setPhotoControls(type, { open: false, capture: true, retake: false, accept: false });
       showMessage('Position the ' + (type === 'selfie' ? 'front of your face and National ID' : 'ID card') + ' clearly, then take the photo.', '');
@@ -1370,7 +1363,8 @@ window.addEventListener('load',async()=>{
   }
 
   async function captureKycPhoto(type) {
-    const video = el('kycCameraVideo');
+    const videoId = type === 'front' ? 'kycCameraVideo' : type === 'back' ? 'kycCameraVideoBack' : 'kycCameraVideoSelfie';
+    const video = el(videoId);
     const canvas = el('kycCameraCanvas');
     if (!video || !canvas || !video.videoWidth || !video.videoHeight || activeCameraType !== type) {
       showMessage('The camera is not ready. Please open it again.', 'error');
