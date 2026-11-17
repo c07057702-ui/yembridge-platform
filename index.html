@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>YemBridge Digital Commerce</title>
+<title>PAMOJA | Together. More Possible.</title>
 <style>
 :root{--navy:#102B46;--green:#087F68;--gold:#F2B84B;--ink:#182B3D;--muted:#718092;--bg:#F5F8F7}
 *{box-sizing:border-box}
@@ -46,22 +46,22 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 </style>
 </head>
 <body class="starting">
-<div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading YemBridge...</b><small>Checking your secure account</small></div></div>
+<div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
 
-<header class="site-header"><div class="brand"><div class="brand-mark">YB</div><div class="brand-divider"></div><div class="brand-copy"><h2>YemBridge</h2><p>YOUR EVERYDAY COMMERCE COMPANION</p></div></div><div class="demo-label">DEMO</div></header>
+<header class="site-header"><div class="brand"><div class="brand-mark">P</div><div class="brand-divider"></div><div class="brand-copy"><h2>PAMOJA</h2><p>TOGETHER. MORE POSSIBLE.</p></div></div><div class="demo-label">DEMO</div></header>
 
 <main>
 <section id="home">
-<div class="card balance"><div class="balance-top"><span>◈ YOUR YEMBRIDGE WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 250,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>YB</b></div></div>
-<div class="welcome"><p class="welcome-tag">WELCOME TO YEMBRIDGE</p><h3>Everything you need,<br>in one place.</h3><p class="muted">Pay bills, stay connected and discover great local businesses.</p><button onclick="show('services')">Explore services →</button></div>
+<div class="card balance"><div class="balance-top"><span>◈ YOUR PAMOJA WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 1,500,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>P</b></div></div>
+<div class="welcome"><p class="welcome-tag">WELCOME TO PAMOJA</p><h3>Everything you need,<br>in one place.</h3><p class="muted">Pay bills, stay connected and discover great local businesses.</p><button onclick="show('services')">Explore services →</button></div>
 <div class="section-heading"><h3>Explore services</h3><span>YOUR DAILY ESSENTIALS</span></div>
 <div class="grid"><div class="service" onclick="show('services')"><span>📱</span><b>Airtime & Data</b><small>Stay connected</small></div><div class="service" onclick="show('services')"><span>💡</span><b>Pay Bills</b><small>Easy payments</small></div><div class="service" onclick="show('shop')"><span>🛍️</span><b>Marketplace</b><small>Shop local</small></div><div class="service" onclick="show('activity')"><span>📋</span><b>Activity</b><small>Track transactions</small></div></div>
-<div class="market-banner" onclick="show('shop')"><div><span>THE YEMBRIDGE MARKETPLACE</span><h3>Shop local.<br>Grow together.</h3><p>Discover products from local merchants.</p><b>Explore marketplace →</b></div><div class="market-symbol">YB</div></div>
+<div class="market-banner" onclick="show('shop')"><div><span>PAMOJA MARKET</span><h3>Shop local.<br>Grow together.</h3><p>Discover products from local merchants.</p><b>Explore PAMOJA Market →</b></div><div class="market-symbol">P</div></div>
 </section>
 
 <section id="services" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE SERVICES</p><h3>Digital Services</h3><p class="muted">Your everyday essentials, all in one place.</p><div class="grid"><div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div><div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div><div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div></div></div></section>
 
-<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">SHOP WITH YEMBRIDGE</p><h3>Marketplace</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Shop local. Grow together.</b><small>Explore approved merchant products.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="cartItems"></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
+<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">PAMOJA MARKET</p><h3>PAMOJA Market</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Together. More Possible.</b><small>Discover products from local merchants.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="cartItems"></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
 
 <section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 0</b></div><div><small>Money Out</small><b>UGX 0</b></div></div><h3 class="activity-heading">Recent Activity</h3><div id="dynamicActivity"></div><div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p></div></section>
 
@@ -146,9 +146,9 @@ function writeLocalArray(key,value){try{localStorage.setItem(key,JSON.stringify(
 function getProductSubmissions(){return readLocalArray(PRODUCT_KEY)}
 function saveProductSubmissions(items){return writeLocalArray(PRODUCT_KEY,items)}
 
-const DEMO_WALLET_SETUP_VERSION='2026-11-wallet-start-250000';
-let yemWallet=250000;
-try{const setup=localStorage.getItem('yembridgeDemoWalletSetup');if(setup!==DEMO_WALLET_SETUP_VERSION){localStorage.setItem('yembridgeDemoBalance','250000');localStorage.setItem('yembridgeDemoWalletSetup',DEMO_WALLET_SETUP_VERSION)}const saved=Number(localStorage.getItem('yembridgeDemoBalance'));yemWallet=Number.isFinite(saved)&&saved>=0?saved:250000;localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){console.warn('Wallet storage unavailable:',e)}
+const DEMO_WALLET_SETUP_VERSION='2026-11-pamoja-demo-wallet-start-1500000';
+let yemWallet=1500000;
+try{const setup=localStorage.getItem('yembridgeDemoWalletSetup');if(setup!==DEMO_WALLET_SETUP_VERSION){localStorage.setItem('yembridgeDemoBalance','1500000');localStorage.setItem('yembridgeDemoWalletSetup',DEMO_WALLET_SETUP_VERSION)}const saved=Number(localStorage.getItem('yembridgeDemoBalance'));yemWallet=Number.isFinite(saved)&&saved>=0?saved :1500000;localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){console.warn('Wallet storage unavailable:',e)}
 let yemCart=[];
 let yemTransactions=readLocalArray('yembridgeDemoTransactions');
 
