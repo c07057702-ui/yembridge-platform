@@ -443,9 +443,13 @@ function renderMerchantProductSubmissions(){
 
 function renderMerchantOrders(){
  const container=document.getElementById('merchantOrders');if(!container)return;
- const orders=readLocalArray('yembridgeMerchantOrders');container.innerHTML='';
- if(!orders.length){container.textContent='No customer orders yet.';return}
- orders.forEach((order,index)=>{
+ const userId=window.Clerk?.user?.id;
+ container.innerHTML='';
+ if(!userId){container.textContent='Please sign in to view your merchant orders.';return}
+ const orders=readLocalArray('yembridgeMerchantOrders');
+ const mine=orders.map((order,index)=>({order,index})).filter(entry=>entry.order.sellerId===userId);
+ if(!mine.length){container.textContent='No customer orders for your merchant account yet.';return}
+ mine.forEach(({order,index})=>{
   const card=document.createElement('div');card.className='merchant-order-card';
   const product=document.createElement('b');product.textContent=order.product||'Product';
   const customer=document.createElement('p');customer.textContent='Customer: '+(order.customer||'Customer');
@@ -464,8 +468,8 @@ function renderMerchantOrders(){
  });
 }
 function updateMerchantOrderStatus(index,newStatus){
- const orders=readLocalArray('yembridgeMerchantOrders');
- if(!orders[index]||orders[index].status==='Completed'||orders[index].status==='Cancelled')return;
+ const orders=readLocalArray('yembridgeMerchantOrders'),userId=window.Clerk?.user?.id;
+ if(!userId||!orders[index]||orders[index].sellerId!==userId||orders[index].status==='Completed'||orders[index].status==='Cancelled')return alert('This order is not available to your merchant account. Please refresh the page.');
  if(newStatus==='Cancelled'){
   const order=orders[index],refund=orderTotal(order);
   if(!confirm('Cancel this order and refund UGX '+refund.toLocaleString('en-UG')+' to the demo wallet?')){renderMerchantOrders();return}
