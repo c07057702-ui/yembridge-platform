@@ -69,9 +69,9 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 
 <section id="merchant" class="hidden">
 <div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your PAMOJA merchant space. This demonstration uses your signed-in account.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
-<div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">UGX 0</div><p class="muted">Demo settlement balance — not real money.</p></div>
-<div class="card"><h3>💸 Merchant Withdrawals</h3><p class="muted">Available for withdrawal (demo):</p><div class="amount" id="merchantAvailableWithdrawal">UGX 0</div><input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX"><button onclick="requestMerchantWithdrawal()">Request Withdrawal</button><p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div></div>
-<div class="card"><h3>📊 Merchant Sales Report</h3><div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div><div class="activity-summary"><div><small>Illustrative Commission (5%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">UGX 0</strong></div></div><p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">Demo report only. These figures are not real earnings.</p></div>
+<div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">Not configured</div><p class="muted">Merchant settlement rules have not yet been configured. No real money is held here.</p></div>
+<div class="card"><h3>💸 Merchant Withdrawals</h3><p class="muted">Withdrawal availability:</p><div class="amount" id="merchantAvailableWithdrawal">Not available</div><input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX"><button onclick="requestMerchantWithdrawal()">Request Withdrawal</button><p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div></div>
+<div class="card"><h3>📊 Merchant Sales Report</h3><div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div><div class="activity-summary"><div><small>Commission (not configured)</small><strong id="merchantCommission">Not configured</strong></div><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">Not configured</strong></div></div><p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">Demo report only. These figures are not real earnings.</p></div>
 
 <div class="card">
 <h3>➕ Submit a Product for Approval</h3>
@@ -501,9 +501,9 @@ function renderMerchantSalesReport(){
  const userId=window.Clerk?.user?.id;
  const orders=userId?readLocalArray('yembridgeMerchantOrders').filter(o=>o.sellerId===userId):[];
  const completed=orders.filter(o=>o.status==='Completed'),pending=orders.filter(o=>o.status!=='Completed'&&o.status!=='Cancelled');
- const total=completed.reduce((s,o)=>s+orderTotal(o),0),commission=total*.05;
+ const total=completed.reduce((s,o)=>s+orderTotal(o),0);
  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
- set('merchantTotalSales','UGX '+total.toLocaleString('en-UG'));set('merchantCompletedCount',String(completed.length));set('merchantCommission','UGX '+commission.toLocaleString('en-UG'));set('merchantNetProceeds','UGX '+(total-commission).toLocaleString('en-UG'));set('merchantPendingCount',String(pending.length));
+ set('merchantTotalSales','UGX '+total.toLocaleString('en-UG'));set('merchantCompletedCount',String(completed.length));set('merchantCommission','Not configured');set('merchantNetProceeds','Not configured');set('merchantPendingCount',String(pending.length));
 }
 function getMerchantAvailableWithdrawal(){
  const userId=window.Clerk?.user?.id;if(!userId)return 0;
@@ -514,7 +514,7 @@ function getMerchantAvailableWithdrawal(){
 }
 function renderMerchantWithdrawals(){
  const balance=document.getElementById('merchantAvailableWithdrawal'),history=document.getElementById('merchantWithdrawalHistory');if(!balance||!history)return;
- const userId=window.Clerk?.user?.id;balance.textContent='UGX '+getMerchantAvailableWithdrawal().toLocaleString('en-UG');history.innerHTML='';
+ const userId=window.Clerk?.user?.id;balance.textContent='Not available';history.innerHTML='';
  if(!userId){history.textContent='Please sign in to view merchant withdrawals.';return}
  const withdrawals=readLocalArray('yembridgeWithdrawals').filter(item=>item.merchantId===userId);
  if(!withdrawals.length){history.textContent='No withdrawal requests yet.';return}
@@ -523,7 +523,7 @@ function renderMerchantWithdrawals(){
 function requestMerchantWithdrawal(){
  const userId=window.Clerk?.user?.id,input=document.getElementById('withdrawalAmount'),message=document.getElementById('withdrawalMessage');
  if(!userId){message.textContent='Please sign in to request a merchant withdrawal.';return}
- const amount=Number(input.value),available=getMerchantAvailableWithdrawal();
+ message.textContent='Withdrawals are unavailable until PAMOJA configures and verifies merchant settlement rules and payment processing.';return;\n const amount=Number(input.value),available=getMerchantAvailableWithdrawal();
  if(!Number.isFinite(amount)||amount<=0){message.textContent='Please enter a valid withdrawal amount.';return}
  if(amount>available){message.textContent='Insufficient available demo proceeds.';return}
  const withdrawals=readLocalArray('yembridgeWithdrawals');withdrawals.unshift({merchantId:userId,amount,status:'Pending',date:new Date().toLocaleString('en-UG')});
