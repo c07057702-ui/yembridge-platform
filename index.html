@@ -242,12 +242,13 @@ function checkoutDemo(){
    if(!p||p.status!=='Approved'||Number(p.quantity)<item.quantity)return alert('Not enough stock remains for '+item.name+'. Please refresh the Shop and adjust your basket.');
   }
  }
+ const originalProducts=getProductSubmissions();
  const orders=readLocalArray('yembridgeMerchantOrders'),date=new Date().toLocaleString('en-UG'),next=orders.slice();
  yemCart.forEach(item=>{
   const p=item.productId?products.find(x=>x.id===item.productId):null;
   if(p)p.quantity=Number(p.quantity)-item.quantity;
   next.unshift({
-   orderId:'YB-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
+   orderId:'PAMOJA-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
    product:item.name,productId:item.productId||null,
    price:item.price,quantity:item.quantity,totalAmount:item.price*item.quantity,
    customer,customerEmail:email,customerId:user.id,
@@ -255,8 +256,12 @@ function checkoutDemo(){
    status:'New',date,refundProcessed:false,stockRestored:false
   });
  });
- if(!writeLocalArray('yembridgeMerchantOrders',next))return;
+ // Save stock first; if order storage fails, restore the original stock.
  if(!saveProductSubmissions(products))return;
+ if(!writeLocalArray('yembridgeMerchantOrders',next)){
+  saveProductSubmissions(originalProducts);
+  return;
+ }
  yemWallet-=total;
  yemTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.quantity+' × '+i.name).join(', '),amount:total,status:'Successful',date});
  saveDemoData();updateWallet();yemCart=[];updateCartSummary();renderActivity();renderMerchantOrders();renderCustomerOrders();renderShopProducts();
