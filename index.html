@@ -250,13 +250,16 @@ function checkoutDemo(){
  const user=window.Clerk.user,email=user.primaryEmailAddress?.emailAddress?.toLowerCase();
  if(!email)return alert('Your account email could not be verified. Please try again.');
  const customer=((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA Customer';
- const total=yemCart.reduce((s,i)=>s+i.price*i.quantity,0);
+ if(!yemCart.every(i=>Number.isInteger(i.quantity)&&i.quantity>0&&Number.isFinite(i.price)&&i.price>0))return alert('Your basket contains an invalid item. Please remove it and add the product again.');
+ const total=yemCart.reduce((sum,item)=>sum+item.price*item.quantity,0);
+ if(!Number.isFinite(total)||total<=0)return alert('The basket total is invalid. Your demo wallet has not been charged.');
  if(total>yemWallet)return alert('Insufficient demo wallet balance. Your basket has not been charged.');
  const products=getProductSubmissions();
  for(const item of yemCart){
   if(item.productId){
-   const p=products.find(x=>x.id===item.productId);
-   if(!p||p.status!=='Approved'||Number(p.quantity)<item.quantity)return alert('Not enough stock remains for '+item.name+'. Please refresh the Shop and adjust your basket.');
+   const p=products.find(x=>x.id===item.productId),stock=Number(p?.quantity),currentPrice=Number(p?.price);
+   if(!p||p.status!=='Approved'||!Number.isInteger(stock)||stock<item.quantity)return alert('Not enough valid stock remains for '+item.name+'. Please refresh the Shop and adjust your basket.');
+   if(!Number.isFinite(currentPrice)||currentPrice<=0||currentPrice!==item.price)return alert('The price for '+item.name+' has changed. Please remove it from your basket and add it again to see the current price.');
   }
  }
  const orders=readLocalArray('yembridgeMerchantOrders'),date=new Date().toLocaleString('en-UG'),next=orders.slice();
