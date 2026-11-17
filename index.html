@@ -158,12 +158,13 @@ function saveDemoData(){try{localStorage.setItem('yembridgeDemoBalance',String(y
 function persistDemoCheckout(products,orders,balance,transactions){
  const keys=['yembridgeProductSubmissions','yembridgeMerchantOrders','yembridgeDemoBalance','yembridgeDemoTransactions'];
  const values=[JSON.stringify(products),JSON.stringify(orders),String(balance),JSON.stringify(transactions)];
- const before=keys.map(key=>localStorage.getItem(key));
+ let before=[];
  try{
+  before=keys.map(key=>localStorage.getItem(key));
   keys.forEach((key,index)=>localStorage.setItem(key,values[index]));
   return true;
  }catch(error){
-  keys.forEach((key,index)=>{try{if(before[index]===null)localStorage.removeItem(key);else localStorage.setItem(key,before[index])}catch(rollbackError){console.error('Demo checkout rollback failed:',rollbackError)}});
+  before.forEach((value,index)=>{try{if(value===null)localStorage.removeItem(keys[index]);else localStorage.setItem(keys[index],value)}catch(rollbackError){console.error('Demo checkout rollback failed:',rollbackError)}});
   console.error('Demo checkout could not be saved:',error);
   alert('Checkout could not be saved on this device. Your basket and demo wallet have not been changed. Please check device storage and try again.');
   return false;
