@@ -498,29 +498,35 @@ function updateMerchantOrderStatus(index,newStatus){
  renderMerchantOrders();renderCustomerOrders();renderMerchantSalesReport();renderMerchantWithdrawals();
 }
 function renderMerchantSalesReport(){
- const orders=readLocalArray('yembridgeMerchantOrders'),completed=orders.filter(o=>o.status==='Completed'),pending=orders.filter(o=>o.status!=='Completed'&&o.status!=='Cancelled');
+ const userId=window.Clerk?.user?.id;
+ const orders=userId?readLocalArray('yembridgeMerchantOrders').filter(o=>o.sellerId===userId):[];
+ const completed=orders.filter(o=>o.status==='Completed'),pending=orders.filter(o=>o.status!=='Completed'&&o.status!=='Cancelled');
  const total=completed.reduce((s,o)=>s+orderTotal(o),0),commission=total*.05;
  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
  set('merchantTotalSales','UGX '+total.toLocaleString('en-UG'));set('merchantCompletedCount',String(completed.length));set('merchantCommission','UGX '+commission.toLocaleString('en-UG'));set('merchantNetProceeds','UGX '+(total-commission).toLocaleString('en-UG'));set('merchantPendingCount',String(pending.length));
 }
 function getMerchantAvailableWithdrawal(){
- const orders=readLocalArray('yembridgeMerchantOrders'),withdrawals=readLocalArray('yembridgeWithdrawals');
+ const userId=window.Clerk?.user?.id;if(!userId)return 0;
+ const orders=readLocalArray('yembridgeMerchantOrders').filter(o=>o.sellerId===userId),withdrawals=readLocalArray('yembridgeWithdrawals').filter(w=>w.merchantId===userId);
  const sales=orders.filter(o=>o.status==='Completed').reduce((s,o)=>s+orderTotal(o),0);
  const requested=withdrawals.filter(w=>w.status==='Pending'||w.status==='Approved').reduce((s,w)=>s+Number(w.amount||0),0);
  return Math.max(0,sales*.95-requested);
 }
 function renderMerchantWithdrawals(){
  const balance=document.getElementById('merchantAvailableWithdrawal'),history=document.getElementById('merchantWithdrawalHistory');if(!balance||!history)return;
- balance.textContent='UGX '+getMerchantAvailableWithdrawal().toLocaleString('en-UG');
- const withdrawals=readLocalArray('yembridgeWithdrawals');history.innerHTML='';
+ const userId=window.Clerk?.user?.id;balance.textContent='UGX '+getMerchantAvailableWithdrawal().toLocaleString('en-UG');history.innerHTML='';
+ if(!userId){history.textContent='Please sign in to view merchant withdrawals.';return}
+ const withdrawals=readLocalArray('yembridgeWithdrawals').filter(item=>item.merchantId===userId);
  if(!withdrawals.length){history.textContent='No withdrawal requests yet.';return}
  withdrawals.forEach(item=>{const card=document.createElement('div');card.className='transaction';const amount=document.createElement('strong');amount.textContent='UGX '+Number(item.amount||0).toLocaleString('en-UG');const status=document.createElement('p');status.textContent='Status: '+(item.status||'Pending');const date=document.createElement('small');date.textContent=item.date||'';card.append(amount,status,date);history.appendChild(card)});
 }
 function requestMerchantWithdrawal(){
- const input=document.getElementById('withdrawalAmount'),message=document.getElementById('withdrawalMessage'),amount=Number(input.value),available=getMerchantAvailableWithdrawal();
+ const userId=window.Clerk?.user?.id,input=document.getElementById('withdrawalAmount'),message=document.getElementById('withdrawalMessage');
+ if(!userId){message.textContent='Please sign in to request a merchant withdrawal.';return}
+ const amount=Number(input.value),available=getMerchantAvailableWithdrawal();
  if(!Number.isFinite(amount)||amount<=0){message.textContent='Please enter a valid withdrawal amount.';return}
  if(amount>available){message.textContent='Insufficient available demo proceeds.';return}
- const withdrawals=readLocalArray('yembridgeWithdrawals');withdrawals.unshift({amount,status:'Pending',date:new Date().toLocaleString('en-UG')});
+ const withdrawals=readLocalArray('yembridgeWithdrawals');withdrawals.unshift({merchantId:userId,amount,status:'Pending',date:new Date().toLocaleString('en-UG')});
  if(!writeLocalArray('yembridgeWithdrawals',withdrawals))return;
  input.value='';message.textContent='Demo withdrawal request submitted successfully.';renderMerchantWithdrawals();
 }
