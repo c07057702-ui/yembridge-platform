@@ -881,6 +881,10 @@ window.addEventListener('load',async()=>{
   let kycTimer = null;
   let kycObserver = null;
   let delegatedHandlersInstalled = false;
+  const capturedPhotos = { front: null, back: null, selfie: null };
+  let cameraStream = null;
+  let activeCameraType = null;
+  let pendingPhotoBlob = null;
 
   function el(id) {
     return document.getElementById(id);
@@ -999,48 +1003,53 @@ window.addEventListener('load',async()=>{
             </span>
           </label>
 
-          <label>Village
-            <input id="kycVillage" type="text" required>
-          </label>
-
-          <label>Ward
-            <input id="kycWard" type="text" required>
-          </label>
-
-          <label>District
-            <input id="kycDistrict" type="text" required>
-          </label>
-
-          <label>Town
-            <input id="kycTown" type="text" required>
-          </label>
+          <p class="kyc-field-note">You do not need to enter your village, town or district here. An authorised PAMOJA reviewer will read the two location details from your National ID during review.</p>
 
           <label>Country that issued your ID
             <input id="kycIdCountry" type="text"
               value="Uganda" required>
           </label>
 
-          <label class="kyc-photo-field">
-            National ID — Front
-            <input id="kycNationalIdFront" type="file"
-              accept="image/jpeg,image/png,image/webp" required>
-          </label>
+          <div class="kyc-photo-field">
+            <strong>National ID — Front</strong>
+            <video id="kycCameraVideo" playsinline autoplay hidden style="width:100%;max-height:260px;border-radius:9px;background:#102B46"></video>
+            <canvas id="kycCameraCanvas" hidden></canvas>
+            <img id="kycFrontPreview" alt="Front of National ID preview" hidden style="width:100%;max-height:180px;object-fit:contain;border-radius:9px">
+            <div class="kyc-actions">
+              <button type="button" data-kyc-camera="front">Open camera</button>
+              <button type="button" data-kyc-capture="front" hidden>Take photo</button>
+              <button type="button" class="kyc-secondary" data-kyc-retake="front" hidden>Retake</button>
+              <button type="button" data-kyc-accept="front" hidden>Accept photo</button>
+            </div>
+            <span id="kycFrontState" class="kyc-field-note">No photo accepted yet.</span>
+          </div>
 
-          <label class="kyc-photo-field">
-            National ID — Back
-            <input id="kycNationalIdBack" type="file"
-              accept="image/jpeg,image/png,image/webp" required>
-          </label>
+          <div class="kyc-photo-field">
+            <strong>National ID — Back</strong>
+            <img id="kycBackPreview" alt="Back of National ID preview" hidden style="width:100%;max-height:180px;object-fit:contain;border-radius:9px">
+            <div class="kyc-actions">
+              <button type="button" data-kyc-camera="back">Open camera</button>
+              <button type="button" data-kyc-capture="back" hidden>Take photo</button>
+              <button type="button" class="kyc-secondary" data-kyc-retake="back" hidden>Retake</button>
+              <button type="button" data-kyc-accept="back" hidden>Accept photo</button>
+            </div>
+            <span id="kycBackState" class="kyc-field-note">No photo accepted yet.</span>
+          </div>
 
-          <label class="kyc-photo-field">
-            Selfie photograph
-            <input id="kycSelfie" type="file"
-              accept="image/jpeg,image/png,image/webp" required>
-          </label>
+          <div class="kyc-photo-field">
+            <strong>Selfie holding the front of your National ID</strong>
+            <img id="kycSelfiePreview" alt="Selfie holding National ID preview" hidden style="width:100%;max-height:180px;object-fit:contain;border-radius:9px">
+            <div class="kyc-actions">
+              <button type="button" data-kyc-camera="selfie">Open front camera</button>
+              <button type="button" data-kyc-capture="selfie" hidden>Take photo</button>
+              <button type="button" class="kyc-secondary" data-kyc-retake="selfie" hidden>Retake</button>
+              <button type="button" data-kyc-accept="selfie" hidden>Accept photo</button>
+            </div>
+            <span id="kycSelfieState" class="kyc-field-note">No photo accepted yet.</span>
+          </div>
 
           <p class="kyc-field-note">
-            Each photograph must be JPEG, PNG or WebP and no larger than 4 MB.
-            Make sure your ID details are clear and readable.
+            All three photographs must be taken with your camera. Gallery uploads are not accepted. Each photo must be JPEG, PNG or WebP and no larger than 4 MB.
           </p>
 
           <div id="kycMessage" class="kyc-message"
@@ -1079,6 +1088,7 @@ window.addEventListener('load',async()=>{
     if (form && form.dataset.kycBound !== 'yes') {
       form.dataset.kycBound = 'yes';
       form.addEventListener('submit', submitKycApplication);
+      form.addEventListener('click', handleCameraControls);
     }
 
     return true;
@@ -1215,12 +1225,13 @@ window.addEventListener('load',async()=>{
 
     const contact = kyc.contactDetails || {};
 
-    const names = {
+    const names = status === 'approved' ? {
       phoneNumber: 'Phone',
-      village: 'Village',
-      ward: 'Ward',
-      district: 'District',
-      town: 'Town',
+      district: 'District / City',
+      town: 'Town / Village',
+      idCountry: 'ID country'
+    } : {
+      phoneNumber: 'Phone',
       idCountry: 'ID country'
     };
 
@@ -1284,6 +1295,155 @@ window.addEventListener('load',async()=>{
     }
   }
 
+  // CAMERA-ONLY KYC PHOTO CAPTURE
+
+  function stopKycCamera() {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(function (track) { track.stop(); });
+      cameraStream = null;
+    }
+    const video = el('kycCameraVideo');
+    if (video) {
+      video.pause();
+      video.srcObject = null;
+      video.hidden = true;
+    }
+    activeCameraType = null;
+  }
+
+  function setPhotoControls(type, mode) {
+    const selectors = {
+      open: '[data-kyc-camera="' + type + '"]',
+      capture: '[data-kyc-capture="' + type + '"]',
+      retake: '[data-kyc-retake="' + type + '"]',
+      accept: '[data-kyc-accept="' + type + '"]'
+    };
+    Object.keys(selectors).forEach(function (key) {
+      const button = document.querySelector(selectors[key]);
+      if (button) button.hidden = !mode[key];
+    });
+  }
+
+  async function openKycCamera(type) {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      showMessage('Camera access is not supported by this browser. Please use a supported mobile browser over a secure connection.', 'error');
+      return;
+    }
+
+    stopKycCamera();
+    pendingPhotoBlob = null;
+    activeCameraType = type;
+
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+          facingMode: { ideal: type === 'selfie' ? 'user' : 'environment' },
+          width: { ideal: 1600 },
+          height: { ideal: 1200 }
+        }
+      });
+
+      if (type === 'front') {
+        const video = el('kycCameraVideo');
+        video.srcObject = cameraStream;
+        video.hidden = false;
+        await video.play();
+      } else {
+        const video = document.createElement('video');
+        video.id = 'kycCameraVideo';
+        video.playsInline = true;
+        video.autoplay = true;
+        video.srcObject = cameraStream;
+        video.style.cssText = 'width:100%;max-height:260px;border-radius:9px;background:#102B46';
+        const field = document.querySelector('[data-kyc-camera="' + type + '"]').closest('.kyc-photo-field');
+        field.insertBefore(video, field.querySelector('.kyc-actions'));
+        await video.play();
+      }
+
+      setPhotoControls(type, { open: false, capture: true, retake: false, accept: false });
+      showMessage('Position the ' + (type === 'selfie' ? 'front of your face and National ID' : 'ID card') + ' clearly, then take the photo.', '');
+    } catch (error) {
+      stopKycCamera();
+      showMessage('Camera permission was denied or the camera is unavailable. Allow camera access in your browser settings and try again.', 'error');
+    }
+  }
+
+  async function captureKycPhoto(type) {
+    const video = el('kycCameraVideo');
+    const canvas = el('kycCameraCanvas');
+    if (!video || !canvas || !video.videoWidth || !video.videoHeight || activeCameraType !== type) {
+      showMessage('The camera is not ready. Please open it again.', 'error');
+      return;
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    pendingPhotoBlob = await new Promise(function (resolve) {
+      canvas.toBlob(resolve, 'image/jpeg', 0.88);
+    });
+
+    if (!pendingPhotoBlob) {
+      showMessage('The photograph could not be captured. Please try again.', 'error');
+      return;
+    }
+
+    const previewId = type === 'front' ? 'kycFrontPreview' : type === 'back' ? 'kycBackPreview' : 'kycSelfiePreview';
+    const preview = el(previewId);
+    if (preview) {
+      if (preview.dataset.objectUrl) URL.revokeObjectURL(preview.dataset.objectUrl);
+      preview.dataset.objectUrl = URL.createObjectURL(pendingPhotoBlob);
+      preview.src = preview.dataset.objectUrl;
+      preview.hidden = false;
+    }
+
+    stopKycCamera();
+    setPhotoControls(type, { open: false, capture: false, retake: true, accept: true });
+    showMessage('Review the preview, then accept it or retake it.', '');
+  }
+
+  function resetKycPhoto(type) {
+    capturedPhotos[type] = null;
+    pendingPhotoBlob = null;
+    const previewId = type === 'front' ? 'kycFrontPreview' : type === 'back' ? 'kycBackPreview' : 'kycSelfiePreview';
+    const preview = el(previewId);
+    if (preview) {
+      if (preview.dataset.objectUrl) URL.revokeObjectURL(preview.dataset.objectUrl);
+      preview.removeAttribute('src');
+      preview.hidden = true;
+      delete preview.dataset.objectUrl;
+    }
+    const state = el(type === 'front' ? 'kycFrontState' : type === 'back' ? 'kycBackState' : 'kycSelfieState');
+    if (state) state.textContent = 'No photo accepted yet.';
+    setPhotoControls(type, { open: true, capture: false, retake: false, accept: false });
+  }
+
+  function handleCameraControls(event) {
+    const button = event.target.closest('button');
+    if (!button) return;
+    const open = button.getAttribute('data-kyc-camera');
+    const capture = button.getAttribute('data-kyc-capture');
+    const retake = button.getAttribute('data-kyc-retake');
+    const accept = button.getAttribute('data-kyc-accept');
+
+    if (open) { event.preventDefault(); openKycCamera(open); }
+    if (capture) { event.preventDefault(); captureKycPhoto(capture); }
+    if (retake) { event.preventDefault(); resetKycPhoto(retake); openKycCamera(retake); }
+    if (accept) {
+      event.preventDefault();
+      if (!pendingPhotoBlob) return;
+      capturedPhotos[accept] = pendingPhotoBlob;
+      pendingPhotoBlob = null;
+      const state = el(accept === 'front' ? 'kycFrontState' : accept === 'back' ? 'kycBackState' : 'kycSelfieState');
+      if (state) state.textContent = 'Photo accepted.';
+      setPhotoControls(accept, { open: false, capture: false, retake: true, accept: false });
+      showMessage('Photo accepted. Continue with the remaining photographs.', '');
+    }
+  }
+
   // SUBMIT KYC APPLICATION
 
   async function submitKycApplication(event) {
@@ -1329,30 +1489,20 @@ window.addEventListener('load',async()=>{
       return;
     }
 
-    const requiredFields = [
-      'kycVillage',
-      'kycWard',
-      'kycDistrict',
-      'kycTown',
-      'kycIdCountry'
-    ];
-
-    if (requiredFields.some(function (id) {
-      return !value(id);
-    })) {
-      showMessage('Please complete all the required address and country fields.', 'error');
+    if (!value('kycIdCountry')) {
+      showMessage('Please enter the country that issued your ID.', 'error');
       return;
     }
 
     const files = {
-      nationalIdFront: el('kycNationalIdFront').files[0],
-      nationalIdBack: el('kycNationalIdBack').files[0],
-      selfie: el('kycSelfie').files[0]
+      nationalIdFront: capturedPhotos.front,
+      nationalIdBack: capturedPhotos.back,
+      selfie: capturedPhotos.selfie
     };
 
     for (const file of Object.values(files)) {
       if (!file) {
-        showMessage('Please select all three required photographs.', 'error');
+        showMessage('Please take and accept all three required photographs using your camera.', 'error');
         return;
       }
 
@@ -1361,7 +1511,7 @@ window.addEventListener('load',async()=>{
         return;
       }
 
-      if (file.size > MAX_PHOTO_SIZE) {
+      if (file.size <= 0 || file.size > MAX_PHOTO_SIZE) {
         showMessage('Each photograph must be no larger than 4 MB.', 'error');
         return;
       }
@@ -1371,14 +1521,10 @@ window.addEventListener('load',async()=>{
 
     data.append('nin', nin);
     data.append('phoneNumber', phone);
-    data.append('village', value('kycVillage'));
-    data.append('ward', value('kycWard'));
-    data.append('district', value('kycDistrict'));
-    data.append('town', value('kycTown'));
     data.append('idCountry', value('kycIdCountry'));
-    data.append('nationalIdFront', files.nationalIdFront);
-    data.append('nationalIdBack', files.nationalIdBack);
-    data.append('selfie', files.selfie);
+    data.append('nationalIdFront', files.nationalIdFront, 'national-id-front.jpg');
+    data.append('nationalIdBack', files.nationalIdBack, 'national-id-back.jpg');
+    data.append('selfie', files.selfie, 'applicant-selfie.jpg');
 
     button.disabled = true;
     button.textContent = 'Submitting...';
@@ -1401,6 +1547,8 @@ window.addEventListener('load',async()=>{
       kycStatus = result.kyc || { status: 'pending' };
 
       form.reset();
+      stopKycCamera();
+      ['front', 'back', 'selfie'].forEach(resetKycPhoto);
       renderKycStatus();
 
       showMessage(
@@ -1466,6 +1614,8 @@ window.addEventListener('load',async()=>{
 
     return true;
   }
+
+  window.addEventListener('pagehide', stopKycCamera);
 
   function initialiseKyc() {
     installDelegatedHandlers();
