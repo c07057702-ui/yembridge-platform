@@ -153,6 +153,22 @@ let yemCart=[];
 let yemTransactions=readLocalArray('yembridgeDemoTransactions');
 
 function saveDemoData(){try{localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){}writeLocalArray('yembridgeDemoTransactions',yemTransactions)}
+
+/* Persist a demo checkout as one guarded operation across its local records. */
+function persistDemoCheckout(products,orders,balance,transactions){
+ const keys=['yembridgeProductSubmissions','yembridgeMerchantOrders','yembridgeDemoBalance','yembridgeDemoTransactions'];
+ const values=[JSON.stringify(products),JSON.stringify(orders),String(balance),JSON.stringify(transactions)];
+ const before=keys.map(key=>localStorage.getItem(key));
+ try{
+  keys.forEach((key,index)=>localStorage.setItem(key,values[index]));
+  return true;
+ }catch(error){
+  keys.forEach((key,index)=>{try{if(before[index]===null)localStorage.removeItem(key);else localStorage.setItem(key,before[index])}catch(rollbackError){console.error('Demo checkout rollback failed:',rollbackError)}});
+  console.error('Demo checkout could not be saved:',error);
+  alert('Checkout could not be saved on this device. Your basket and demo wallet have not been changed. Please check device storage and try again.');
+  return false;
+ }
+}
 function updateWallet(){const el=document.querySelector('.balance .amount');if(el)el.textContent='UGX '+yemWallet.toLocaleString('en-UG')}
 function orderQuantity(order){const q=Number(order?.quantity);return Number.isInteger(q)&&q>0?q:1}
 function orderTotal(order){const total=Number(order?.totalAmount);if(Number.isFinite(total)&&total>0)return total;return Number(order?.price||0)*orderQuantity(order)}
@@ -242,7 +258,6 @@ function checkoutDemo(){
    if(!p||p.status!=='Approved'||Number(p.quantity)<item.quantity)return alert('Not enough stock remains for '+item.name+'. Please refresh the Shop and adjust your basket.');
   }
  }
- const originalProducts=getProductSubmissions();
  const orders=readLocalArray('yembridgeMerchantOrders'),date=new Date().toLocaleString('en-UG'),next=orders.slice();
  yemCart.forEach(item=>{
   const p=item.productId?products.find(x=>x.id===item.productId):null;
@@ -256,15 +271,12 @@ function checkoutDemo(){
    status:'New',date,refundProcessed:false,stockRestored:false
   });
  });
- // Save stock first; if order storage fails, restore the original stock.
- if(!saveProductSubmissions(products))return;
- if(!writeLocalArray('yembridgeMerchantOrders',next)){
-  saveProductSubmissions(originalProducts);
-  return;
- }
- yemWallet-=total;
- yemTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.quantity+' × '+i.name).join(', '),amount:total,status:'Successful',date});
- saveDemoData();updateWallet();yemCart=[];updateCartSummary();renderActivity();renderMerchantOrders();renderCustomerOrders();renderShopProducts();
+ const nextBalance=yemWallet-total;
+ const nextTransactions=yemTransactions.slice();
+ nextTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.quantity+' × '+i.name).join(', '),amount:total,status:'Successful',date});
+ if(!persistDemoCheckout(products,next,nextBalance,nextTransactions))return;
+ yemWallet=nextBalance;yemTransactions=nextTransactions;
+ updateWallet();yemCart=[];updateCartSummary();renderActivity();renderMerchantOrders();renderCustomerOrders();renderShopProducts();
  alert('Demo purchase successful! UGX '+total.toLocaleString('en-UG')+' has been deducted from your demo wallet.');
 }
 
