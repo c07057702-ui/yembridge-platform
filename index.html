@@ -1221,27 +1221,28 @@ window.addEventListener('load',async()=>{
       lines.push('We could not identify your current verification status. Please refresh.');
     }
 
-    if (kyc.maskedNin) lines.push('NIN: ' + String(kyc.maskedNin));
     if (kyc.submittedAt) lines.push('Submitted: ' + String(kyc.submittedAt));
     if (kyc.reviewedAt) lines.push('Last reviewed: ' + String(kyc.reviewedAt));
 
-    const contact = kyc.contactDetails || {};
+    // Reveal identity and contact details only after the server confirms approval.
+    if (status === 'approved') {
+      if (kyc.nin) lines.push('NIN: ' + String(kyc.nin));
+      else if (kyc.maskedNin) lines.push('NIN: ' + String(kyc.maskedNin));
 
-    const names = status === 'approved' ? {
-      phoneNumber: 'Phone',
-      district: 'District / City',
-      town: 'Town / Village',
-      idCountry: 'ID country'
-    } : {
-      phoneNumber: 'Phone',
-      idCountry: 'ID country'
-    };
+      const contact = kyc.contactDetails || {};
+      const names = {
+        phoneNumber: 'Phone',
+        district: 'District / City',
+        town: 'Town / Village',
+        idCountry: 'ID country'
+      };
 
-    Object.keys(names).forEach(function (key) {
-      if (contact[key]) {
-        lines.push(names[key] + ': ' + String(contact[key]));
-      }
-    });
+      Object.keys(names).forEach(function (key) {
+        if (contact[key]) {
+          lines.push(names[key] + ': ' + String(contact[key]));
+        }
+      });
+    }
 
     details.textContent = lines.join('\n');
 
