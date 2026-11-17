@@ -59,16 +59,16 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 <div class="market-banner" onclick="show('shop')"><div><span>PAMOJA MARKET</span><h3>Shop local.<br>Grow together.</h3><p>Discover products from local merchants.</p><b>Explore PAMOJA Market →</b></div><div class="market-symbol">P</div></div>
 </section>
 
-<section id="services" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE SERVICES</p><h3>Digital Services</h3><p class="muted">Your everyday essentials, all in one place.</p><div class="grid"><div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div><div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div><div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div></div></div></section>
+<section id="services" class="hidden"><div class="card"><p class="welcome-tag">PAMOJA SERVICES</p><h3>Digital Services</h3><p class="muted">Your everyday essentials, all in one place.</p><div class="grid"><div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div><div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div><div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div></div></div></section>
 
 <section id="shop" class="hidden"><div class="card"><p class="welcome-tag">PAMOJA MARKET</p><h3>PAMOJA Market</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Together. More Possible.</b><small>Discover products from local merchants.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="cartItems"></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
 
 <section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 0</b></div><div><small>Money Out</small><b>UGX 0</b></div></div><h3 class="activity-heading">Recent Activity</h3><div id="dynamicActivity"></div><div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p></div></section>
 
-<section id="account" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE CUSTOMER CENTRE</p><h3>My Account</h3><p class="muted">Manage your profile and account security.</p><div id="loggedOut"><div class="account-intro"><div class="account-avatar">YB</div><div><b>Welcome to YemBridge</b><small>Your everyday commerce companion.</small></div></div><div id="clerk-auth"></div><p id="authLoadMessage" class="muted" aria-live="polite">Loading secure sign-in...</p></div><div id="loggedIn" class="hidden"><div class="profile-panel"><div class="profile-avatar">YB</div><div><small>WELCOME BACK</small><h3 id="displayName"></h3><p id="displayEmail"></p></div></div><div id="accountSyncMessage" class="muted" style="margin:15px 0;padding:12px;border:1px solid #ccc;border-radius:8px" aria-live="polite">Checking YemBridge database connection...</div><div id="adminAccessStatus" class="muted" style="margin:12px 0;padding:12px;border:1px solid #D8E4DF;border-radius:8px;background:#F7FAF8" aria-live="polite">Administrator access will be checked after sign-in.</div><h4>Account verification</h4><div class="account-status"><div class="status-icon">🪪</div><div><b>Identity verification</b><small>Complete KYC to access eligible services.</small></div><span class="status-pending">Not verified</span></div><div class="account-status"><div class="status-icon">◈</div><div><b>YEM connection</b><small>YEM account integration status.</small></div><span class="status-pending">Not connected</span></div><h4>Account security</h4><div class="security-note"><b>🔒 Your account matters</b><p>Never share your password, wallet private key or recovery phrase.</p></div><p class="demo-warning">DEMO ACCOUNT — No real funds or live YEM connection.</p><button class="account-button logout-button" onclick="logoutUser()">Sign Out</button></div></div></section>
+<section id="account" class="hidden"><div class="card"><p class="welcome-tag">PAMOJA CUSTOMER CENTRE</p><h3>My Account</h3><p class="muted">Manage your profile and account security.</p><div id="loggedOut"><div class="account-intro"><div class="account-avatar">P</div><div><b>Welcome to PAMOJA</b><small>Together. More Possible.</small></div></div><div id="clerk-auth"></div><p id="authLoadMessage" class="muted" aria-live="polite">Loading secure sign-in...</p></div><div id="loggedIn" class="hidden"><div class="profile-panel"><div class="profile-avatar">P</div><div><small>WELCOME BACK</small><h3 id="displayName"></h3><p id="displayEmail"></p></div></div><div id="accountSyncMessage" class="muted" style="margin:15px 0;padding:12px;border:1px solid #ccc;border-radius:8px" aria-live="polite">Checking PAMOJA account connection...</div><div id="adminAccessStatus" class="muted" style="margin:12px 0;padding:12px;border:1px solid #D8E4DF;border-radius:8px;background:#F7FAF8" aria-live="polite">Administrator access will be checked after sign-in.</div><h4>Account verification</h4><div class="account-status"><div class="status-icon">🪪</div><div><b>Identity verification</b><small>Complete KYC to access eligible services.</small></div><span class="status-pending">Not verified</span></div><div class="account-status"><div class="status-icon">◈</div><div><b>YEM connection</b><small>YEM account integration status.</small></div><span class="status-pending">Not connected</span></div><h4>Account security</h4><div class="security-note"><b>🔒 Your account matters</b><p>Never share your password, wallet private key or recovery phrase.</p></div><p class="demo-warning">DEMO ACCOUNT — No real funds or live YEM connection.</p><button class="account-button logout-button" onclick="logoutUser()">Sign Out</button></div></div></section>
 
 <section id="merchant" class="hidden">
-<div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your YemBridge merchant space. This demonstration uses your signed-in account.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
+<div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your PAMOJA merchant space. This demonstration uses your signed-in account.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
 <div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">UGX 0</div><p class="muted">Demo settlement balance — not real money.</p></div>
 <div class="card"><h3>💸 Merchant Withdrawals</h3><p class="muted">Available for withdrawal (demo):</p><div class="amount" id="merchantAvailableWithdrawal">UGX 0</div><input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX"><button onclick="requestMerchantWithdrawal()">Request Withdrawal</button><p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div></div>
 <div class="card"><h3>📊 Merchant Sales Report</h3><div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div><div class="activity-summary"><div><small>Illustrative Commission (5%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">UGX 0</strong></div></div><p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">Demo report only. These figures are not real earnings.</p></div>
@@ -229,10 +229,10 @@ function updateCartSummary(){
 
 function checkoutDemo(){
  if(!yemCart.length)return alert('Your basket is empty.');
- if(!window.yembridgeAuthReady||!window.Clerk?.isSignedIn||!window.Clerk.user){alert('Please sign in to your YemBridge account before checkout.');show('account');return}
+ if(!window.yembridgeAuthReady||!window.Clerk?.isSignedIn||!window.Clerk.user){alert('Please sign in to your PAMOJA account before checkout.');show('account');return}
  const user=window.Clerk.user,email=user.primaryEmailAddress?.emailAddress?.toLowerCase();
  if(!email)return alert('Your account email could not be verified. Please try again.');
- const customer=((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge Customer';
+ const customer=((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA Customer';
  const total=yemCart.reduce((s,i)=>s+i.price*i.quantity,0);
  if(total>yemWallet)return alert('Insufficient demo wallet balance. Your basket has not been charged.');
  const products=getProductSubmissions();
@@ -380,7 +380,7 @@ function submitMerchantProduct(){
   name,description,category,location,phone,price,quantity,
   photos:selectedProductPhotos.slice(),
   merchantId:user.id,
-  merchantName:((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge Merchant',
+  merchantName:((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA Merchant',
   merchantEmail:user.primaryEmailAddress?.emailAddress||'',
   status:'Pending Review',
   submittedAt:new Date().toLocaleString('en-UG'),
@@ -526,9 +526,9 @@ window.addEventListener('load',async()=>{
   window.yembridgeAuthReady=true;
   if(Clerk.isSignedIn&&Clerk.user){
    loggedOut.classList.add('hidden');loggedIn.classList.remove('hidden');const user=Clerk.user;
-   document.getElementById('displayName').textContent=((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge User';
+   document.getElementById('displayName').textContent=((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA User';
    document.getElementById('displayEmail').textContent=user.primaryEmailAddress?.emailAddress||'';
-   if(syncMessage)syncMessage.textContent='Checking YemBridge database connection...';
+   if(syncMessage)syncMessage.textContent='Checking PAMOJA account connection...';
   }else{
    loggedIn.classList.add('hidden');loggedOut.classList.remove('hidden');window.yembridgeAccount=null;
    document.getElementById('displayName').textContent='';document.getElementById('displayEmail').textContent='';
@@ -544,7 +544,7 @@ window.addEventListener('load',async()=>{
     if(!response.ok){const err=new Error('Account synchronization failed with HTTP '+response.status);err.diagnostic=result.diagnostic||null;throw err}
     window.yembridgeAccount=result;
     updateYemBridgeAccountDisplay();
-    if(syncMessage)syncMessage.textContent=result.accountNo?'YemBridge account connected. Account number: '+result.accountNo:'Your YemBridge profile is connected.';
+    if(syncMessage)syncMessage.textContent=result.accountNo?'PAMOJA account connected. Account number: '+result.accountNo:'Your PAMOJA profile is connected.';
     const adminPanel=document.getElementById('adminAccessStatus');
     if(adminPanel){
      adminPanel.textContent='Checking administrator access...';
@@ -569,7 +569,7 @@ window.addEventListener('load',async()=>{
       adminPanel.textContent='Administrator status could not be checked ('+diagnostic+'). Your normal account remains available.';
      }
     }
-   }catch(error){console.error('YemBridge account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent='Your profile is signed in, but YemBridge account setup could not be completed. Please try again later.'}
+   }catch(error){console.error('PAMOJA account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent='Your profile is signed in, but PAMOJA account setup could not be completed. Please try again later.'}
   }
  }catch(error){
   console.error('Clerk initialization failed:',error);window.yembridgeAuthReady=true;window.yembridgeAccount=null;
@@ -605,7 +605,7 @@ window.addEventListener('load',async()=>{
         'background:#102B46;color:white;border-radius:15px;padding:18px;margin:15px 0;text-align:center;';
 
       const heading = document.createElement('small');
-      heading.textContent = 'YOUR PERMANENT YEMBRIDGE ACCOUNT NUMBER';
+      heading.textContent = 'YOUR PERMANENT PAMOJA ACCOUNT NUMBER';
       heading.style.cssText =
         'display:block;color:#D5E8E2;font-size:10px;font-weight:bold;';
 
@@ -851,7 +851,7 @@ window.addEventListener('load',async()=>{
       !window.Clerk.isSignedIn ||
       !window.Clerk.session
     ) {
-      throw new Error('Please sign in to your YemBridge account.');
+      throw new Error('Please sign in to your PAMOJA account.');
     }
 
     const token = await window.Clerk.session.getToken();
@@ -1198,7 +1198,7 @@ window.addEventListener('load',async()=>{
 
     if (!window.yembridgeAccount) {
       if (details) {
-        details.textContent = 'Connect your YemBridge account first.';
+        details.textContent = 'Connect your PAMOJA account first.';
       }
       return;
     }
@@ -1245,7 +1245,7 @@ window.addEventListener('load',async()=>{
     const button = el('kycSubmitButton');
 
     if (!window.yembridgeAccount) {
-      showMessage('Connect your YemBridge account before submitting KYC.', 'error');
+      showMessage('Connect your PAMOJA account before submitting KYC.', 'error');
       return;
     }
 
@@ -1366,7 +1366,7 @@ window.addEventListener('load',async()=>{
       let message = error.message || 'Your submission could not be completed.';
 
       if (message.toLowerCase().includes('duplicate')) {
-        message = 'This NIN is already registered. Please contact YemBridge support if you believe this is an error.';
+        message = 'This NIN is already registered. Please contact PAMOJA support if you believe this is an error.';
       } else if (message.toLowerCase().includes('already submitted')) {
         message = 'An application has already been submitted. Please refresh your verification status.';
       }
@@ -1411,7 +1411,7 @@ window.addEventListener('load',async()=>{
 
         if (details) {
           details.textContent =
-            'Connect your YemBridge account to load your verification status.';
+            'Connect your PAMOJA account to load your verification status.';
         }
       }
     }, 1000);
