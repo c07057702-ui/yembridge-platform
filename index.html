@@ -765,9 +765,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 window.addEventListener('load',async()=>{
  const authContainer=document.getElementById('clerk-auth'),loggedOut=document.getElementById('loggedOut'),loggedIn=document.getElementById('loggedIn'),authLoadMessage=document.getElementById('authLoadMessage'),syncMessage=document.getElementById('accountSyncMessage');
  const params=new URLSearchParams(window.location.search),authMode=(params.get('auth')||'').toLowerCase();
- let rememberedSection='';try{rememberedSection=sessionStorage.getItem('yembridgeLastSection')||''}catch(e){}
- const canRestore=Clerk.isSignedIn&&VALID_SECTIONS.includes(rememberedSection)&&rememberedSection!=='welcome';
- const desired=(authMode==='sign-in'||authMode==='sign-up')?'account':(Clerk.isSignedIn?(canRestore?rememberedSection:'home'):'welcome');
  let authMounted=false;
  function mountAuth(mode){
   if(!window.Clerk||!authContainer||authMounted)return;authContainer.innerHTML='';
@@ -782,6 +779,9 @@ window.addEventListener('load',async()=>{
   if(!window.__internal_ClerkUICtor)throw new Error('Clerk UI package did not load.');
   await Clerk.load({ui:{ClerkUI:window.__internal_ClerkUICtor},signInUrl:HOME_URL,signUpUrl:HOME_URL});
   window.yembridgeAuthReady=true;
+  let rememberedSection='';try{rememberedSection=sessionStorage.getItem('yembridgeLastSection')||''}catch(e){}
+  const canRestore=Clerk.isSignedIn&&VALID_SECTIONS.includes(rememberedSection)&&rememberedSection!=='welcome';
+  const desired=(authMode==='sign-in'||authMode==='sign-up')?'account':(Clerk.isSignedIn?(canRestore?rememberedSection:'home'):'welcome');
   refreshPamojaMenu();
   if(Clerk.isSignedIn&&Clerk.user){
    loggedOut.classList.add('hidden');loggedIn.classList.remove('hidden');const user=Clerk.user;
