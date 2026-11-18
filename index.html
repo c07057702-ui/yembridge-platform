@@ -47,11 +47,44 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 <style>
 .admin-application{border:1px solid #E2EBE6;border-radius:12px;padding:12px;margin:9px 0;background:#FAFCFB}.admin-application strong,.admin-application small{display:block}.admin-application small{color:#718092;font-size:11px;margin:4px 0 9px}.admin-application button{width:100%}
 .admin-documents{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.admin-document{border:1px solid #E2EBE6;border-radius:12px;padding:8px;min-width:0}.admin-document img{width:100%;max-height:260px;object-fit:contain;background:#F1F5F3;border-radius:8px}.admin-document b{display:block;font-size:12px;margin:4px}.admin-detail-lines{background:#F3F7F5;border-radius:12px;padding:12px;white-space:pre-line;overflow-wrap:anywhere;font-size:12px}@media(max-width:380px){.admin-documents{grid-template-columns:1fr}}
+
+/* PAMOJA visual refresh and accessible account menu */
+body{background:radial-gradient(ellipse at 8% 0%,#E7F3EF 0,transparent 34%),#F4F7F6;color:#172D40;font-family:Inter,"Segoe UI",Arial,sans-serif}
+.site-header{position:sticky;top:0;z-index:25;min-height:82px;padding:14px max(18px,calc((100% - 650px)/2 + 14px));background:linear-gradient(115deg,#08283F 0%,#0B4050 65%,#087F68 100%);border-radius:0 0 23px 23px;box-shadow:0 10px 28px #092B4026}
+.brand-mark{width:43px;height:43px;border:1px solid #E8BD5A;border-radius:14px;display:grid;place-items:center;background:#FFFFFF12;font-size:29px}
+.brand-divider{height:38px;background:#E8BD5A;opacity:.8}.brand-copy h2{font-size:20px;letter-spacing:2px;font-weight:800}.brand-copy p{font-size:8px;letter-spacing:1.35px}
+.header-actions{display:flex;align-items:center;gap:12px}
+.menu-toggle{width:44px;height:44px;padding:10px;background:#FFFFFF15;border:1px solid #FFFFFF45;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:0 3px 12px #001B2A25}
+.menu-toggle span{display:block;width:19px;height:2px;background:#fff;border-radius:3px}
+.menu-toggle:focus-visible,.menu-close:focus-visible,.drawer-link:focus-visible{outline:3px solid #F2B84B;outline-offset:3px}
+main{max-width:650px;margin:0 auto;padding:19px 16px 125px}
+.card{border-radius:21px;padding:19px;margin-bottom:17px;border-color:#E4ECE8;box-shadow:0 8px 26px #193E5D0D}
+.balance{background:linear-gradient(135deg,#0B2944 0%,#0A5360 100%);box-shadow:0 14px 30px #0A39452B}
+.welcome{padding:13px 4px 18px}.welcome h3{font-size:27px;letter-spacing:-.6px}
+.service{border-radius:17px;padding:17px 10px;min-height:112px;box-shadow:0 5px 16px #183C5010;transition:transform .16s ease,box-shadow .16s ease}
+.service:active{transform:scale(.985)}button{border-radius:12px}
+.market-banner,.market-intro{border-radius:19px;box-shadow:0 9px 22px #0A39451B}
+nav{max-width:650px;margin:0 auto;left:0;right:0;padding:9px max(8px,calc((100% - 650px)/2 + 8px)) calc(9px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px #173B4C12;border-radius:19px 19px 0 0;background:#FFFFFFF5;backdrop-filter:blur(14px)}
+nav button{min-height:48px;border-radius:13px;font-weight:700}nav button.active{background:#E3F3EC;color:#087F68}
+.menu-backdrop{position:fixed;inset:0;background:#061B2BCC;backdrop-filter:blur(3px);z-index:39}
+.pamoja-menu{position:fixed;top:0;right:0;bottom:0;width:min(86vw,340px);padding:25px 19px calc(25px + env(safe-area-inset-bottom));background:#F8FBF9;z-index:40;box-shadow:-18px 0 48px #001B2A35;overflow-y:auto}
+.menu-top{display:flex;align-items:flex-start;justify-content:space-between;padding:9px 2px 25px;border-bottom:1px solid #E1EBE6;margin-bottom:16px}
+.menu-top small,.menu-top b{display:block}.menu-top small{font-size:10px;letter-spacing:1.5px;color:#087F68;font-weight:800;margin-bottom:7px}.menu-top b{font-size:16px;color:#102B46}
+.menu-close{width:38px;height:38px;padding:0;background:#EAF2EE;color:#102B46;font-size:26px;line-height:1}
+.drawer-link{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin:9px 0;padding:14px 12px;background:#fff;color:#102B46;border:1px solid #E1EBE6;border-radius:15px;box-shadow:0 4px 14px #173B4C0B}
+.drawer-link>span:first-child{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#E8F4EF;color:#087F68;font-size:19px}
+.drawer-link>span:nth-child(2){flex:1}.drawer-link b,.drawer-link small{display:block}.drawer-link b{font-size:13px}.drawer-link small{font-size:10px;color:#718092;font-weight:400;margin-top:3px}.drawer-link i{font-style:normal;color:#087F68;font-size:18px}
+.drawer-signout{border-color:#F0DDDA}.drawer-signout>span:first-child{background:#FCEFED;color:#A83C3C}
+@media(min-width:700px){.pamoja-menu{top:12px;bottom:12px;border-radius:22px}.menu-backdrop{background:#061B2B99}}
+@media(max-width:390px){.site-header{padding:12px 13px}.brand{gap:8px}.brand-mark{width:39px;height:39px}.brand-copy h2{font-size:17px}.header-actions{gap:8px}.demo-label{font-size:9px;padding:5px 7px}.menu-toggle{width:42px;height:42px}}
+
 </style></head>
 <body class="starting">
 <div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
 
-<header class="site-header"><div class="brand"><div class="brand-mark">P</div><div class="brand-divider"></div><div class="brand-copy"><h2>PAMOJA</h2><p>TOGETHER. MORE POSSIBLE.</p></div></div><div class="demo-label">DEMO</div></header>
+<header class="site-header"><div class="brand"><div class="brand-mark">P</div><div class="brand-divider"></div><div class="brand-copy"><h2>PAMOJA</h2><p>TOGETHER. MORE POSSIBLE.</p></div></div><div class="header-actions"><div class="demo-label">DEMO</div><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="pamojaMenu" aria-expanded="false" onclick="togglePamojaMenu()"><span></span><span></span><span></span></button></div></header>
+<div class="menu-backdrop hidden" id="menuBackdrop" onclick="closePamojaMenu()" aria-hidden="true"></div>
+<aside class="pamoja-menu hidden" id="pamojaMenu" aria-label="Account menu" aria-hidden="true"><div class="menu-top"><div><small>PAMOJA MENU</small><b>Together. More Possible.</b></div><button type="button" class="menu-close" aria-label="Close menu" onclick="closePamojaMenu()">×</button></div><div id="menuSignedOut"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('account')"><span>↪</span><span><b>Sign in</b><small>Access your PAMOJA account</small></span><i>→</i></button></div><div id="menuSignedIn" class="hidden"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('account')"><span>◉</span><span><b>Profile</b><small>Account and security settings</small></span><i>→</i></button><button type="button" class="drawer-link drawer-signout" onclick="closePamojaMenu();logoutUser()"><span>↗</span><span><b>Sign out</b><small>Securely leave your account</small></span><i>→</i></button></div></aside>
 
 <main>
 <section id="home">
@@ -138,6 +171,10 @@ const PRODUCT_KEY='yembridgeProductSubmissions';
 
 function finishStartup(){document.body.classList.remove('starting');const overlay=document.getElementById('startupOverlay');if(overlay)overlay.classList.add('hidden')}
 function navButtonFor(id){return Array.from(document.querySelectorAll('nav button')).find(button=>(button.getAttribute('onclick')||'').includes("'"+id+"'"))}
+function refreshPamojaMenu(){const signedIn=!!(window.yembridgeAuthReady&&window.Clerk?.isSignedIn);document.getElementById('menuSignedOut')?.classList.toggle('hidden',signedIn);document.getElementById('menuSignedIn')?.classList.toggle('hidden',!signedIn)}
+function togglePamojaMenu(){const menu=document.getElementById('pamojaMenu'),backdrop=document.getElementById('menuBackdrop'),toggle=document.getElementById('menuToggle');if(!menu||!backdrop)return;const opening=menu.classList.contains('hidden');menu.classList.toggle('hidden',!opening);backdrop.classList.toggle('hidden',!opening);menu.setAttribute('aria-hidden',String(!opening));backdrop.setAttribute('aria-hidden',String(!opening));if(toggle){toggle.setAttribute('aria-expanded',String(opening));toggle.setAttribute('aria-label',opening?'Close menu':'Open menu')}if(opening)refreshPamojaMenu()}
+function closePamojaMenu(){const menu=document.getElementById('pamojaMenu'),backdrop=document.getElementById('menuBackdrop'),toggle=document.getElementById('menuToggle');menu?.classList.add('hidden');backdrop?.classList.add('hidden');menu?.setAttribute('aria-hidden','true');backdrop?.setAttribute('aria-hidden','true');if(toggle){toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open menu')}}
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closePamojaMenu()});
 function show(id,btn){
  if(!VALID_SECTIONS.includes(id))id='home';
  if(!window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)){window.yembridgePendingSection=id;id='account'}
@@ -153,7 +190,7 @@ function show(id,btn){
  if(id==='admin')loadAdminKycQueue();
 }
 function demo(service){alert(service+' is a demonstration only. No real transaction has been made.')}
-async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('account');return}try{try{sessionStorage.setItem('yembridgeLastSection','account')}catch(e){}await window.Clerk.signOut();window.yembridgeAccount=null;updateYemBridgeAccountDisplay();window.location.replace(HOME_URL+'?auth=sign-in')}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
+async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('account');return}try{try{sessionStorage.setItem('yembridgeLastSection','account')}catch(e){}await window.Clerk.signOut();window.yembridgeAccount=null;updateYemBridgeAccountDisplay();refreshPamojaMenu();window.location.replace(HOME_URL+'?auth=sign-in')}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
 
 function readLocalArray(key){try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(e){console.warn('Could not read demo data:',key,e);return[]}}
 function writeLocalArray(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch(e){console.error(e);alert('This demo information could not be saved on this device. It may be out of browser storage space.');return false}}
@@ -586,6 +623,7 @@ window.addEventListener('load',async()=>{
   if(!window.__internal_ClerkUICtor)throw new Error('Clerk UI package did not load.');
   await Clerk.load({ui:{ClerkUI:window.__internal_ClerkUICtor},signInUrl:HOME_URL,signUpUrl:HOME_URL});
   window.yembridgeAuthReady=true;
+  refreshPamojaMenu();
   if(Clerk.isSignedIn&&Clerk.user){
    loggedOut.classList.add('hidden');loggedIn.classList.remove('hidden');const user=Clerk.user;
    document.getElementById('displayName').textContent=((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA User';
