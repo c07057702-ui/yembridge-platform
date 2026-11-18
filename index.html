@@ -177,15 +177,70 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 
 <main>
 <section id="welcome" class="hidden">
-<div class="card" style="margin-top:18px;padding:26px 20px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(235,246,241,.88))">
-<p class="welcome-tag">WELCOME TO PAMOJA</p>
-<h3 style="font-size:clamp(30px,8vw,42px);line-height:1.12;margin:8px 0 12px">Together. More Possible.</h3>
-<p class="muted" style="font-size:15px">A simpler way to manage everyday money, discover local businesses, shop, and access useful services — all in one place.</p>
-<div class="grid" style="margin:22px 0"><div class="service"><span>💳</span><b>Everyday money</b><small>One place for your account</small></div><div class="service"><span>🛍️</span><b>PAMOJA Market</b><small>Discover local products</small></div><div class="service"><span>📱</span><b>Digital services</b><small>Everyday services together</small></div><div class="service"><span>🤝</span><b>Local merchants</b><small>Connect and grow together</small></div></div>
-<button type="button" class="account-button" onclick="openPamojaAuth('sign-up')">Create account</button>
-<button type="button" class="account-button" style="background:linear-gradient(115deg,#102B46,#174B63)" onclick="openPamojaAuth('sign-in')">Sign in</button>
-<p class="muted" style="text-align:center;margin-top:14px">Create your secure account or sign in to continue to PAMOJA.</p>
+<style>
+.landing-hero{margin-top:18px;padding:27px 21px;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(230,245,238,.92));overflow:hidden;position:relative}
+.landing-kicker{color:#087F68;font-size:10px;font-weight:900;letter-spacing:1.7px;margin:0 0 9px}
+.landing-hero h1{font-size:clamp(34px,9vw,47px);line-height:1.05;letter-spacing:-1.5px;color:#082944;margin:0 0 14px}
+.landing-hero p{font-size:14px;color:#53697A;margin:0;max-width:520px}
+.landing-hero .landing-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:23px}
+.landing-hero .landing-actions button{width:100%;min-height:48px}
+.landing-secondary{background:linear-gradient(115deg,#102B46,#174B63)}
+.landing-section{margin:22px 0}
+.landing-section h2{font-size:21px;color:#082944;margin:0 0 7px}
+.landing-section>p{font-size:12px;color:#607487;margin:0 0 13px}
+.landing-feature{min-height:132px;text-align:left;padding:15px 13px}
+.landing-feature span{font-size:25px}
+.landing-feature b{display:block;margin:7px 0 4px}
+.landing-feature small{font-size:10px;line-height:1.45}
+.landing-step{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid #E2ECE7}
+.landing-step:last-child{border-bottom:0}
+.landing-step>span{width:32px;height:32px;flex-shrink:0;border-radius:11px;background:#E5F4ED;color:#087F68;display:grid;place-items:center;font-weight:900}
+.landing-step b,.landing-step small{display:block}
+.landing-step b{font-size:12px;color:#102B46}
+.landing-step small{font-size:11px;color:#607487;margin-top:3px}
+.landing-note{font-size:10px;color:#7A6336;background:#FFF5DF;border:1px solid #F6E4B9;border-radius:12px;padding:12px;margin-top:15px}
+.landing-bottom{text-align:center;padding:22px 16px;background:linear-gradient(125deg,#071F38,#075C59 75%,#07866F);color:white}
+.landing-bottom h2{font-size:24px;color:white;margin:0 0 7px}
+.landing-bottom p{font-size:12px;color:#D9ECE6;margin:0 0 15px}
+.landing-bottom button{width:100%;background:linear-gradient(110deg,#F28C28,#F5BD59);color:#102B46}
+@media(max-width:360px){.landing-hero .landing-actions{grid-template-columns:1fr}.landing-feature{min-height:120px}}
+</style>
+<div class="card landing-hero">
+<p class="landing-kicker">WELCOME TO PAMOJA</p>
+<h1>Together.<br>More Possible.</h1>
+<p>One place to explore everyday money tools, shop from local merchants, discover useful services and connect with opportunities around you.</p>
+<div class="landing-actions"><button type="button" onclick="openPamojaAuth('sign-up')">Create account</button><button type="button" class="landing-secondary" onclick="openPamojaAuth('sign-in')">Sign in</button></div>
+<p style="font-size:10px;margin-top:12px">New to PAMOJA? Create an account to get started. Already registered? Sign in.</p>
 </div>
+<div class="landing-section">
+<h2>Discover what PAMOJA brings together</h2>
+<p>A connected digital space designed to make everyday activities easier.</p>
+<div class="grid">
+<div class="service landing-feature"><span>💳</span><b>Everyday money</b><small>Access your PAMOJA account area and keep track of account activity in one place.</small></div>
+<div class="service landing-feature"><span>🛍️</span><b>PAMOJA Market</b><small>Explore a marketplace experience for discovering products from local merchants.</small></div>
+<div class="service landing-feature"><span>📱</span><b>PAMOJA Services</b><small>Explore options for airtime, data, electricity, water, URA services and ride requests.</small></div>
+<div class="service landing-feature"><span>🏪</span><b>Merchant space</b><small>A dedicated area for merchants to submit products and view their merchant tools.</small></div>
+<div class="service landing-feature"><span>🔄</span><b>Trade</b><small>A space planned for connected wallets and exchange features as integrations become available.</small></div>
+<div class="service landing-feature"><span>📋</span><b>Transactions</b><small>View account activity and marketplace order information from one section.</small></div>
+</div>
+</div>
+<div class="card landing-section">
+<h2>How to get started</h2>
+<div class="landing-step"><span>1</span><div><b>Create your PAMOJA account</b><small>Tap Create account. You will be taken to the existing secure Clerk registration screen.</small></div></div>
+<div class="landing-step"><span>2</span><div><b>Sign in securely</b><small>Use your account details through the Clerk sign-in screen whenever you return.</small></div></div>
+<div class="landing-step"><span>3</span><div><b>Explore your PAMOJA home</b><small>After successful sign-in, you will arrive at Home and can open the available sections.</small></div></div>
+</div>
+<div class="card landing-section">
+<h2>Built around doing more, together</h2>
+<p>From discovering local products to exploring digital services, PAMOJA brings useful experiences into one platform. Your account area also includes profile information and identity-verification status.</p>
+<div class="landing-note"><b>Please note:</b> PAMOJA is currently a demonstration platform. Some features, including live payments, service-provider connections, wallet binding, merchant settlement and real transactions, are not yet active. Demo products and balances are illustrative only. Never enter payment details on demonstration screens.</div>
+</div>
+<div class="card landing-bottom">
+<h2>Ready to be part of PAMOJA?</h2>
+<p>Create your account and take your first step with us.</p>
+<button type="button" onclick="openPamojaAuth('sign-up')">Create your PAMOJA account</button>
+</div>
+<p class="muted" style="text-align:center;font-size:10px;margin:12px 0 20px">PAMOJA · Together. More Possible.</p>
 </section>
 <section id="home" class="hidden">
 <div class="card balance"><div class="balance-top"><span>◈ YOUR PAMOJA WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 1,500,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>P</b></div></div>
