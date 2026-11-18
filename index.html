@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>YemBridge Digital Commerce</title>
+<title>PAMOJA | Together. More Possible.</title>
 <style>
 :root{--navy:#102B46;--green:#087F68;--gold:#F2B84B;--ink:#182B3D;--muted:#718092;--bg:#F5F8F7}
 *{box-sizing:border-box}
@@ -26,7 +26,7 @@ button{border:0;border-radius:11px;padding:11px 15px;background:var(--green);col
 .service{background:white;border:1px solid #E7EEEA;border-radius:15px;padding:14px 8px;text-align:center;cursor:pointer;min-height:100px}.service span{display:block;font-size:25px;margin-bottom:6px}.service b{font-size:13px;color:var(--navy)}.service small{display:block;color:#82918C;font-size:10px;margin-top:4px}
 .section-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}
 .market-banner,.market-intro{background:linear-gradient(120deg,#102B46,#087F68);color:white;border-radius:16px;padding:16px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.market-banner h3{color:white;font-size:20px;margin:6px 0}.market-banner p,.market-intro small{color:#D5E8E2;font-size:11px}.market-banner span{color:var(--gold);font-size:9px;font-weight:bold}.market-intro b,.market-intro small{display:block}.market-intro span{font-size:28px}
-.shop-heading,.activity-heading{margin-top:18px}.product-card{background:white;border:1px solid #E3EAE7;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0;overflow-wrap:anywhere}.product-image{background:#F0F6F4;border-radius:10px;min-height:80px;max-height:170px;width:100%;object-fit:cover;display:grid;place-items:center;font-size:38px}.product-category{color:var(--green);font-size:9px;font-weight:bold}.product-card b{font-size:12px;color:var(--navy)}.product-card strong{font-size:13px;color:var(--green)}.product-card button{font-size:10px;padding:9px 4px}
+.shop-heading,.activity-heading{margin-top:18px}.market-search-label{display:block;margin-top:10px;font-size:11px;color:var(--navy);font-weight:bold}.market-search{margin:6px 0 2px;border:1px solid #D7E5DF;background:linear-gradient(135deg,#FFFFFF,#F6FAF8);border-radius:13px;padding:13px 14px;box-shadow:inset 0 1px 2px #193E5D08}.market-search:focus{border-color:var(--green);box-shadow:0 0 0 3px #087F6818}.market-results-count{margin:4px 0 10px}.product-card{background:white;border:1px solid #E3EAE7;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0;overflow-wrap:anywhere}.product-image{background:#F0F6F4;border-radius:10px;min-height:80px;max-height:170px;width:100%;object-fit:cover;display:grid;place-items:center;font-size:38px}.product-category{color:var(--green);font-size:9px;font-weight:bold}.product-card b{font-size:12px;color:var(--navy)}.product-card strong{font-size:13px;color:var(--green)}.product-card button{font-size:10px;padding:9px 4px}
 .quantity-label{font-size:10px;font-weight:bold;color:var(--navy);margin-top:5px}.quantity-input{padding:9px;margin:0;font-size:13px}
 .cart-summary,.activity-summary>div,.security-note{background:#F0F6F4;border-radius:12px;padding:12px}.cart-summary{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0;flex-wrap:wrap}.cart-summary b,.cart-summary small{display:block}.cart-summary small{font-size:10px;color:var(--muted)}
 .activity-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}.activity-summary small,.activity-summary b{display:block}.activity-summary small{font-size:10px;color:var(--muted)}.activity-summary b{font-size:13px;color:var(--navy);margin-top:5px}
@@ -44,34 +44,46 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 .product-photo-strip{display:flex;gap:5px;overflow-x:auto}.product-photo-strip img{width:70px;height:70px;object-fit:cover;border-radius:7px}
 @media(max-width:360px){nav button{font-size:10px;padding:8px 4px}.amount{font-size:25px}}
 </style>
-</head>
+<style>
+.admin-application{border:1px solid #E2EBE6;border-radius:12px;padding:12px;margin:9px 0;background:#FAFCFB}.admin-application strong,.admin-application small{display:block}.admin-application small{color:#718092;font-size:11px;margin:4px 0 9px}.admin-application button{width:100%}
+.admin-documents{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.admin-document{border:1px solid #E2EBE6;border-radius:12px;padding:8px;min-width:0}.admin-document img{width:100%;max-height:260px;object-fit:contain;background:#F1F5F3;border-radius:8px}.admin-document b{display:block;font-size:12px;margin:4px}.admin-detail-lines{background:#F3F7F5;border-radius:12px;padding:12px;white-space:pre-line;overflow-wrap:anywhere;font-size:12px}@media(max-width:380px){.admin-documents{grid-template-columns:1fr}}
+</style></head>
 <body class="starting">
-<div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading YemBridge...</b><small>Checking your secure account</small></div></div>
+<div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
 
-<header class="site-header"><div class="brand"><div class="brand-mark">YB</div><div class="brand-divider"></div><div class="brand-copy"><h2>YemBridge</h2><p>YOUR EVERYDAY COMMERCE COMPANION</p></div></div><div class="demo-label">DEMO</div></header>
+<header class="site-header"><div class="brand"><div class="brand-mark">P</div><div class="brand-divider"></div><div class="brand-copy"><h2>PAMOJA</h2><p>TOGETHER. MORE POSSIBLE.</p></div></div><div class="demo-label">DEMO</div></header>
 
 <main>
 <section id="home">
-<div class="card balance"><div class="balance-top"><span>◈ YOUR YEMBRIDGE WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 250,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>YB</b></div></div>
-<div class="welcome"><p class="welcome-tag">WELCOME TO YEMBRIDGE</p><h3>Everything you need,<br>in one place.</h3><p class="muted">Pay bills, stay connected and discover great local businesses.</p><button onclick="show('services')">Explore services →</button></div>
+<div class="card balance"><div class="balance-top"><span>◈ YOUR PAMOJA WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 1,500,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>P</b></div></div>
+<div class="welcome"><p class="welcome-tag">WELCOME TO PAMOJA</p><h3>Everything you need,<br>in one place.</h3><p class="muted">Pay bills, stay connected and discover great local businesses.</p><button onclick="show('services')">Explore services →</button></div>
 <div class="section-heading"><h3>Explore services</h3><span>YOUR DAILY ESSENTIALS</span></div>
 <div class="grid"><div class="service" onclick="show('services')"><span>📱</span><b>Airtime & Data</b><small>Stay connected</small></div><div class="service" onclick="show('services')"><span>💡</span><b>Pay Bills</b><small>Easy payments</small></div><div class="service" onclick="show('shop')"><span>🛍️</span><b>Marketplace</b><small>Shop local</small></div><div class="service" onclick="show('activity')"><span>📋</span><b>Activity</b><small>Track transactions</small></div></div>
-<div class="market-banner" onclick="show('shop')"><div><span>THE YEMBRIDGE MARKETPLACE</span><h3>Shop local.<br>Grow together.</h3><p>Discover products from local merchants.</p><b>Explore marketplace →</b></div><div class="market-symbol">YB</div></div>
+<div class="market-banner" onclick="show('shop')"><div><span>PAMOJA MARKET</span><h3>Shop local.<br>Grow together.</h3><p>Discover products from local merchants.</p><b>Explore PAMOJA Market →</b></div><div class="market-symbol">P</div></div>
 </section>
 
-<section id="services" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE SERVICES</p><h3>Digital Services</h3><p class="muted">Your everyday essentials, all in one place.</p><div class="grid"><div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div><div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div><div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div></div></div></section>
+<section id="services" class="hidden"><div class="card"><p class="welcome-tag">PAMOJA SERVICES</p><h3>Digital Services</h3><p class="muted">Your everyday essentials, all in one place.</p><div class="grid"><div class="service" onclick="demo('Airtime')"><span>📱</span><b>Airtime</b><small>Top up your phone</small></div><div class="service" onclick="demo('Mobile data')"><span>🌐</span><b>Mobile Data</b><small>Stay connected</small></div><div class="service" onclick="demo('Utility bills')"><span>💡</span><b>Utility Bills</b><small>Pay your bills</small></div></div></div></section>
 
-<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">SHOP WITH YEMBRIDGE</p><h3>Marketplace</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Shop local. Grow together.</b><small>Explore approved merchant products.</small></div><span>🛍️</span></div><h3 class="shop-heading">Featured products</h3><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="cartItems"></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
+<section id="shop" class="hidden"><div class="card"><p class="welcome-tag">PAMOJA MARKET</p><h3>PAMOJA Market</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Together. More Possible.</b><small>Discover products from local merchants.</small></div><span>🛍️</span></div><h3 class="shop-heading">Explore products</h3><label class="market-search-label" for="marketSearch">Find something in PAMOJA Market</label><input id="marketSearch" class="market-search" type="search" placeholder="Search products or categories..." autocomplete="off"><p id="marketResultsCount" class="muted market-results-count" aria-live="polite">Showing demo products</p><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="cartItems"></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
 
 <section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 0</b></div><div><small>Money Out</small><b>UGX 0</b></div></div><h3 class="activity-heading">Recent Activity</h3><div id="dynamicActivity"></div><div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p></div></section>
 
-<section id="account" class="hidden"><div class="card"><p class="welcome-tag">YEMBRIDGE CUSTOMER CENTRE</p><h3>My Account</h3><p class="muted">Manage your profile and account security.</p><div id="loggedOut"><div class="account-intro"><div class="account-avatar">YB</div><div><b>Welcome to YemBridge</b><small>Your everyday commerce companion.</small></div></div><div id="clerk-auth"></div><p id="authLoadMessage" class="muted" aria-live="polite">Loading secure sign-in...</p></div><div id="loggedIn" class="hidden"><div class="profile-panel"><div class="profile-avatar">YB</div><div><small>WELCOME BACK</small><h3 id="displayName"></h3><p id="displayEmail"></p></div></div><div id="accountSyncMessage" class="muted" style="margin:15px 0;padding:12px;border:1px solid #ccc;border-radius:8px" aria-live="polite">Checking YemBridge database connection...</div><div id="adminAccessStatus" class="muted" style="margin:12px 0;padding:12px;border:1px solid #D8E4DF;border-radius:8px;background:#F7FAF8" aria-live="polite">Administrator access will be checked after sign-in.</div><h4>Account verification</h4><div class="account-status"><div class="status-icon">🪪</div><div><b>Identity verification</b><small>Complete KYC to access eligible services.</small></div><span class="status-pending">Not verified</span></div><div class="account-status"><div class="status-icon">◈</div><div><b>YEM connection</b><small>YEM account integration status.</small></div><span class="status-pending">Not connected</span></div><h4>Account security</h4><div class="security-note"><b>🔒 Your account matters</b><p>Never share your password, wallet private key or recovery phrase.</p></div><p class="demo-warning">DEMO ACCOUNT — No real funds or live YEM connection.</p><button class="account-button logout-button" onclick="logoutUser()">Sign Out</button></div></div></section>
+<section id="account" class="hidden"><div class="card"><p class="welcome-tag">PAMOJA CUSTOMER CENTRE</p><h3>My Account</h3><p class="muted">Manage your profile and account security.</p><div id="loggedOut"><div class="account-intro"><div class="account-avatar">P</div><div><b>Welcome to PAMOJA</b><small>Together. More Possible.</small></div></div><div id="clerk-auth"></div><p id="authLoadMessage" class="muted" aria-live="polite">Loading secure sign-in...</p></div><div id="loggedIn" class="hidden"><div class="profile-panel"><div class="profile-avatar">P</div><div><small>WELCOME BACK</small><h3 id="displayName"></h3><p id="displayEmail"></p></div></div><div id="accountSyncMessage" class="muted" style="margin:15px 0;padding:12px;border:1px solid #ccc;border-radius:8px" aria-live="polite">Checking PAMOJA account connection...</div><div id="adminAccessStatus" class="muted" style="margin:12px 0;padding:12px;border:1px solid #D8E4DF;border-radius:8px;background:#F7FAF8" aria-live="polite">Administrator access will be checked after sign-in.</div><h4>Account verification</h4><div class="account-status"><div class="status-icon">🪪</div><div><b>Identity verification</b><small>Complete KYC to access eligible services.</small></div><span class="status-pending">Not verified</span></div><div class="account-status"><div class="status-icon">◈</div><div><b>YEM connection</b><small>YEM account integration status.</small></div><span class="status-pending">Not connected</span></div><h4>Account security</h4><div class="security-note"><b>🔒 Your account matters</b><p>Never share your password, wallet private key or recovery phrase.</p></div><p class="demo-warning">DEMO ACCOUNT — No real funds or live YEM connection.</p><button class="account-button logout-button" onclick="logoutUser()">Sign Out</button></div></div></section>
 
+<section id="admin" class="hidden">
+<div class="card"><p class="welcome-tag">PAMOJA ADMINISTRATION</p><h3>KYC Review Desk</h3><p class="muted">Private customer identity review. Access is checked by the backend for every request.</p>
+<label for="adminKycStatusFilter">Filter applications</label><select id="adminKycStatusFilter"><option value="">All statuses</option><option value="pending">Pending</option><option value="under_review">Under review</option><option value="requires_information">More information required</option><option value="rejected">Rejected</option><option value="approved">Approved</option></select>
+<button type="button" id="adminKycRefresh">Refresh queue</button><p id="adminKycQueueMessage" class="muted" aria-live="polite">Loading review queue...</p><div id="adminKycQueue"></div></div>
+<div id="adminKycDetailCard" class="card hidden"><div class="section-heading"><h3>Application details</h3><button type="button" class="kyc-secondary" id="adminKycBack">Back to queue</button></div>
+<div id="adminKycDetail"></div><div id="adminKycDocuments" class="admin-documents"></div>
+<div id="adminKycReviewForm" class="hidden"><h4>Record review decision</h4><label for="adminKycDecision">Decision</label><select id="adminKycDecision"><option value="approved">Approve</option><option value="rejected">Reject</option><option value="requires_information">Request more information</option></select>
+<div id="adminKycApprovalFields"><label for="adminKycDistrict">District / City (as shown on National ID)</label><input id="adminKycDistrict" maxlength="100" placeholder="Enter District / City"><label for="adminKycTown">Town / Village (as shown on National ID)</label><input id="adminKycTown" maxlength="100" placeholder="Enter Town / Village"></div>
+<label for="adminKycNotes">Review notes (optional)</label><textarea id="adminKycNotes" maxlength="1000" placeholder="Add a short reason or instruction"></textarea><button type="button" id="adminKycSubmitDecision">Save review decision</button><p id="adminKycReviewMessage" class="muted" aria-live="polite"></p></div></div></section>
 <section id="merchant" class="hidden">
-<div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your YemBridge merchant space. This demonstration uses your signed-in account.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
-<div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">UGX 0</div><p class="muted">Demo settlement balance — not real money.</p></div>
-<div class="card"><h3>💸 Merchant Withdrawals</h3><p class="muted">Available for withdrawal (demo):</p><div class="amount" id="merchantAvailableWithdrawal">UGX 0</div><input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX"><button onclick="requestMerchantWithdrawal()">Request Withdrawal</button><p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div></div>
-<div class="card"><h3>📊 Merchant Sales Report</h3><div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div><div class="activity-summary"><div><small>Illustrative Commission (5%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">UGX 0</strong></div></div><p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">Demo report only. These figures are not real earnings.</p></div>
+<div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your PAMOJA merchant space. This demonstration uses your signed-in account.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
+<div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">Not configured</div><p class="muted">Merchant settlement rules have not yet been configured. No real money is held here.</p></div>
+<div class="card"><h3>💸 Merchant Withdrawals</h3><p class="muted">Withdrawal availability:</p><div class="amount" id="merchantAvailableWithdrawal">Not available</div><input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX"><button onclick="requestMerchantWithdrawal()">Request Withdrawal</button><p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div></div>
+<div class="card"><h3>📊 Merchant Sales Report</h3><div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div><div class="activity-summary"><div><small>PAMOJA Commission (0.98%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>URA Tax (0.60%)</small><strong id="merchantUraTax">UGX 0</strong></div></div><div class="activity-summary"><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">Not configured</strong></div></div><p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">The URA amount is shown as a proposed deduction from merchant sales for tax remittance. PAMOJA does not yet collect or remit it. Confirm the applicable tax, rate and collection obligations with URA or a qualified tax adviser before live use. Demo report only; these figures are not real earnings.</p></div>
 
 <div class="card">
 <h3>➕ Submit a Product for Approval</h3>
@@ -95,7 +107,7 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 </main>
 
 <nav aria-label="Main navigation"><button type="button" onclick="show('home',this)">⌂ Home</button><button type="button" onclick="show('services',this)">Services</button><button type="button" onclick="show('shop',this)">Shop</button><button type="button" onclick="show('activity',this)">Activity</button><button type="button" onclick="show('merchant',this)">Merchant</button><button type="button" onclick="show('account',this)">Account</button></nav>
-<footer>YemBridge Digital Commerce Ltd · Prototype v1.2</footer>
+<footer>PAMOJA · Demo prototype</footer>
 
 <!-- Clerk authentication libraries: these must load before the YemBridge scripts below. -->
 <script
@@ -117,8 +129,8 @@ footer{text-align:center;color:#82918C;font-size:10px;padding:15px}.demo-note,.a
 window.yembridgeAuthReady=false;
 window.yembridgeAccount=null;
 window.yembridgePendingSection=null;
-const PROTECTED_SECTIONS=['services','shop','activity','merchant'];
-const VALID_SECTIONS=['home','services','shop','activity','account','merchant'];
+const PROTECTED_SECTIONS=['services','shop','activity','merchant','admin'];
+const VALID_SECTIONS=['home','services','shop','activity','account','merchant','admin'];
 const HOME_URL='https://c07057702-ui.github.io/yembridge-platform/';
 const API_URL='https://yembridge-api.c07057702.workers.dev';
 const PRODUCT_KEY='yembridgeProductSubmissions';
@@ -137,6 +149,7 @@ function show(id,btn){
  if(id==='activity'){renderCustomerOrders();renderActivity()}
  if(id==='merchant'){renderMerchantOrders();renderMerchantSalesReport();renderMerchantWithdrawals();renderMerchantProductSubmissions()}
  if(id==='shop')renderShopProducts();
+ if(id==='admin')loadAdminKycQueue();
 }
 function demo(service){alert(service+' is a demonstration only. No real transaction has been made.')}
 async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('account');return}try{try{sessionStorage.setItem('yembridgeLastSection','account')}catch(e){}await window.Clerk.signOut();window.yembridgeAccount=null;updateYemBridgeAccountDisplay();window.location.replace(HOME_URL+'?auth=sign-in')}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
@@ -146,13 +159,30 @@ function writeLocalArray(key,value){try{localStorage.setItem(key,JSON.stringify(
 function getProductSubmissions(){return readLocalArray(PRODUCT_KEY)}
 function saveProductSubmissions(items){return writeLocalArray(PRODUCT_KEY,items)}
 
-const DEMO_WALLET_SETUP_VERSION='2026-11-wallet-start-250000';
-let yemWallet=250000;
-try{const setup=localStorage.getItem('yembridgeDemoWalletSetup');if(setup!==DEMO_WALLET_SETUP_VERSION){localStorage.setItem('yembridgeDemoBalance','250000');localStorage.setItem('yembridgeDemoWalletSetup',DEMO_WALLET_SETUP_VERSION)}const saved=Number(localStorage.getItem('yembridgeDemoBalance'));yemWallet=Number.isFinite(saved)&&saved>=0?saved:250000;localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){console.warn('Wallet storage unavailable:',e)}
+const DEMO_WALLET_SETUP_VERSION='2026-11-pamoja-demo-wallet-start-1500000';
+let yemWallet=1500000;
+try{const setup=localStorage.getItem('yembridgeDemoWalletSetup');if(setup!==DEMO_WALLET_SETUP_VERSION){localStorage.setItem('yembridgeDemoBalance','1500000');localStorage.setItem('yembridgeDemoWalletSetup',DEMO_WALLET_SETUP_VERSION)}const saved=Number(localStorage.getItem('yembridgeDemoBalance'));yemWallet=Number.isFinite(saved)&&saved>=0?saved :1500000;localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){console.warn('Wallet storage unavailable:',e)}
 let yemCart=[];
 let yemTransactions=readLocalArray('yembridgeDemoTransactions');
 
 function saveDemoData(){try{localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){}writeLocalArray('yembridgeDemoTransactions',yemTransactions)}
+
+/* Persist a demo checkout as one guarded operation across its local records. */
+function persistDemoCheckout(products,orders,balance,transactions){
+ const keys=['yembridgeProductSubmissions','yembridgeMerchantOrders','yembridgeDemoBalance','yembridgeDemoTransactions'];
+ const values=[JSON.stringify(products),JSON.stringify(orders),String(balance),JSON.stringify(transactions)];
+ let before=[];
+ try{
+  before=keys.map(key=>localStorage.getItem(key));
+  keys.forEach((key,index)=>localStorage.setItem(key,values[index]));
+  return true;
+ }catch(error){
+  before.forEach((value,index)=>{try{if(value===null)localStorage.removeItem(keys[index]);else localStorage.setItem(keys[index],value)}catch(rollbackError){console.error('Demo checkout rollback failed:',rollbackError)}});
+  console.error('Demo checkout could not be saved:',error);
+  alert('Checkout could not be saved on this device. Your basket and demo wallet have not been changed. Please check device storage and try again.');
+  return false;
+ }
+}
 function updateWallet(){const el=document.querySelector('.balance .amount');if(el)el.textContent='UGX '+yemWallet.toLocaleString('en-UG')}
 function orderQuantity(order){const q=Number(order?.quantity);return Number.isInteger(q)&&q>0?q:1}
 function orderTotal(order){const total=Number(order?.totalAmount);if(Number.isFinite(total)&&total>0)return total;return Number(order?.price||0)*orderQuantity(order)}
@@ -229,17 +259,20 @@ function updateCartSummary(){
 
 function checkoutDemo(){
  if(!yemCart.length)return alert('Your basket is empty.');
- if(!window.yembridgeAuthReady||!window.Clerk?.isSignedIn||!window.Clerk.user){alert('Please sign in to your YemBridge account before checkout.');show('account');return}
+ if(!window.yembridgeAuthReady||!window.Clerk?.isSignedIn||!window.Clerk.user){alert('Please sign in to your PAMOJA account before checkout.');show('account');return}
  const user=window.Clerk.user,email=user.primaryEmailAddress?.emailAddress?.toLowerCase();
  if(!email)return alert('Your account email could not be verified. Please try again.');
- const customer=((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge Customer';
- const total=yemCart.reduce((s,i)=>s+i.price*i.quantity,0);
+ const customer=((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA Customer';
+ if(!yemCart.every(i=>Number.isInteger(i.quantity)&&i.quantity>0&&Number.isFinite(i.price)&&i.price>0))return alert('Your basket contains an invalid item. Please remove it and add the product again.');
+ const total=yemCart.reduce((sum,item)=>sum+item.price*item.quantity,0);
+ if(!Number.isFinite(total)||total<=0)return alert('The basket total is invalid. Your demo wallet has not been charged.');
  if(total>yemWallet)return alert('Insufficient demo wallet balance. Your basket has not been charged.');
  const products=getProductSubmissions();
  for(const item of yemCart){
   if(item.productId){
-   const p=products.find(x=>x.id===item.productId);
-   if(!p||p.status!=='Approved'||Number(p.quantity)<item.quantity)return alert('Not enough stock remains for '+item.name+'. Please refresh the Shop and adjust your basket.');
+   const p=products.find(x=>x.id===item.productId),stock=Number(p?.quantity),currentPrice=Number(p?.price);
+   if(!p||p.status!=='Approved'||!Number.isInteger(stock)||stock<item.quantity)return alert('Not enough valid stock remains for '+item.name+'. Please refresh the Shop and adjust your basket.');
+   if(!Number.isFinite(currentPrice)||currentPrice<=0||currentPrice!==item.price)return alert('The price for '+item.name+' has changed. Please remove it from your basket and add it again to see the current price.');
   }
  }
  const orders=readLocalArray('yembridgeMerchantOrders'),date=new Date().toLocaleString('en-UG'),next=orders.slice();
@@ -247,7 +280,7 @@ function checkoutDemo(){
   const p=item.productId?products.find(x=>x.id===item.productId):null;
   if(p)p.quantity=Number(p.quantity)-item.quantity;
   next.unshift({
-   orderId:'YB-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
+   orderId:'PAMOJA-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
    product:item.name,productId:item.productId||null,
    price:item.price,quantity:item.quantity,totalAmount:item.price*item.quantity,
    customer,customerEmail:email,customerId:user.id,
@@ -255,11 +288,12 @@ function checkoutDemo(){
    status:'New',date,refundProcessed:false,stockRestored:false
   });
  });
- if(!writeLocalArray('yembridgeMerchantOrders',next))return;
- if(!saveProductSubmissions(products))return;
- yemWallet-=total;
- yemTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.quantity+' × '+i.name).join(', '),amount:total,status:'Successful',date});
- saveDemoData();updateWallet();yemCart=[];updateCartSummary();renderActivity();renderMerchantOrders();renderCustomerOrders();renderShopProducts();
+ const nextBalance=yemWallet-total;
+ const nextTransactions=yemTransactions.slice();
+ nextTransactions.unshift({type:'purchase',description:'Marketplace Purchase',details:yemCart.map(i=>i.quantity+' × '+i.name).join(', '),amount:total,status:'Successful',date});
+ if(!persistDemoCheckout(products,next,nextBalance,nextTransactions))return;
+ yemWallet=nextBalance;yemTransactions=nextTransactions;
+ updateWallet();yemCart=[];updateCartSummary();renderActivity();renderMerchantOrders();renderCustomerOrders();renderShopProducts();
  alert('Demo purchase successful! UGX '+total.toLocaleString('en-UG')+' has been deducted from your demo wallet.');
 }
 
@@ -291,11 +325,20 @@ function renderShopProducts(){
   {name:'Smart Watch',price:65000,category:'ELECTRONICS',emoji:'⌚'},
   {name:'Wireless Earphones',price:35000,category:'ELECTRONICS',emoji:'🎧'}
  ];
- demoItems.forEach(p=>container.appendChild(makeShopCard(p)));
  const approved=getProductSubmissions().filter(p=>p.status==='Approved');
- approved.forEach(p=>container.appendChild(makeShopCard(p)));
- if(!approved.length){const note=document.createElement('p');note.className='muted';note.textContent='Merchant-submitted products will appear here after administrator approval.';container.appendChild(note)}
+ const allProducts=demoItems.concat(approved);
+ const search=(document.getElementById('marketSearch')?.value||'').trim().toLowerCase();
+ const visible=allProducts.filter(p=>[p.name,p.category,p.description,p.location].some(v=>String(v||'').toLowerCase().includes(search)));
+ visible.forEach(p=>container.appendChild(makeShopCard(p)));
+ const count=document.getElementById('marketResultsCount');
+ if(count)count.textContent=search?'Showing '+visible.length+' of '+allProducts.length+' products':'Showing '+allProducts.length+' demo and approved products';
+ if(!visible.length){const note=document.createElement('p');note.className='muted';note.textContent='No products match that search. Try another name or category.';container.appendChild(note)}
+ if(!approved.length&&!search){const note=document.createElement('p');note.className='muted';note.textContent='More products from local merchants will appear here after administrator approval.';container.appendChild(note)}
 }
+document.addEventListener('DOMContentLoaded',()=>{
+ const search=document.getElementById('marketSearch');
+ if(search)search.addEventListener('input',renderShopProducts);
+});
 function makeShopCard(p){
  const card=document.createElement('div');card.className='product-card';
  if(p.photos?.length){const img=document.createElement('img');img.className='product-image';img.src=p.photos[0];img.alt=p.name||'Product photo';card.appendChild(img)}
@@ -380,7 +423,7 @@ function submitMerchantProduct(){
   name,description,category,location,phone,price,quantity,
   photos:selectedProductPhotos.slice(),
   merchantId:user.id,
-  merchantName:((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge Merchant',
+  merchantName:((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA Merchant',
   merchantEmail:user.primaryEmailAddress?.emailAddress||'',
   status:'Pending Review',
   submittedAt:new Date().toLocaleString('en-UG'),
@@ -413,9 +456,13 @@ function renderMerchantProductSubmissions(){
 
 function renderMerchantOrders(){
  const container=document.getElementById('merchantOrders');if(!container)return;
- const orders=readLocalArray('yembridgeMerchantOrders');container.innerHTML='';
- if(!orders.length){container.textContent='No customer orders yet.';return}
- orders.forEach((order,index)=>{
+ const userId=window.Clerk?.user?.id;
+ container.innerHTML='';
+ if(!userId){container.textContent='Please sign in to view your merchant orders.';return}
+ const orders=readLocalArray('yembridgeMerchantOrders');
+ const mine=orders.map((order,index)=>({order,index})).filter(entry=>entry.order.sellerId===userId);
+ if(!mine.length){container.textContent='No customer orders for your merchant account yet.';return}
+ mine.forEach(({order,index})=>{
   const card=document.createElement('div');card.className='merchant-order-card';
   const product=document.createElement('b');product.textContent=order.product||'Product';
   const customer=document.createElement('p');customer.textContent='Customer: '+(order.customer||'Customer');
@@ -434,44 +481,58 @@ function renderMerchantOrders(){
  });
 }
 function updateMerchantOrderStatus(index,newStatus){
- const orders=readLocalArray('yembridgeMerchantOrders');
- if(!orders[index]||orders[index].status==='Completed'||orders[index].status==='Cancelled')return;
+ const orders=readLocalArray('yembridgeMerchantOrders'),userId=window.Clerk?.user?.id;
+ if(!userId||!orders[index]||orders[index].sellerId!==userId||orders[index].status==='Completed'||orders[index].status==='Cancelled')return alert('This order is not available to your merchant account. Please refresh the page.');
  if(newStatus==='Cancelled'){
   const order=orders[index],refund=orderTotal(order);
   if(!confirm('Cancel this order and refund UGX '+refund.toLocaleString('en-UG')+' to the demo wallet?')){renderMerchantOrders();return}
-  order.status='Cancelled';
-  if(!applyOrderRefund(order)){alert('The refund could not be processed. Please try again.');return}
-  if(!restoreOrderStock(order)){alert('The stock restoration could not be saved. Please try again.');return}
-  if(!writeLocalArray('yembridgeMerchantOrders',orders)){alert('Order cancellation could not be saved.');return}
-  saveDemoData();updateWallet();renderActivity();renderShopProducts();
-  alert('Order cancelled. UGX '+Number(order.refundAmount).toLocaleString('en-UG')+' has been returned to the demo wallet.');
- }else{orders[index].status=newStatus;if(!writeLocalArray('yembridgeMerchantOrders',orders))return}
+  if(order.refundProcessed)return alert('This order has already been refunded.');
+  if(!Number.isFinite(refund)||refund<=0)return alert('The refund amount is invalid.');
+  const nextOrders=orders.slice(),nextOrder={...order};
+  const refundDate=new Date().toLocaleString('en-UG');
+  nextOrder.status='Cancelled';nextOrder.refundProcessed=true;nextOrder.refundDate=refundDate;nextOrder.refundAmount=refund;
+  nextOrders[index]=nextOrder;
+  const nextProducts=getProductSubmissions();
+  if(nextOrder.productId&&!nextOrder.stockRestored){
+   const product=nextProducts.find(p=>p.id===nextOrder.productId);
+   if(product)product.quantity=Number(product.quantity||0)+orderQuantity(nextOrder);
+   nextOrder.stockRestored=true;
+  }
+  const nextBalance=yemWallet+refund,nextTransactions=yemTransactions.slice();
+  nextTransactions.unshift({type:'refund',description:'Marketplace Order Refund',details:nextOrder.product||'Cancelled order',amount:refund,status:'Refund Successful',date:refundDate});
+  if(!persistDemoCheckout(nextProducts,nextOrders,nextBalance,nextTransactions))return;
+  yemWallet=nextBalance;yemTransactions=nextTransactions;
+  updateWallet();renderActivity();renderShopProducts();
+  alert('Order cancelled. UGX '+refund.toLocaleString('en-UG')+' has been returned to the demo wallet.');
+ }else{
+  if(!['New','Accepted','Processing','Delivered - Awaiting Customer Confirmation'].includes(newStatus))return;
+  orders[index].status=newStatus;if(!writeLocalArray('yembridgeMerchantOrders',orders))return
+ }
  renderMerchantOrders();renderCustomerOrders();renderMerchantSalesReport();renderMerchantWithdrawals();
 }
 function renderMerchantSalesReport(){
- const orders=readLocalArray('yembridgeMerchantOrders'),completed=orders.filter(o=>o.status==='Completed'),pending=orders.filter(o=>o.status!=='Completed'&&o.status!=='Cancelled');
- const total=completed.reduce((s,o)=>s+orderTotal(o),0),commission=total*.05;
+ const userId=window.Clerk?.user?.id;
+ const orders=userId?readLocalArray('yembridgeMerchantOrders').filter(o=>o.sellerId===userId):[];
+ const completed=orders.filter(o=>o.status==='Completed'),pending=orders.filter(o=>o.status!=='Completed'&&o.status!=='Cancelled');
+ const total=completed.reduce((s,o)=>s+orderTotal(o),0),commission=Math.round(total*0.0098),uraTax=Math.round(total*0.006),netProceeds=total-commission-uraTax;
  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
- set('merchantTotalSales','UGX '+total.toLocaleString('en-UG'));set('merchantCompletedCount',String(completed.length));set('merchantCommission','UGX '+commission.toLocaleString('en-UG'));set('merchantNetProceeds','UGX '+(total-commission).toLocaleString('en-UG'));set('merchantPendingCount',String(pending.length));
-}
-function getMerchantAvailableWithdrawal(){
- const orders=readLocalArray('yembridgeMerchantOrders'),withdrawals=readLocalArray('yembridgeWithdrawals');
- const sales=orders.filter(o=>o.status==='Completed').reduce((s,o)=>s+orderTotal(o),0);
- const requested=withdrawals.filter(w=>w.status==='Pending'||w.status==='Approved').reduce((s,w)=>s+Number(w.amount||0),0);
- return Math.max(0,sales*.95-requested);
+ set('merchantTotalSales','UGX '+total.toLocaleString('en-UG'));set('merchantCompletedCount',String(completed.length));set('merchantCommission','UGX '+commission.toLocaleString('en-UG'));set('merchantUraTax','UGX '+uraTax.toLocaleString('en-UG'));set('merchantNetProceeds','UGX '+netProceeds.toLocaleString('en-UG'));set('merchantPendingCount',String(pending.length));
 }
 function renderMerchantWithdrawals(){
  const balance=document.getElementById('merchantAvailableWithdrawal'),history=document.getElementById('merchantWithdrawalHistory');if(!balance||!history)return;
- balance.textContent='UGX '+getMerchantAvailableWithdrawal().toLocaleString('en-UG');
- const withdrawals=readLocalArray('yembridgeWithdrawals');history.innerHTML='';
+ const userId=window.Clerk?.user?.id;balance.textContent='Not available';history.innerHTML='';
+ if(!userId){history.textContent='Please sign in to view merchant withdrawals.';return}
+ const withdrawals=readLocalArray('yembridgeWithdrawals').filter(item=>item.merchantId===userId);
  if(!withdrawals.length){history.textContent='No withdrawal requests yet.';return}
  withdrawals.forEach(item=>{const card=document.createElement('div');card.className='transaction';const amount=document.createElement('strong');amount.textContent='UGX '+Number(item.amount||0).toLocaleString('en-UG');const status=document.createElement('p');status.textContent='Status: '+(item.status||'Pending');const date=document.createElement('small');date.textContent=item.date||'';card.append(amount,status,date);history.appendChild(card)});
 }
 function requestMerchantWithdrawal(){
- const input=document.getElementById('withdrawalAmount'),message=document.getElementById('withdrawalMessage'),amount=Number(input.value),available=getMerchantAvailableWithdrawal();
+ const userId=window.Clerk?.user?.id,input=document.getElementById('withdrawalAmount'),message=document.getElementById('withdrawalMessage');
+ if(!userId){message.textContent='Please sign in to request a merchant withdrawal.';return}
+ message.textContent='Withdrawals are unavailable until PAMOJA configures and verifies merchant settlement rules and payment processing.';return;\n const amount=Number(input.value),available=getMerchantAvailableWithdrawal();
  if(!Number.isFinite(amount)||amount<=0){message.textContent='Please enter a valid withdrawal amount.';return}
  if(amount>available){message.textContent='Insufficient available demo proceeds.';return}
- const withdrawals=readLocalArray('yembridgeWithdrawals');withdrawals.unshift({amount,status:'Pending',date:new Date().toLocaleString('en-UG')});
+ const withdrawals=readLocalArray('yembridgeWithdrawals');withdrawals.unshift({merchantId:userId,amount,status:'Pending',date:new Date().toLocaleString('en-UG')});
  if(!writeLocalArray('yembridgeWithdrawals',withdrawals))return;
  input.value='';message.textContent='Demo withdrawal request submitted successfully.';renderMerchantWithdrawals();
 }
@@ -526,9 +587,9 @@ window.addEventListener('load',async()=>{
   window.yembridgeAuthReady=true;
   if(Clerk.isSignedIn&&Clerk.user){
    loggedOut.classList.add('hidden');loggedIn.classList.remove('hidden');const user=Clerk.user;
-   document.getElementById('displayName').textContent=((user.firstName||'')+' '+(user.lastName||'')).trim()||'YemBridge User';
+   document.getElementById('displayName').textContent=((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA User';
    document.getElementById('displayEmail').textContent=user.primaryEmailAddress?.emailAddress||'';
-   if(syncMessage)syncMessage.textContent='Checking YemBridge database connection...';
+   if(syncMessage)syncMessage.textContent='Checking PAMOJA account connection...';
   }else{
    loggedIn.classList.add('hidden');loggedOut.classList.remove('hidden');window.yembridgeAccount=null;
    document.getElementById('displayName').textContent='';document.getElementById('displayEmail').textContent='';
@@ -544,32 +605,26 @@ window.addEventListener('load',async()=>{
     if(!response.ok){const err=new Error('Account synchronization failed with HTTP '+response.status);err.diagnostic=result.diagnostic||null;throw err}
     window.yembridgeAccount=result;
     updateYemBridgeAccountDisplay();
-    if(syncMessage)syncMessage.textContent=result.accountNo?'YemBridge account connected. Account number: '+result.accountNo:'Your YemBridge profile is connected.';
+    if(syncMessage)syncMessage.textContent=result.accountNo?'PAMOJA account connected. Account number: '+result.accountNo:'Your PAMOJA profile is connected.';
     const adminPanel=document.getElementById('adminAccessStatus');
     if(adminPanel){
-     adminPanel.textContent='Checking administrator access...';
+     adminPanel.textContent='Checking KYC reviewer permission...';
      try{
-      const adminResponse=await fetch(API_URL+'/admin/me',{headers:{Authorization:'Bearer '+token}});
-      const adminText=await adminResponse.text();let adminResult={};try{adminResult=JSON.parse(adminText)}catch(e){throw new Error('Unreadable administrator response.')}
-      if(!adminResponse.ok)throw new Error('Administrator check returned HTTP '+adminResponse.status);
-      if(adminResult.isAdmin){
-       const roleNames=Array.isArray(adminResult.roles)?adminResult.roles.map(role=>role.role_name).filter(Boolean):[];
-       adminPanel.textContent='Administrator access: Active'+(roleNames.length?' — '+roleNames.join(', '):'');
+      const adminResponse=await fetch(API_URL+'/admin/kyc-queue?limit=1&offset=0',{headers:{Authorization:'Bearer '+token}});
+      if(adminResponse.status===403){
+       adminPanel.textContent='KYC reviewer access: Not assigned to this account.';
+      }else if(!adminResponse.ok){
+       throw new Error('KYC reviewer check returned HTTP '+adminResponse.status);
       }else{
-       adminPanel.textContent='Administrator access: Not assigned. Your account is currently not an administrator.';
+       await adminResponse.json();
+       adminPanel.textContent='KYC reviewer access: Active.';
+       const openButton=document.createElement('button');openButton.type='button';openButton.textContent='Open KYC review desk';openButton.style.marginTop='10px';
+       openButton.addEventListener('click',function(){show('admin')});
+       adminPanel.appendChild(document.createElement('br'));adminPanel.appendChild(openButton);
       }
-     }catch(adminError){
-      console.error('Administrator status check failed:',adminError);
-      let diagnostic='Network/CORS error';
-      if(adminError && typeof adminError.message === 'string' && adminError.message.startsWith('Administrator check returned HTTP ')){
-       diagnostic=adminError.message.replace('Administrator check returned ','');
-      }else if(adminError && adminError.message==='Unreadable administrator response.'){
-       diagnostic='Unreadable server response';
-      }
-      adminPanel.textContent='Administrator status could not be checked ('+diagnostic+'). Your normal account remains available.';
-     }
+     }catch(adminError){console.error('KYC reviewer permission check failed:',adminError);adminPanel.textContent='KYC reviewer access could not be checked. Your normal account remains available.'}
     }
-   }catch(error){console.error('YemBridge account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent='Your profile is signed in, but YemBridge account setup could not be completed. Please try again later.'}
+   }catch(error){console.error('PAMOJA account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent='Your profile is signed in, but PAMOJA account setup could not be completed. Please try again later.'}
   }
  }catch(error){
   console.error('Clerk initialization failed:',error);window.yembridgeAuthReady=true;window.yembridgeAccount=null;
@@ -605,7 +660,7 @@ window.addEventListener('load',async()=>{
         'background:#102B46;color:white;border-radius:15px;padding:18px;margin:15px 0;text-align:center;';
 
       const heading = document.createElement('small');
-      heading.textContent = 'YOUR PERMANENT YEMBRIDGE ACCOUNT NUMBER';
+      heading.textContent = 'YOUR PERMANENT PAMOJA ACCOUNT NUMBER';
       heading.style.cssText =
         'display:block;color:#D5E8E2;font-size:10px;font-weight:bold;';
 
@@ -619,20 +674,38 @@ window.addEventListener('load',async()=>{
       note.style.cssText =
         'display:block;color:#D5E8E2;font-size:11px;';
 
-      panel.append(heading, number, note);
+      const opened = document.createElement('small');
+      opened.id = 'yembridgeAccountOpened';
+      opened.style.cssText =
+        'display:block;color:#D5E8E2;font-size:11px;margin-top:8px;';
+
+      panel.append(heading, number, note, opened);
       profile.insertAdjacentElement('afterend', panel);
     }
 
     const account = window.yembridgeAccount;
     const number = document.getElementById('yembridgeAccountNumber');
+    const opened = document.getElementById('yembridgeAccountOpened');
 
     if (account && account.accountNo) {
       const accountNo = String(account.accountNo);
       if (number.textContent !== accountNo) number.textContent = accountNo;
+
+      const openedDate = account.createdAt ? new Date(account.createdAt) : null;
+      const openedLabel = openedDate && !Number.isNaN(openedDate.getTime())
+        ? 'Date opened: ' + new Intl.DateTimeFormat('en-UG', {
+            year: 'numeric', month: 'short', day: 'numeric'
+          }).format(openedDate)
+        : 'Date opened: unavailable';
+      if (opened && opened.textContent !== openedLabel) {
+        opened.textContent = openedLabel;
+      }
+
       panel.classList.remove('hidden');
     } else {
       const waitingText = 'Awaiting connection';
       if (number.textContent !== waitingText) number.textContent = waitingText;
+      if (opened) opened.textContent = '';
       panel.classList.add('hidden');
     }
   }
@@ -833,6 +906,10 @@ window.addEventListener('load',async()=>{
   let kycTimer = null;
   let kycObserver = null;
   let delegatedHandlersInstalled = false;
+  const capturedPhotos = { front: null, back: null, selfie: null };
+  let cameraStream = null;
+  let activeCameraType = null;
+  let pendingPhotoBlob = null;
 
   function el(id) {
     return document.getElementById(id);
@@ -851,7 +928,7 @@ window.addEventListener('load',async()=>{
       !window.Clerk.isSignedIn ||
       !window.Clerk.session
     ) {
-      throw new Error('Please sign in to your YemBridge account.');
+      throw new Error('Please sign in to your PAMOJA account.');
     }
 
     const token = await window.Clerk.session.getToken();
@@ -951,48 +1028,55 @@ window.addEventListener('load',async()=>{
             </span>
           </label>
 
-          <label>Village
-            <input id="kycVillage" type="text" required>
-          </label>
-
-          <label>Ward
-            <input id="kycWard" type="text" required>
-          </label>
-
-          <label>District
-            <input id="kycDistrict" type="text" required>
-          </label>
-
-          <label>Town
-            <input id="kycTown" type="text" required>
-          </label>
+          <p class="kyc-field-note">You do not need to enter your village, town or district here. An authorised PAMOJA reviewer will read the two location details from your National ID during review.</p>
 
           <label>Country that issued your ID
             <input id="kycIdCountry" type="text"
               value="Uganda" required>
           </label>
 
-          <label class="kyc-photo-field">
-            National ID — Front
-            <input id="kycNationalIdFront" type="file"
-              accept="image/jpeg,image/png,image/webp" required>
-          </label>
+          <div class="kyc-photo-field">
+            <strong>National ID — Front</strong>
+            <video id="kycCameraVideo" playsinline autoplay hidden style="width:100%;max-height:260px;border-radius:9px;background:#102B46"></video>
+            <canvas id="kycCameraCanvas" hidden></canvas>
+            <img id="kycFrontPreview" alt="Front of National ID preview" hidden style="width:100%;max-height:180px;object-fit:contain;border-radius:9px">
+            <div class="kyc-actions">
+              <button type="button" data-kyc-camera="front">Open camera</button>
+              <button type="button" data-kyc-capture="front" hidden>Take photo</button>
+              <button type="button" class="kyc-secondary" data-kyc-retake="front" hidden>Retake</button>
+              <button type="button" data-kyc-accept="front" hidden>Accept photo</button>
+            </div>
+            <span id="kycFrontState" class="kyc-field-note">No photo accepted yet.</span>
+          </div>
 
-          <label class="kyc-photo-field">
-            National ID — Back
-            <input id="kycNationalIdBack" type="file"
-              accept="image/jpeg,image/png,image/webp" required>
-          </label>
+          <div class="kyc-photo-field">
+            <strong>National ID — Back</strong>
+            <video id="kycCameraVideoBack" playsinline autoplay hidden style="width:100%;max-height:260px;border-radius:9px;background:#102B46"></video>
+            <img id="kycBackPreview" alt="Back of National ID preview" hidden style="width:100%;max-height:180px;object-fit:contain;border-radius:9px">
+            <div class="kyc-actions">
+              <button type="button" data-kyc-camera="back">Open camera</button>
+              <button type="button" data-kyc-capture="back" hidden>Take photo</button>
+              <button type="button" class="kyc-secondary" data-kyc-retake="back" hidden>Retake</button>
+              <button type="button" data-kyc-accept="back" hidden>Accept photo</button>
+            </div>
+            <span id="kycBackState" class="kyc-field-note">No photo accepted yet.</span>
+          </div>
 
-          <label class="kyc-photo-field">
-            Selfie photograph
-            <input id="kycSelfie" type="file"
-              accept="image/jpeg,image/png,image/webp" required>
-          </label>
+          <div class="kyc-photo-field">
+            <strong>Selfie holding the front of your National ID</strong>
+            <video id="kycCameraVideoSelfie" playsinline autoplay hidden style="width:100%;max-height:260px;border-radius:9px;background:#102B46"></video>
+            <img id="kycSelfiePreview" alt="Selfie holding National ID preview" hidden style="width:100%;max-height:180px;object-fit:contain;border-radius:9px">
+            <div class="kyc-actions">
+              <button type="button" data-kyc-camera="selfie">Open front camera</button>
+              <button type="button" data-kyc-capture="selfie" hidden>Take photo</button>
+              <button type="button" class="kyc-secondary" data-kyc-retake="selfie" hidden>Retake</button>
+              <button type="button" data-kyc-accept="selfie" hidden>Accept photo</button>
+            </div>
+            <span id="kycSelfieState" class="kyc-field-note">No photo accepted yet.</span>
+          </div>
 
           <p class="kyc-field-note">
-            Each photograph must be JPEG, PNG or WebP and no larger than 4 MB.
-            Make sure your ID details are clear and readable.
+            All three photographs must be taken with your camera. Gallery uploads are not accepted. Each photo must be JPEG, PNG or WebP and no larger than 4 MB.
           </p>
 
           <div id="kycMessage" class="kyc-message"
@@ -1031,6 +1115,7 @@ window.addEventListener('load',async()=>{
     if (form && form.dataset.kycBound !== 'yes') {
       form.dataset.kycBound = 'yes';
       form.addEventListener('submit', submitKycApplication);
+      form.addEventListener('click', handleCameraControls);
     }
 
     return true;
@@ -1161,26 +1246,28 @@ window.addEventListener('load',async()=>{
       lines.push('We could not identify your current verification status. Please refresh.');
     }
 
-    if (kyc.maskedNin) lines.push('NIN: ' + String(kyc.maskedNin));
     if (kyc.submittedAt) lines.push('Submitted: ' + String(kyc.submittedAt));
     if (kyc.reviewedAt) lines.push('Last reviewed: ' + String(kyc.reviewedAt));
 
-    const contact = kyc.contactDetails || {};
+    // Reveal identity and contact details only after the server confirms approval.
+    if (status === 'approved') {
+      if (kyc.nin) lines.push('NIN: ' + String(kyc.nin));
+      else if (kyc.maskedNin) lines.push('NIN: ' + String(kyc.maskedNin));
 
-    const names = {
-      phoneNumber: 'Phone',
-      village: 'Village',
-      ward: 'Ward',
-      district: 'District',
-      town: 'Town',
-      idCountry: 'ID country'
-    };
+      const contact = kyc.contactDetails || {};
+      const names = {
+        phoneNumber: 'Phone',
+        district: 'District / City',
+        town: 'Town / Village',
+        idCountry: 'ID country'
+      };
 
-    Object.keys(names).forEach(function (key) {
-      if (contact[key]) {
-        lines.push(names[key] + ': ' + String(contact[key]));
-      }
-    });
+      Object.keys(names).forEach(function (key) {
+        if (contact[key]) {
+          lines.push(names[key] + ': ' + String(contact[key]));
+        }
+      });
+    }
 
     details.textContent = lines.join('\n');
 
@@ -1198,7 +1285,7 @@ window.addEventListener('load',async()=>{
 
     if (!window.yembridgeAccount) {
       if (details) {
-        details.textContent = 'Connect your YemBridge account first.';
+        details.textContent = 'Connect your PAMOJA account first.';
       }
       return;
     }
@@ -1236,6 +1323,147 @@ window.addEventListener('load',async()=>{
     }
   }
 
+  // CAMERA-ONLY KYC PHOTO CAPTURE
+
+  function stopKycCamera() {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(function (track) { track.stop(); });
+      cameraStream = null;
+    }
+    ['Front', 'Back', 'Selfie'].forEach(function (part) {
+      const video = el('kycCameraVideo' + part);
+      if (video) {
+        video.pause();
+        video.srcObject = null;
+        video.hidden = true;
+      }
+    });
+    activeCameraType = null;
+  }
+
+  function setPhotoControls(type, mode) {
+    const selectors = {
+      open: '[data-kyc-camera="' + type + '"]',
+      capture: '[data-kyc-capture="' + type + '"]',
+      retake: '[data-kyc-retake="' + type + '"]',
+      accept: '[data-kyc-accept="' + type + '"]'
+    };
+    Object.keys(selectors).forEach(function (key) {
+      const button = document.querySelector(selectors[key]);
+      if (button) button.hidden = !mode[key];
+    });
+  }
+
+  async function openKycCamera(type) {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      showMessage('Camera access is not supported by this browser. Please use a supported mobile browser over a secure connection.', 'error');
+      return;
+    }
+
+    stopKycCamera();
+    pendingPhotoBlob = null;
+    activeCameraType = type;
+
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+          facingMode: { ideal: type === 'selfie' ? 'user' : 'environment' },
+          width: { ideal: 1600 },
+          height: { ideal: 1200 }
+        }
+      });
+
+      const videoId = type === 'front' ? 'kycCameraVideo' : type === 'back' ? 'kycCameraVideoBack' : 'kycCameraVideoSelfie';
+      const video = el(videoId);
+      video.srcObject = cameraStream;
+      video.hidden = false;
+      await video.play();
+
+      setPhotoControls(type, { open: false, capture: true, retake: false, accept: false });
+      showMessage('Position the ' + (type === 'selfie' ? 'front of your face and National ID' : 'ID card') + ' clearly, then take the photo.', '');
+    } catch (error) {
+      stopKycCamera();
+      showMessage('Camera permission was denied or the camera is unavailable. Allow camera access in your browser settings and try again.', 'error');
+    }
+  }
+
+  async function captureKycPhoto(type) {
+    const videoId = type === 'front' ? 'kycCameraVideo' : type === 'back' ? 'kycCameraVideoBack' : 'kycCameraVideoSelfie';
+    const video = el(videoId);
+    const canvas = el('kycCameraCanvas');
+    if (!video || !canvas || !video.videoWidth || !video.videoHeight || activeCameraType !== type) {
+      showMessage('The camera is not ready. Please open it again.', 'error');
+      return;
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    pendingPhotoBlob = await new Promise(function (resolve) {
+      canvas.toBlob(resolve, 'image/jpeg', 0.88);
+    });
+
+    if (!pendingPhotoBlob) {
+      showMessage('The photograph could not be captured. Please try again.', 'error');
+      return;
+    }
+
+    const previewId = type === 'front' ? 'kycFrontPreview' : type === 'back' ? 'kycBackPreview' : 'kycSelfiePreview';
+    const preview = el(previewId);
+    if (preview) {
+      if (preview.dataset.objectUrl) URL.revokeObjectURL(preview.dataset.objectUrl);
+      preview.dataset.objectUrl = URL.createObjectURL(pendingPhotoBlob);
+      preview.src = preview.dataset.objectUrl;
+      preview.hidden = false;
+    }
+
+    stopKycCamera();
+    setPhotoControls(type, { open: false, capture: false, retake: true, accept: true });
+    showMessage('Review the preview, then accept it or retake it.', '');
+  }
+
+  function resetKycPhoto(type) {
+    capturedPhotos[type] = null;
+    pendingPhotoBlob = null;
+    const previewId = type === 'front' ? 'kycFrontPreview' : type === 'back' ? 'kycBackPreview' : 'kycSelfiePreview';
+    const preview = el(previewId);
+    if (preview) {
+      if (preview.dataset.objectUrl) URL.revokeObjectURL(preview.dataset.objectUrl);
+      preview.removeAttribute('src');
+      preview.hidden = true;
+      delete preview.dataset.objectUrl;
+    }
+    const state = el(type === 'front' ? 'kycFrontState' : type === 'back' ? 'kycBackState' : 'kycSelfieState');
+    if (state) state.textContent = 'No photo accepted yet.';
+    setPhotoControls(type, { open: true, capture: false, retake: false, accept: false });
+  }
+
+  function handleCameraControls(event) {
+    const button = event.target.closest('button');
+    if (!button) return;
+    const open = button.getAttribute('data-kyc-camera');
+    const capture = button.getAttribute('data-kyc-capture');
+    const retake = button.getAttribute('data-kyc-retake');
+    const accept = button.getAttribute('data-kyc-accept');
+
+    if (open) { event.preventDefault(); openKycCamera(open); }
+    if (capture) { event.preventDefault(); captureKycPhoto(capture); }
+    if (retake) { event.preventDefault(); resetKycPhoto(retake); openKycCamera(retake); }
+    if (accept) {
+      event.preventDefault();
+      if (!pendingPhotoBlob) return;
+      capturedPhotos[accept] = pendingPhotoBlob;
+      pendingPhotoBlob = null;
+      const state = el(accept === 'front' ? 'kycFrontState' : accept === 'back' ? 'kycBackState' : 'kycSelfieState');
+      if (state) state.textContent = 'Photo accepted.';
+      setPhotoControls(accept, { open: false, capture: false, retake: true, accept: false });
+      showMessage('Photo accepted. Continue with the remaining photographs.', '');
+    }
+  }
+
   // SUBMIT KYC APPLICATION
 
   async function submitKycApplication(event) {
@@ -1245,7 +1473,7 @@ window.addEventListener('load',async()=>{
     const button = el('kycSubmitButton');
 
     if (!window.yembridgeAccount) {
-      showMessage('Connect your YemBridge account before submitting KYC.', 'error');
+      showMessage('Connect your PAMOJA account before submitting KYC.', 'error');
       return;
     }
 
@@ -1281,30 +1509,20 @@ window.addEventListener('load',async()=>{
       return;
     }
 
-    const requiredFields = [
-      'kycVillage',
-      'kycWard',
-      'kycDistrict',
-      'kycTown',
-      'kycIdCountry'
-    ];
-
-    if (requiredFields.some(function (id) {
-      return !value(id);
-    })) {
-      showMessage('Please complete all the required address and country fields.', 'error');
+    if (!value('kycIdCountry')) {
+      showMessage('Please enter the country that issued your ID.', 'error');
       return;
     }
 
     const files = {
-      nationalIdFront: el('kycNationalIdFront').files[0],
-      nationalIdBack: el('kycNationalIdBack').files[0],
-      selfie: el('kycSelfie').files[0]
+      nationalIdFront: capturedPhotos.front,
+      nationalIdBack: capturedPhotos.back,
+      selfie: capturedPhotos.selfie
     };
 
     for (const file of Object.values(files)) {
       if (!file) {
-        showMessage('Please select all three required photographs.', 'error');
+        showMessage('Please take and accept all three required photographs using your camera.', 'error');
         return;
       }
 
@@ -1313,7 +1531,7 @@ window.addEventListener('load',async()=>{
         return;
       }
 
-      if (file.size > MAX_PHOTO_SIZE) {
+      if (file.size <= 0 || file.size > MAX_PHOTO_SIZE) {
         showMessage('Each photograph must be no larger than 4 MB.', 'error');
         return;
       }
@@ -1323,14 +1541,10 @@ window.addEventListener('load',async()=>{
 
     data.append('nin', nin);
     data.append('phoneNumber', phone);
-    data.append('village', value('kycVillage'));
-    data.append('ward', value('kycWard'));
-    data.append('district', value('kycDistrict'));
-    data.append('town', value('kycTown'));
     data.append('idCountry', value('kycIdCountry'));
-    data.append('nationalIdFront', files.nationalIdFront);
-    data.append('nationalIdBack', files.nationalIdBack);
-    data.append('selfie', files.selfie);
+    data.append('nationalIdFront', files.nationalIdFront, 'national-id-front.jpg');
+    data.append('nationalIdBack', files.nationalIdBack, 'national-id-back.jpg');
+    data.append('selfie', files.selfie, 'applicant-selfie.jpg');
 
     button.disabled = true;
     button.textContent = 'Submitting...';
@@ -1353,6 +1567,8 @@ window.addEventListener('load',async()=>{
       kycStatus = result.kyc || { status: 'pending' };
 
       form.reset();
+      stopKycCamera();
+      ['front', 'back', 'selfie'].forEach(resetKycPhoto);
       renderKycStatus();
 
       showMessage(
@@ -1366,7 +1582,7 @@ window.addEventListener('load',async()=>{
       let message = error.message || 'Your submission could not be completed.';
 
       if (message.toLowerCase().includes('duplicate')) {
-        message = 'This NIN is already registered. Please contact YemBridge support if you believe this is an error.';
+        message = 'This NIN is already registered. Please contact PAMOJA support if you believe this is an error.';
       } else if (message.toLowerCase().includes('already submitted')) {
         message = 'An application has already been submitted. Please refresh your verification status.';
       }
@@ -1411,13 +1627,15 @@ window.addEventListener('load',async()=>{
 
         if (details) {
           details.textContent =
-            'Connect your YemBridge account to load your verification status.';
+            'Connect your PAMOJA account to load your verification status.';
         }
       }
     }, 1000);
 
     return true;
   }
+
+  window.addEventListener('pagehide', stopKycCamera);
 
   function initialiseKyc() {
     installDelegatedHandlers();
@@ -1463,6 +1681,44 @@ window.addEventListener('load',async()=>{
 
   // Start immediately. Do not wait for DOMContentLoaded or window.load.
   setTimeout(releaseStartupScreen, 10000);
+})();
+</script>
+<script>
+(function(){
+'use strict';
+const API='https://yembridge-api.c07057702.workers.dev',byId=id=>document.getElementById(id);
+let selectedKycId=null,documentUrls=[];
+async function token(){if(!window.Clerk||!window.Clerk.isSignedIn||!window.Clerk.session)throw Error('Please sign in again.');const t=await window.Clerk.session.getToken();if(!t)throw Error('Your secure session could not be verified.');return t}
+async function api(path,options){const bearer=await token();const response=await fetch(API+path,Object.assign({},options||{},{headers:Object.assign({Authorization:'Bearer '+bearer},options&&options.headers||{})}));if(!response.ok){let msg='Request failed (HTTP '+response.status+').';try{const d=await response.json();if(d.error)msg=d.error}catch(e){}throw Error(msg)}return response}
+function releaseUrls(){documentUrls.forEach(u=>URL.revokeObjectURL(u));documentUrls=[]}
+async function loadAdminKycQueue(){
+ const queue=byId('adminKycQueue');if(!queue)return;queue.textContent='';byId('adminKycQueueMessage').textContent='Loading applications...';byId('adminKycDetailCard').classList.add('hidden');
+ try{
+  const status=byId('adminKycStatusFilter').value;const response=await api('/admin/kyc-queue?limit=50&offset=0'+(status?'&status='+encodeURIComponent(status):''));const data=await response.json();const apps=data.applications||[];
+  byId('adminKycQueueMessage').textContent=apps.length?'Showing '+apps.length+' application(s).':'No applications found for this filter.';
+  apps.forEach(item=>{const card=document.createElement('div');card.className='admin-application';const name=document.createElement('strong');name.textContent=((item.first_name||'')+' '+(item.second_name||'')).trim()||'Customer';const meta=document.createElement('small');meta.textContent='Account: '+(item.account_no||'—')+' · Status: '+(item.kyc_status||'unknown')+' · Submitted: '+(item.submitted_at?new Date(item.submitted_at).toLocaleString():'—');const button=document.createElement('button');button.type='button';button.textContent='Review application';button.addEventListener('click',()=>loadAdminKycDetail(item.kyc_id));card.append(name,meta,button);queue.appendChild(card)})
+ }catch(e){byId('adminKycQueueMessage').textContent=e.message||'Unable to load queue.'}
+}
+async function loadAdminKycDetail(id){
+ selectedKycId=id;releaseUrls();byId('adminKycDetailCard').classList.remove('hidden');byId('adminKycDetail').textContent='Loading protected application details...';byId('adminKycDocuments').textContent='';byId('adminKycReviewForm').classList.add('hidden');
+ try{
+  const response=await api('/admin/kyc-detail?kycId='+encodeURIComponent(id));const data=await response.json(),a=data.application||{},c=a.contactDetails||{};
+  const lines=['Customer: '+((a.firstName||'')+' '+(a.lastName||'')).trim(),'Account number: '+(a.accountNo||'—'),'NIN: '+(a.nin||'—'),'Phone: '+(c.phoneNumber||'—'),'ID country: '+(c.idCountry||'—'),'District / City: '+(c.district||'Not recorded'),'Town / Village: '+(c.town||'Not recorded'),'Status: '+(a.kycStatus||'—'),'Submitted: '+(a.submittedAt?new Date(a.submittedAt).toLocaleString():'—'),'Last reviewed: '+(a.reviewedAt?new Date(a.reviewedAt).toLocaleString():'—'),'Review notes: '+(a.reviewNotes||'None')];
+  const detail=document.createElement('div');detail.className='admin-detail-lines';detail.textContent=lines.join('\n');byId('adminKycDetail').replaceChildren(detail);
+  const docs=a.availableDocuments||['front','back'];for(const type of docs){const res=await api('/admin/kyc-document?kycId='+encodeURIComponent(id)+'&type='+encodeURIComponent(type));const url=URL.createObjectURL(await res.blob());documentUrls.push(url);const wrap=document.createElement('div');wrap.className='admin-document';const title=document.createElement('b');title.textContent=type==='front'?'National ID — Front':type==='back'?'National ID — Back':'Selfie with National ID';const img=document.createElement('img');img.src=url;img.alt=title.textContent;wrap.append(title,img);byId('adminKycDocuments').appendChild(wrap)}
+  byId('adminKycReviewForm').classList.remove('hidden');byId('adminKycReviewMessage').textContent='';byId('adminKycDistrict').value=c.district||'';byId('adminKycTown').value=c.town||'';byId('adminKycNotes').value='';updateApprovalFields();byId('adminKycDetailCard').scrollIntoView({behavior:'smooth',block:'start'});
+ }catch(e){byId('adminKycDetail').textContent=e.message||'Unable to load application.'}
+}
+function updateApprovalFields(){byId('adminKycApprovalFields').classList.toggle('hidden',byId('adminKycDecision').value!=='approved')}
+async function submitDecision(){
+ if(!selectedKycId)return;const button=byId('adminKycSubmitDecision');button.disabled=true;byId('adminKycReviewMessage').textContent='Saving decision securely...';
+ const decision=byId('adminKycDecision').value,payload={kycId:selectedKycId,decision,notes:byId('adminKycNotes').value.trim()};
+ if(decision==='approved'){payload.district=byId('adminKycDistrict').value.trim();payload.town=byId('adminKycTown').value.trim();if(payload.district.length<2||payload.town.length<2){byId('adminKycReviewMessage').textContent='Enter both District / City and Town / Village from the National ID.';button.disabled=false;return}}
+ try{await api('/admin/kyc-review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});byId('adminKycReviewMessage').textContent='Review decision saved.';releaseUrls();selectedKycId=null;await loadAdminKycQueue();byId('adminKycDetailCard').classList.add('hidden')}
+ catch(e){byId('adminKycReviewMessage').textContent=e.message||'Unable to save decision.'}finally{button.disabled=false}
+}
+function bind(){byId('adminKycRefresh')?.addEventListener('click',loadAdminKycQueue);byId('adminKycStatusFilter')?.addEventListener('change',loadAdminKycQueue);byId('adminKycDecision')?.addEventListener('change',updateApprovalFields);byId('adminKycSubmitDecision')?.addEventListener('click',submitDecision);byId('adminKycBack')?.addEventListener('click',()=>{releaseUrls();selectedKycId=null;byId('adminKycDetailCard').classList.add('hidden')})}
+window.loadAdminKycQueue=loadAdminKycQueue;if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();window.addEventListener('pagehide',releaseUrls);
 })();
 </script>
 </body>
