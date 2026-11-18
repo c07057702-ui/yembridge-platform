@@ -656,12 +656,7 @@ function renderMerchantWithdrawals(){
 function requestMerchantWithdrawal(){
  const userId=window.Clerk?.user?.id,input=document.getElementById('withdrawalAmount'),message=document.getElementById('withdrawalMessage');
  if(!userId){message.textContent='Please sign in to request a merchant withdrawal.';return}
- message.textContent='Withdrawals are unavailable until PAMOJA configures and verifies merchant settlement rules and payment processing.';return;\n const amount=Number(input.value),available=getMerchantAvailableWithdrawal();
- if(!Number.isFinite(amount)||amount<=0){message.textContent='Please enter a valid withdrawal amount.';return}
- if(amount>available){message.textContent='Insufficient available demo proceeds.';return}
- const withdrawals=readLocalArray('yembridgeWithdrawals');withdrawals.unshift({merchantId:userId,amount,status:'Pending',date:new Date().toLocaleString('en-UG')});
- if(!writeLocalArray('yembridgeWithdrawals',withdrawals))return;
- input.value='';message.textContent='Demo withdrawal request submitted successfully.';renderMerchantWithdrawals();
+ message.textContent='Withdrawals are unavailable until PAMOJA configures and verifies merchant settlement rules and payment processing.';return;
 }
 function renderCustomerOrders(){
  const container=document.getElementById('customerOrders');if(!container)return;container.innerHTML='';
