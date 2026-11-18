@@ -344,7 +344,7 @@ function show(id,btn){
  const signedIn=!!(window.yembridgeAuthReady&&window.Clerk?.isSignedIn);
  document.querySelector('nav')?.classList.toggle('hidden',!signedIn);
  const active=id==='home'&&btn?btn:navButtonFor(id);if(active)active.classList.add('active');
- if(window.yembridgeAuthReady){try{sessionStorage.setItem('yembridgeLastSection',id)}catch(e){}}
+ if(window.yembridgeAuthReady&&(PROTECTED_SECTIONS.includes(id)||(id==='account'&&window.Clerk?.isSignedIn))){try{sessionStorage.setItem('yembridgeLastSection',id)}catch(e){}}
  if(id==='activity'){renderCustomerOrders();renderActivity()}
  if(id==='merchant'){renderMerchantOrders();renderMerchantSalesReport();renderMerchantWithdrawals();renderMerchantProductSubmissions()}
  if(id==='shop')renderShopProducts();
@@ -765,7 +765,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 window.addEventListener('load',async()=>{
  const authContainer=document.getElementById('clerk-auth'),loggedOut=document.getElementById('loggedOut'),loggedIn=document.getElementById('loggedIn'),authLoadMessage=document.getElementById('authLoadMessage'),syncMessage=document.getElementById('accountSyncMessage');
  const params=new URLSearchParams(window.location.search),authMode=(params.get('auth')||'').toLowerCase();
- const desired=(authMode==='sign-in'||authMode==='sign-up')?'account':(Clerk.isSignedIn?'home':'welcome');
+ let rememberedSection='';try{rememberedSection=sessionStorage.getItem('yembridgeLastSection')||''}catch(e){}\n const canRestore=Clerk.isSignedIn&&VALID_SECTIONS.includes(rememberedSection)&&rememberedSection!=='welcome';\n const desired=(authMode==='sign-in'||authMode==='sign-up')?'account':(Clerk.isSignedIn?(canRestore?rememberedSection:'home'):'welcome');
  let authMounted=false;
  function mountAuth(mode){
   if(!window.Clerk||!authContainer||authMounted)return;authContainer.innerHTML='';
