@@ -78,11 +78,100 @@ nav button{min-height:48px;border-radius:13px;font-weight:700}nav button.active{
 @media(min-width:700px){.pamoja-menu{top:12px;bottom:12px;border-radius:22px}.menu-backdrop{background:#061B2B99}}
 @media(max-width:390px){.site-header{padding:12px 13px}.brand{gap:8px}.brand-mark{width:39px;height:39px}.brand-copy h2{font-size:17px}.header-actions{gap:8px}.demo-label{font-size:9px;padding:5px 7px}.menu-toggle{width:42px;height:42px}}
 
+
+/* PAMOJA bold colour + frosted-glass visual system */
+:root{
+ --navy:#071F38;--green:#07866F;--orange:#F28C28;--purple:#7655C7;
+ --glass:rgba(255,255,255,.70);--glass-border:rgba(255,255,255,.78);
+ --ink:#122B40;--muted:#607487;
+}
+body{
+ background:
+ radial-gradient(ellipse at 5% 8%,rgba(8,134,111,.22),transparent 34%),
+ radial-gradient(ellipse at 96% 18%,rgba(242,140,40,.17),transparent 30%),
+ radial-gradient(ellipse at 75% 92%,rgba(118,85,199,.12),transparent 35%),
+ linear-gradient(145deg,#E8F1F0,#F5F7FB 48%,#EAF2F0);
+}
+.site-header{
+ background:linear-gradient(112deg,#061B32 0%,#073E50 58%,#07866F 100%);
+ border-bottom:1px solid rgba(255,255,255,.22);
+}
+.brand-mark{
+ position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.55);
+ border-radius:15px;background:linear-gradient(145deg,#F28C28 0 34%,#07866F 35% 68%,#7655C7 69% 100%);
+ color:#fff;text-shadow:0 2px 5px #061B3270;
+ box-shadow:0 5px 18px #001B2A45,inset 0 1px 0 #FFFFFF80;
+ font-size:30px;font-weight:900;font-style:normal;
+}
+.brand-divider{background:linear-gradient(#F28C28,#F5C35B);width:3px}
+.brand-copy h2{font-weight:900;letter-spacing:2.5px;text-shadow:0 2px 12px #001B2A50}
+.brand-copy p{color:#FFE0A6;font-weight:800}
+.card,.service,.product-card,.merchant-order-card,.listing-card,.admin-application,.admin-document{
+ background:var(--glass);border:1px solid var(--glass-border);
+ box-shadow:0 12px 30px rgba(13,47,63,.09),inset 0 1px 0 rgba(255,255,255,.78);
+ backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.card{border-radius:23px}
+.balance{
+ background:linear-gradient(125deg,rgba(5,30,54,.97),rgba(5,91,83,.93) 72%,rgba(8,134,111,.92));
+ border:1px solid rgba(255,255,255,.25);box-shadow:0 18px 38px rgba(4,47,60,.24);
+}
+.balance .amount{font-size:clamp(29px,7vw,36px);letter-spacing:-1px}
+.balance-bottom b{color:#F28C28;font-size:20px}
+.welcome-tag,.section-heading span,.product-category{color:#087D68}
+.welcome h3{font-size:clamp(27px,6vw,34px);font-weight:900;letter-spacing:-1px;color:#082944}
+button{
+ background:linear-gradient(115deg,#087F68,#0A9A78);
+ box-shadow:0 5px 14px rgba(8,127,104,.20);
+ transition:transform .16s ease,filter .16s ease,box-shadow .16s ease;
+}
+button:active{transform:translateY(1px) scale(.985)}
+button:hover{filter:brightness(1.06);box-shadow:0 7px 18px rgba(8,127,104,.25)}
+.service{
+ position:relative;overflow:hidden;min-height:116px;border-radius:19px;
+ transition:transform .18s ease,box-shadow .18s ease;
+}
+.service:before{
+ content:"";position:absolute;width:72px;height:72px;right:-27px;top:-29px;
+ border-radius:50%;background:linear-gradient(135deg,rgba(8,134,111,.15),rgba(242,140,40,.13));
+}
+.service span{position:relative;font-size:27px}
+.service b{position:relative;font-size:13px;font-weight:800}
+.service:active{transform:scale(.975)}
+.grid .service:nth-child(4n+1){border-top:3px solid #07866F}
+.grid .service:nth-child(4n+2){border-top:3px solid #F28C28}
+.grid .service:nth-child(4n+3){border-top:3px solid #7655C7}
+.grid .service:nth-child(4n){border-top:3px solid #0C6380}
+.market-banner,.market-intro{
+ background:linear-gradient(115deg,#071F38 0%,#075C59 68%,#07866F 100%);
+ border:1px solid rgba(255,255,255,.22);box-shadow:0 15px 30px rgba(5,48,61,.2);
+}
+.market-symbol{color:#F7B34C;text-shadow:0 3px 14px #001B2A70}
+.account-intro,.profile-panel,.cart-summary,.activity-summary>div,.security-note,.merchant-order-card,.listing-card{
+ background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.82);
+ backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.account-avatar,.profile-avatar{background:linear-gradient(135deg,#F28C28,#07866F 55%,#7655C7);color:white}
+input,textarea,select{background:rgba(255,255,255,.82);border-color:rgba(8,90,83,.2)}
+input:focus,textarea:focus,select:focus{border-color:#07866F;box-shadow:0 0 0 3px rgba(8,134,111,.13)}
+nav{
+ background:rgba(255,255,255,.76);border:1px solid rgba(255,255,255,.8);
+ backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+ box-shadow:0 -8px 30px rgba(7,38,54,.10);
+}
+nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242,140,40,.12));color:#066C5B}
+.demo-label{background:linear-gradient(110deg,#F28C28,#F5BD59);color:#102B46}
+.menu-toggle{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.42);backdrop-filter:blur(12px)}
+.pamoja-menu{background:rgba(247,251,249,.94);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.drawer-link{background:rgba(255,255,255,.78);backdrop-filter:blur(12px)}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+@media(max-width:390px){.card{padding:16px}.welcome h3{font-size:26px}}
+
 </style></head>
 <body class="starting">
 <div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
 
-<header class="site-header"><div class="brand"><div class="brand-mark">P</div><div class="brand-divider"></div><div class="brand-copy"><h2>PAMOJA</h2><p>TOGETHER. MORE POSSIBLE.</p></div></div><div class="header-actions"><div class="demo-label">DEMO</div><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="pamojaMenu" aria-expanded="false" onclick="togglePamojaMenu()"><span></span><span></span><span></span></button></div></header>
+<header class="site-header"><div class="brand"><div class="brand-mark" aria-label="PAMOJA multicolour brand mark">P</div><div class="brand-divider"></div><div class="brand-copy"><h2>PAMOJA</h2><p>TOGETHER. MORE POSSIBLE.</p></div></div><div class="header-actions"><div class="demo-label">DEMO</div><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="pamojaMenu" aria-expanded="false" onclick="togglePamojaMenu()"><span></span><span></span><span></span></button></div></header>
 <div class="menu-backdrop hidden" id="menuBackdrop" onclick="closePamojaMenu()" aria-hidden="true"></div>
 <aside class="pamoja-menu hidden" id="pamojaMenu" aria-label="Account menu" aria-hidden="true"><div class="menu-top"><div><small>PAMOJA MENU</small><b>Together. More Possible.</b></div><button type="button" class="menu-close" aria-label="Close menu" onclick="closePamojaMenu()">×</button></div><div id="menuSignedOut"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('account')"><span>↪</span><span><b>Sign in</b><small>Access your PAMOJA account</small></span><i>→</i></button></div><div id="menuSignedIn" class="hidden"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('account')"><span>◉</span><span><b>Profile</b><small>Account and security settings</small></span><i>→</i></button><button type="button" class="drawer-link drawer-signout" onclick="closePamojaMenu();logoutUser()"><span>↗</span><span><b>Sign out</b><small>Securely leave your account</small></span><i>→</i></button></div></aside>
 
