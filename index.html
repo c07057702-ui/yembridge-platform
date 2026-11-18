@@ -334,7 +334,8 @@ function refreshPamojaMenu(){const signedIn=!!(window.yembridgeAuthReady&&window
 function togglePamojaMenu(){const menu=document.getElementById('pamojaMenu'),backdrop=document.getElementById('menuBackdrop'),toggle=document.getElementById('menuToggle');if(!menu||!backdrop)return;const opening=menu.classList.contains('hidden');menu.classList.toggle('hidden',!opening);backdrop.classList.toggle('hidden',!opening);menu.setAttribute('aria-hidden',String(!opening));backdrop.setAttribute('aria-hidden',String(!opening));if(toggle){toggle.setAttribute('aria-expanded',String(opening));toggle.setAttribute('aria-label',opening?'Close menu':'Open menu')}if(opening)refreshPamojaMenu()}
 function closePamojaMenu(){const menu=document.getElementById('pamojaMenu'),backdrop=document.getElementById('menuBackdrop'),toggle=document.getElementById('menuToggle');menu?.classList.add('hidden');backdrop?.classList.add('hidden');menu?.setAttribute('aria-hidden','true');backdrop?.setAttribute('aria-hidden','true');if(toggle){toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open menu')}}
 document.addEventListener('keydown',event=>{if(event.key==='Escape')closePamojaMenu()});
-function show(id,btn){
+let pamojaHistoryReady=false;
+function show(id,btn,fromHistory=false){
  if(!VALID_SECTIONS.includes(id))id='home';
  if(!window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)){window.yembridgePendingSection=id;id='welcome'}
  else if(window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)&&!window.Clerk?.isSignedIn)id='welcome';
@@ -346,11 +347,13 @@ function show(id,btn){
  document.querySelector('nav')?.classList.toggle('hidden',!signedIn);
  const active=id==='home'&&btn?btn:navButtonFor(id);if(active)active.classList.add('active');
  if(window.yembridgeAuthReady&&(PROTECTED_SECTIONS.includes(id)||(id==='account'&&window.Clerk?.isSignedIn))){try{sessionStorage.setItem('yembridgeLastSection',id)}catch(e){}}
+ if(!fromHistory){try{const state={...(window.history.state||{}),pamojaSection:id};if(!pamojaHistoryReady){window.history.replaceState(state,'',window.location.href);pamojaHistoryReady=true}else if(window.history.state?.pamojaSection!==id){window.history.pushState(state,'',window.location.href)}}catch(e){console.warn('PAMOJA screen history could not be updated.',e)}}
  if(id==='activity'){renderCustomerOrders();renderActivity()}
  if(id==='merchant'){renderMerchantOrders();renderMerchantSalesReport();renderMerchantWithdrawals();renderMerchantProductSubmissions()}
  if(id==='shop')renderShopProducts();
  if(id==='admin')loadAdminKycQueue();
 }
+window.addEventListener('popstate',event=>{const previous=event.state?.pamojaSection;const fallback=window.yembridgeAuthReady&&window.Clerk?.isSignedIn?'home':'welcome';closePamojaMenu();show(VALID_SECTIONS.includes(previous)?previous:fallback,navButtonFor(previous),true)});
 function demo(service){alert(service+' is a demonstration only. No real transaction has been made.')}
 async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('account');return}try{try{sessionStorage.setItem('yembridgeLastSection','account')}catch(e){}await window.Clerk.signOut();window.yembridgeAccount=null;updateYemBridgeAccountDisplay();refreshPamojaMenu();window.location.replace(HOME_URL+'?auth=sign-in')}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
 
