@@ -117,6 +117,7 @@ body{
  border:1px solid rgba(255,255,255,.25);box-shadow:0 18px 38px rgba(4,47,60,.24);
 }
 .balance .amount{font-size:clamp(29px,7vw,36px);letter-spacing:-1px}
+.balance .amount-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 2px}.balance .amount-row .amount{min-width:0;overflow-wrap:anywhere}.balance .balance-visibility{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 11px;border:1px solid rgba(255,255,255,.38);border-radius:10px;background:rgba(255,255,255,.13);color:#fff;font-size:12px;font-weight:700;box-shadow:none}.balance .balance-visibility:hover{background:rgba(255,255,255,.22);box-shadow:none}.balance .balance-visibility:focus-visible{outline:2px solid #F5C35B;outline-offset:3px}
 .balance-bottom b{color:#F28C28;font-size:20px}
 .welcome-tag,.section-heading span,.product-category{color:#087D68}
 .welcome h3{font-size:clamp(27px,6vw,34px);font-weight:900;letter-spacing:-1px;color:#082944}
@@ -243,7 +244,7 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 <p class="muted" style="text-align:center;font-size:10px;margin:12px 0 20px">PAMOJA · Together. More Possible.</p>
 </section>
 <section id="home" class="hidden">
-<div class="card balance"><div class="balance-top"><span>◈ YOUR PAMOJA WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 1,500,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>P</b></div></div>
+<div class="card balance"><div class="balance-top"><span>◈ YOUR PAMOJA WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount-row"><div class="amount">UGX 1,500,000</div><button type="button" class="balance-visibility" id="walletVisibilityButton" onclick="toggleWalletBalance()" aria-label="Hide wallet balance" aria-pressed="false"><span id="walletVisibilityIcon" aria-hidden="true">◉</span><span id="walletVisibilityText">Hide</span></button></div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>P</b></div></div>
 <div class="welcome"><p class="welcome-tag">WELCOME TO PAMOJA</p><h3>Together. More Possible.</h3><p class="muted">Your everyday money, shopping and services in one place.</p><button onclick="show('services')">Explore services →</button></div>
 <div class="section-heading"><h3>Quick access</h3><span>YOUR PAMOJA</span></div>
 <div class="grid"><div class="service" onclick="show('services')"><span>📱</span><b>Digital Services</b><small>Airtime, bills and more</small></div><div class="service" onclick="show('shop')"><span>🛍️</span><b>PAMOJA Market</b><small>Shop local</small></div><div class="service" onclick="show('trade')"><span>🔄</span><b>Trade</b><small>Wallets and exchange</small></div><div class="service" onclick="show('activity')"><span>📋</span><b>Transactions</b><small>View account activity</small></div></div>
@@ -384,7 +385,9 @@ function persistDemoCheckout(products,orders,balance,transactions){
   return false;
  }
 }
-function updateWallet(){const el=document.querySelector('.balance .amount');if(el)el.textContent='UGX '+yemWallet.toLocaleString('en-UG')}
+let walletBalanceHidden=false;
+function updateWallet(){const el=document.querySelector('.balance .amount'),button=document.getElementById('walletVisibilityButton'),icon=document.getElementById('walletVisibilityIcon'),label=document.getElementById('walletVisibilityText');if(el)el.textContent=walletBalanceHidden?'UGX •••••••':'UGX '+yemWallet.toLocaleString('en-UG');if(button){button.setAttribute('aria-pressed',String(walletBalanceHidden));button.setAttribute('aria-label',walletBalanceHidden?'Show wallet balance':'Hide wallet balance')}if(icon)icon.textContent=walletBalanceHidden?'◎':'◉';if(label)label.textContent=walletBalanceHidden?'Show':'Hide'}
+function toggleWalletBalance(){walletBalanceHidden=!walletBalanceHidden;updateWallet()}
 function orderQuantity(order){const q=Number(order?.quantity);return Number.isInteger(q)&&q>0?q:1}
 function orderTotal(order){const total=Number(order?.totalAmount);if(Number.isFinite(total)&&total>0)return total;return Number(order?.price||0)*orderQuantity(order)}
 
