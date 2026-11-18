@@ -176,7 +176,18 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 <aside class="pamoja-menu hidden" id="pamojaMenu" aria-label="Account menu" aria-hidden="true"><div class="menu-top"><div><small>PAMOJA MENU</small><b>Together. More Possible.</b></div><button type="button" class="menu-close" aria-label="Close menu" onclick="closePamojaMenu()">×</button></div><div id="menuSignedOut"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('account')"><span>↪</span><span><b>Sign in</b><small>Access your PAMOJA account</small></span><i>→</i></button></div><div id="menuSignedIn" class="hidden"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('profile')"><span>◉</span><span><b>Profile</b><small>Account details and status</small></span><i>→</i></button><button type="button" class="drawer-link drawer-signout" onclick="closePamojaMenu();logoutUser()"><span>↗</span><span><b>Sign out</b><small>Securely leave your account</small></span><i>→</i></button></div></aside>
 
 <main>
-<section id="home">
+<section id="welcome" class="hidden">
+<div class="card" style="margin-top:18px;padding:26px 20px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(235,246,241,.88))">
+<p class="welcome-tag">WELCOME TO PAMOJA</p>
+<h3 style="font-size:clamp(30px,8vw,42px);line-height:1.12;margin:8px 0 12px">Together. More Possible.</h3>
+<p class="muted" style="font-size:15px">A simpler way to manage everyday money, discover local businesses, shop, and access useful services — all in one place.</p>
+<div class="grid" style="margin:22px 0"><div class="service"><span>💳</span><b>Everyday money</b><small>One place for your account</small></div><div class="service"><span>🛍️</span><b>PAMOJA Market</b><small>Discover local products</small></div><div class="service"><span>📱</span><b>Digital services</b><small>Everyday services together</small></div><div class="service"><span>🤝</span><b>Local merchants</b><small>Connect and grow together</small></div></div>
+<button type="button" class="account-button" onclick="openPamojaAuth('sign-up')">Create account</button>
+<button type="button" class="account-button" style="background:linear-gradient(115deg,#102B46,#174B63)" onclick="openPamojaAuth('sign-in')">Sign in</button>
+<p class="muted" style="text-align:center;margin-top:14px">Create your secure account or sign in to continue to PAMOJA.</p>
+</div>
+</section>
+<section id="home" class="hidden">
 <div class="card balance"><div class="balance-top"><span>◈ YOUR PAMOJA WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount">UGX 1,500,000</div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>P</b></div></div>
 <div class="welcome"><p class="welcome-tag">WELCOME TO PAMOJA</p><h3>Together. More Possible.</h3><p class="muted">Your everyday money, shopping and services in one place.</p><button onclick="show('services')">Explore services →</button></div>
 <div class="section-heading"><h3>Quick access</h3><span>YOUR PAMOJA</span></div>
@@ -231,7 +242,7 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 </section>
 </main>
 
-<nav aria-label="Main navigation"><button type="button" onclick="show('home',this)">⌂ Home</button><button type="button" onclick="show('activity',this)">Transactions</button><button type="button" onclick="show('merchant',this)">Merchant</button><button type="button" onclick="show('account',this)">Settings</button></nav>
+<nav class="hidden" aria-label="Main navigation"><button type="button" onclick="show('home',this)">⌂ Home</button><button type="button" onclick="show('activity',this)">Transactions</button><button type="button" onclick="show('merchant',this)">Merchant</button><button type="button" onclick="show('account',this)">Settings</button></nav>
 <footer>PAMOJA · Demo prototype</footer>
 
 <!-- Clerk authentication libraries: these must load before the YemBridge scripts below. -->
@@ -254,11 +265,12 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 window.yembridgeAuthReady=false;
 window.yembridgeAccount=null;
 window.yembridgePendingSection=null;
-const PROTECTED_SECTIONS=['services','shop','activity','trade','account','profile','merchant','admin'];
-const VALID_SECTIONS=['home','services','shop','activity','trade','account','profile','merchant','admin'];
+const PROTECTED_SECTIONS=['home','services','shop','activity','trade','profile','merchant','admin'];
+const VALID_SECTIONS=['welcome','home','services','shop','activity','trade','account','profile','merchant','admin'];
 const HOME_URL='https://c07057702-ui.github.io/yembridge-platform/';
 const API_URL='https://yembridge-api.c07057702.workers.dev';
 const PRODUCT_KEY='yembridgeProductSubmissions';
+function openPamojaAuth(mode){if(mode!=='sign-in'&&mode!=='sign-up')return;window.location.href=HOME_URL+'?auth='+mode;}
 
 function finishStartup(){document.body.classList.remove('starting');const overlay=document.getElementById('startupOverlay');if(overlay)overlay.classList.add('hidden')}
 function navButtonFor(id){return Array.from(document.querySelectorAll('nav button')).find(button=>(button.getAttribute('onclick')||'').includes("'"+id+"'"))}
@@ -268,11 +280,14 @@ function closePamojaMenu(){const menu=document.getElementById('pamojaMenu'),back
 document.addEventListener('keydown',event=>{if(event.key==='Escape')closePamojaMenu()});
 function show(id,btn){
  if(!VALID_SECTIONS.includes(id))id='home';
- if(!window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)){window.yembridgePendingSection=id;id='account'}
- else if(window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)&&!window.Clerk?.isSignedIn)id='account';
+ if(!window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)){window.yembridgePendingSection=id;id='welcome'}
+ else if(window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)&&!window.Clerk?.isSignedIn)id='welcome';
+ if(id==='welcome'&&window.yembridgeAuthReady&&window.Clerk?.isSignedIn)id='home';
  document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
  const target=document.getElementById(id);if(!target)return;target.classList.remove('hidden');
  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ const signedIn=!!(window.yembridgeAuthReady&&window.Clerk?.isSignedIn);
+ document.querySelector('nav')?.classList.toggle('hidden',!signedIn);
  const active=id==='home'&&btn?btn:navButtonFor(id);if(active)active.classList.add('active');
  if(window.yembridgeAuthReady){try{sessionStorage.setItem('yembridgeLastSection',id)}catch(e){}}
  if(id==='activity'){renderCustomerOrders();renderActivity()}
@@ -695,8 +710,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 window.addEventListener('load',async()=>{
  const authContainer=document.getElementById('clerk-auth'),loggedOut=document.getElementById('loggedOut'),loggedIn=document.getElementById('loggedIn'),authLoadMessage=document.getElementById('authLoadMessage'),syncMessage=document.getElementById('accountSyncMessage');
  const params=new URLSearchParams(window.location.search),authMode=(params.get('auth')||'').toLowerCase();
- let saved='home';try{saved=sessionStorage.getItem('yembridgeLastSection')||'home'}catch(e){}
- const desired=(authMode==='sign-in'||authMode==='sign-up')?'account':(VALID_SECTIONS.includes(saved)?saved:'home');
+ const desired=(authMode==='sign-in'||authMode==='sign-up')?'account':(Clerk.isSignedIn?'home':'welcome');
  let authMounted=false;
  function mountAuth(mode){
   if(!window.Clerk||!authContainer||authMounted)return;authContainer.innerHTML='';
@@ -722,7 +736,7 @@ window.addEventListener('load',async()=>{
    document.getElementById('displayName').textContent='';document.getElementById('displayEmail').textContent='';
   }
   show(desired,navButtonFor(desired));finishStartup();
-  if(!Clerk.isSignedIn)mountAuth(authMode==='sign-up'?'sign-up':'sign-in');
+  if(!Clerk.isSignedIn&&desired==='account')mountAuth(authMode==='sign-up'?'sign-up':'sign-in');
   renderCustomerOrders();renderMerchantProductSubmissions();
   if(Clerk.isSignedIn&&Clerk.user){
    try{
