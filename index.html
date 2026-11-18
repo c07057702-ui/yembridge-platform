@@ -674,20 +674,38 @@ window.addEventListener('load',async()=>{
       note.style.cssText =
         'display:block;color:#D5E8E2;font-size:11px;';
 
-      panel.append(heading, number, note);
+      const opened = document.createElement('small');
+      opened.id = 'yembridgeAccountOpened';
+      opened.style.cssText =
+        'display:block;color:#D5E8E2;font-size:11px;margin-top:8px;';
+
+      panel.append(heading, number, note, opened);
       profile.insertAdjacentElement('afterend', panel);
     }
 
     const account = window.yembridgeAccount;
     const number = document.getElementById('yembridgeAccountNumber');
+    const opened = document.getElementById('yembridgeAccountOpened');
 
     if (account && account.accountNo) {
       const accountNo = String(account.accountNo);
       if (number.textContent !== accountNo) number.textContent = accountNo;
+
+      const openedDate = account.createdAt ? new Date(account.createdAt) : null;
+      const openedLabel = openedDate && !Number.isNaN(openedDate.getTime())
+        ? 'Date opened: ' + new Intl.DateTimeFormat('en-UG', {
+            year: 'numeric', month: 'short', day: 'numeric'
+          }).format(openedDate)
+        : 'Date opened: unavailable';
+      if (opened && opened.textContent !== openedLabel) {
+        opened.textContent = openedLabel;
+      }
+
       panel.classList.remove('hidden');
     } else {
       const waitingText = 'Awaiting connection';
       if (number.textContent !== waitingText) number.textContent = waitingText;
+      if (opened) opened.textContent = '';
       panel.classList.add('hidden');
     }
   }
