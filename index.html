@@ -779,6 +779,8 @@ window.addEventListener('load',async()=>{
   if(!window.__internal_ClerkUICtor)throw new Error('Clerk UI package did not load.');
   await Clerk.load({ui:{ClerkUI:window.__internal_ClerkUICtor},signInUrl:HOME_URL,signUpUrl:HOME_URL});
   window.yembridgeAuthReady=true;
+  const settingsContent=document.getElementById('settingsContent');
+  if(settingsContent)settingsContent.classList.toggle('hidden',!Clerk.isSignedIn);
   let rememberedSection='';try{rememberedSection=sessionStorage.getItem('yembridgeLastSection')||''}catch(e){}
   const canRestore=Clerk.isSignedIn&&VALID_SECTIONS.includes(rememberedSection)&&rememberedSection!=='welcome';
   const desired=(authMode==='sign-in'||authMode==='sign-up')?'account':(Clerk.isSignedIn?(canRestore?rememberedSection:'home'):'welcome');
