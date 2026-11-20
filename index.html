@@ -353,7 +353,7 @@ function show(id,btn,fromHistory=false){
  if(id==='shop')renderShopProducts();
  if(id==='admin')loadAdminKycQueue();
 }
-window.addEventListener('popstate',event=>{const previous=event.state?.pamojaSection;const fallback=window.yembridgeAuthReady&&window.Clerk?.isSignedIn?'home':'welcome';closePamojaMenu();show(VALID_SECTIONS.includes(previous)?previous:fallback,navButtonFor(previous),true)});
+window.addEventListener('popstate',event=>{const previous=event.state?.pamojaSection;if(!VALID_SECTIONS.includes(previous))return;closePamojaMenu();show(previous,navButtonFor(previous),true)});
 function demo(service){alert(service+' is a demonstration only. No real transaction has been made.')}
 async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('welcome');return}try{await window.Clerk.signOut();window.yembridgeAccount=null;try{sessionStorage.removeItem('yembridgeLastSection')}catch(e){console.warn('Could not clear the last PAMOJA screen.',e)}updateYemBridgeAccountDisplay();refreshPamojaMenu();window.location.replace(HOME_URL)}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
 
@@ -771,6 +771,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 window.addEventListener('load',async()=>{
  const authContainer=document.getElementById('clerk-auth'),loggedOut=document.getElementById('loggedOut'),loggedIn=document.getElementById('loggedIn'),authLoadMessage=document.getElementById('authLoadMessage'),syncMessage=document.getElementById('accountSyncMessage');
  const params=new URLSearchParams(window.location.search),authMode=(params.get('auth')||'').toLowerCase();
+ if(authMode==='sign-in'||authMode==='sign-up'){try{sessionStorage.setItem('yembridgeAuthFlow','new-sign-in')}catch(e){console.warn('Could not save the sign-in navigation state.',e)}}
  let authMounted=false;
  function mountAuth(mode){
   if(!window.Clerk||!authContainer||authMounted)return;authContainer.innerHTML='';
@@ -787,9 +788,10 @@ window.addEventListener('load',async()=>{
   window.yembridgeAuthReady=true;
   const settingsContent=document.getElementById('settingsContent');
   if(settingsContent)settingsContent.classList.toggle('hidden',!Clerk.isSignedIn);
-  let rememberedSection='';try{rememberedSection=sessionStorage.getItem('yembridgeLastSection')||''}catch(e){}
-  const desired=Clerk.isSignedIn?'home':((authMode==='sign-in'||authMode==='sign-up')?'account':'welcome');
-  if(Clerk.isSignedIn){try{sessionStorage.removeItem('yembridgeLastSection')}catch(e){console.warn('Could not clear the last PAMOJA screen after sign-in.',e)}}
+  let rememberedSection='',authFlow='';try{rememberedSection=sessionStorage.getItem('yembridgeLastSection')||'';authFlow=sessionStorage.getItem('yembridgeAuthFlow')||''}catch(e){}
+  const isNewSignIn=Clerk.isSignedIn&&authFlow==='new-sign-in';
+  const desired=Clerk.isSignedIn?(isNewSignIn?'home':(PROTECTED_SECTIONS.includes(rememberedSection)||rememberedSection==='account'?rememberedSection:'home')):((authMode==='sign-in'||authMode==='sign-up')?'account':'welcome');
+  if(isNewSignIn){try{sessionStorage.removeItem('yembridgeAuthFlow');sessionStorage.removeItem('yembridgeLastSection')}catch(e){console.warn('Could not clear the completed sign-in navigation state.',e)}}
   refreshPamojaMenu();
   if(Clerk.isSignedIn&&Clerk.user){
    loggedOut.classList.add('hidden');loggedIn.classList.remove('hidden');const user=Clerk.user;
