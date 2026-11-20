@@ -355,7 +355,7 @@ function show(id,btn,fromHistory=false){
 }
 window.addEventListener('popstate',event=>{const previous=event.state?.pamojaSection;const fallback=window.yembridgeAuthReady&&window.Clerk?.isSignedIn?'home':'welcome';closePamojaMenu();show(VALID_SECTIONS.includes(previous)?previous:fallback,navButtonFor(previous),true)});
 function demo(service){alert(service+' is a demonstration only. No real transaction has been made.')}
-async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('account');return}try{try{sessionStorage.setItem('yembridgeLastSection','account')}catch(e){}await window.Clerk.signOut();window.yembridgeAccount=null;updateYemBridgeAccountDisplay();refreshPamojaMenu();window.location.replace(HOME_URL+'?auth=sign-in')}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
+async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('welcome');return}try{await window.Clerk.signOut();window.yembridgeAccount=null;try{sessionStorage.removeItem('yembridgeLastSection')}catch(e){console.warn('Could not clear the last PAMOJA screen.',e)}updateYemBridgeAccountDisplay();refreshPamojaMenu();window.location.replace(HOME_URL)}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
 
 function openClerkPasswordSettings(){if(window.Clerk&&typeof window.Clerk.openUserProfile==='function'){window.Clerk.openUserProfile()}else{alert('Secure password settings are not available yet. Please try again after signing in.')}}
 
