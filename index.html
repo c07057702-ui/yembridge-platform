@@ -1454,7 +1454,7 @@ window.addEventListener('load',async()=>{
       lines.push('Your documents have been received. Please wait while they are reviewed.');
     } else if (status === 'rejected' || status === 'requires_information') {
       lines.push('Please correct your details and submit again.');
-      if (status === 'requires_information' && typeof kyc.reviewNotes === 'string' && kyc.reviewNotes.trim()) {
+      if ((status === 'rejected' || status === 'requires_information') && typeof kyc.reviewNotes === 'string' && kyc.reviewNotes.trim()) {
         lines.push('Reviewer message: ' + kyc.reviewNotes.trim());
       }
     } else if (status === 'unverified') {
