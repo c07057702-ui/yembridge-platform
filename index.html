@@ -211,6 +211,18 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 </head>
 <body class="starting">
 <div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
+<script>
+// Early startup watchdog: release the screen even if a third-party sign-in script stalls.
+(function () {
+  function releasePamojaStartup() {
+    if (document.body) document.body.classList.remove('starting');
+    var overlay = document.getElementById('startupOverlay');
+    if (overlay) overlay.classList.add('hidden');
+  }
+  window.setTimeout(releasePamojaStartup, 8000);
+  window.addEventListener('error', function () { window.setTimeout(releasePamojaStartup, 0); }, { once: true });
+})();
+</script>
 
 <header class="site-header"><div class="brand"><div class="brand-mark" aria-label="PAMOJA multicolour brand mark">P</div><div class="brand-divider"></div><div class="brand-copy"><h2>PAMOJA</h2><p>TOGETHER. MORE POSSIBLE.</p></div></div><div class="header-actions"><div class="demo-label">DEMO</div><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="pamojaMenu" aria-expanded="false" onclick="togglePamojaMenu()"><span></span><span></span><span></span></button></div></header>
 <div class="menu-backdrop hidden" id="menuBackdrop" onclick="closePamojaMenu()" aria-hidden="true"></div>
