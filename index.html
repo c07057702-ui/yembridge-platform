@@ -212,14 +212,23 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 <body>
 <div id="startupOverlay" class="startup-overlay hidden" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
 <script>
-// Early startup watchdog: release the screen even if a third-party sign-in script stalls.
+// Keep the public welcome page usable even if the external sign-in service stalls.
 (function () {
   function releasePamojaStartup() {
     if (document.body) document.body.classList.remove('starting');
     var overlay = document.getElementById('startupOverlay');
     if (overlay) overlay.classList.add('hidden');
+    if (!window.yembridgeAuthReady) {
+      document.querySelectorAll('main section').forEach(function (section) { section.classList.add('hidden'); });
+      var welcome = document.getElementById('welcome');
+      if (welcome) welcome.classList.remove('hidden');
+      var nav = document.querySelector('nav');
+      if (nav) nav.classList.add('hidden');
+      var status = document.getElementById('welcomeAuthStatus');
+      if (status) status.textContent = 'Secure sign-in is taking longer than expected. The welcome page is available; please check your connection before signing in.';
+    }
   }
-  window.setTimeout(releasePamojaStartup, 8000);
+  window.setTimeout(releasePamojaStartup, 12000);
   window.addEventListener('error', function () { window.setTimeout(releasePamojaStartup, 0); }, { once: true });
 })();
 </script>
@@ -262,6 +271,7 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 <p class="landing-kicker">WELCOME TO PAMOJA</p>
 <h1>Together.<br>More Possible.</h1>
 <p>One place to explore everyday money tools, shop from local merchants, discover useful services and connect with opportunities around you.</p>
+<p id="welcomeAuthStatus" role="status" aria-live="polite" style="font-size:12px;color:#8A5B13;margin-top:10px"></p>
 <div class="landing-actions"><button type="button" onclick="openPamojaAuth('sign-up')">Create account</button><button type="button" class="landing-secondary" onclick="openPamojaAuth('sign-in')">Sign in</button></div>
 <p style="font-size:10px;margin-top:12px">New to PAMOJA? Create an account to get started. Already registered? Sign in.</p>
 </div>
@@ -848,7 +858,10 @@ window.addEventListener('load',async()=>{
  try{
   if(!window.Clerk)throw new Error('Clerk JavaScript did not load.');
   if(!window.__internal_ClerkUICtor)throw new Error('Clerk UI package did not load.');
-  await Clerk.load({ui:{ClerkUI:window.__internal_ClerkUICtor},signInUrl:HOME_URL+'?auth=sign-in',signUpUrl:HOME_URL+'?auth=sign-up'});
+  await Promise.race([
+   Clerk.load({ui:{ClerkUI:window.__internal_ClerkUICtor},signInUrl:HOME_URL+'?auth=sign-in',signUpUrl:HOME_URL+'?auth=sign-up'}),
+   new Promise((_,reject)=>setTimeout(()=>reject(new Error('Secure sign-in initialization timed out.')),15000))
+  ]);
   window.yembridgeAuthReady=true;
   const settingsContent=document.getElementById('settingsContent');
   if(settingsContent)settingsContent.classList.toggle('hidden',!Clerk.isSignedIn);
@@ -899,9 +912,11 @@ window.addEventListener('load',async()=>{
    }catch(error){console.error('PAMOJA account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent=error.userMessage||'Your profile is signed in, but PAMOJA account setup could not be completed. Please try again later.'}
   }
  }catch(error){
-  console.error('Clerk initialization failed:',error);window.yembridgeAuthReady=true;window.yembridgeAccount=null;
-  loggedIn.classList.add('hidden');loggedOut.classList.remove('hidden');show('account',navButtonFor('account'));finishStartup();
+  console.error('Clerk initialization failed:',error);window.yembridgeAuthReady=false;window.yembridgeAccount=null;
+  loggedIn.classList.add('hidden');loggedOut.classList.remove('hidden');show('welcome');finishStartup();
   updateYemBridgeAccountDisplay();
+  const welcomeStatus=document.getElementById('welcomeAuthStatus');
+  if(welcomeStatus)welcomeStatus.textContent='Secure sign-in could not connect. Please check your internet connection and try again.';
   if(authLoadMessage)authLoadMessage.textContent='We could not load secure sign-in. Check your internet connection and refresh the page.';
  }
 });
