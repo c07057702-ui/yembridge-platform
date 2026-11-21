@@ -1232,6 +1232,23 @@ window.addEventListener('load',async()=>{
     });
   }
 
+  function syncKycPhoneCountry() {
+    const country = el('kycIdCountry');
+    const code = el('kycPhoneCode');
+    if (!country || !code) return;
+    const option = country.options[country.selectedIndex];
+    code.textContent = option ? (option.getAttribute('data-dial-code') || '') : '';
+  }
+
+  document.addEventListener('input', function (event) {
+    if (event.target && event.target.id === 'kycPhoneNumber') {
+      event.target.value = event.target.value.replace(/\D/g, '').slice(0, 14);
+    }
+  });
+  document.addEventListener('change', function (event) {
+    if (event.target && event.target.id === 'kycIdCountry') syncKycPhoneCountry();
+  });
+
   // INSTALL KYC INTERFACE
 
   function installKycInterface() {
@@ -1285,18 +1302,36 @@ window.addEventListener('load',async()=>{
 
           <label>
             Phone number
-            <input id="kycPhoneNumber" type="tel"
-              placeholder="+256..." required>
-            <span class="kyc-field-note">
-              Use international format, for example +256 followed by your number.
-            </span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span id="kycPhoneCode" style="flex:0 0 auto;padding:11px 12px;border:1px solid #cbd8d3;border-radius:8px;background:#eef5f1;font-weight:700;color:#183c35">+256</span>
+              <input id="kycPhoneNumber" type="tel" inputmode="numeric" pattern="[0-9]*"
+                autocomplete="tel-national" maxlength="14" placeholder="Phone number" required
+                style="min-width:0;flex:1">
+            </div>
+            <span class="kyc-field-note">Enter numbers only. The selected country's calling code is added automatically.</span>
           </label>
 
           <p class="kyc-field-note">You do not need to enter your village, town or district here. An authorised PAMOJA reviewer will read the two location details from your National ID during review.</p>
 
-          <label>Country that issued your ID
-            <input id="kycIdCountry" type="text"
-              value="Uganda" required>
+          <label for="kycIdCountry">Country that issued your ID
+            <select id="kycIdCountry" required>
+              <option value="Uganda" data-dial-code="+256" selected>Uganda (+256)</option>
+              <option value="Kenya" data-dial-code="+254">Kenya (+254)</option>
+              <option value="Tanzania" data-dial-code="+255">Tanzania (+255)</option>
+              <option value="Rwanda" data-dial-code="+250">Rwanda (+250)</option>
+              <option value="South Sudan" data-dial-code="+211">South Sudan (+211)</option>
+              <option value="Burundi" data-dial-code="+257">Burundi (+257)</option>
+              <option value="Democratic Republic of the Congo" data-dial-code="+243">DR Congo (+243)</option>
+              <option value="Nigeria" data-dial-code="+234">Nigeria (+234)</option>
+              <option value="Ghana" data-dial-code="+233">Ghana (+233)</option>
+              <option value="South Africa" data-dial-code="+27">South Africa (+27)</option>
+              <option value="United States" data-dial-code="+1">United States (+1)</option>
+              <option value="Canada" data-dial-code="+1">Canada (+1)</option>
+              <option value="United Kingdom" data-dial-code="+44">United Kingdom (+44)</option>
+              <option value="India" data-dial-code="+91">India (+91)</option>
+              <option value="United Arab Emirates" data-dial-code="+971">United Arab Emirates (+971)</option>
+              <option value="Other" data-dial-code="+">Other country</option>
+            </select>
           </label>
 
           <div class="kyc-photo-field">
@@ -1356,6 +1391,8 @@ window.addEventListener('load',async()=>{
 
       identityRow.insertAdjacentElement('afterend', panel);
     }
+
+    syncKycPhoneCountry();
 
     identityRow.classList.add('kyc-clickable');
     identityRow.setAttribute('role', 'button');
@@ -1777,15 +1814,19 @@ window.addEventListener('load',async()=>{
     };
 
     const nin = value('kycNin').toUpperCase();
-    const phone = value('kycPhoneNumber');
+    const nationalPhone = value('kycPhoneNumber').replace(/\D/g, '');
+    const countrySelect = el('kycIdCountry');
+    const selectedOption = countrySelect && countrySelect.options[countrySelect.selectedIndex];
+    const dialCode = selectedOption ? selectedOption.getAttribute('data-dial-code') : '';
+    const phone = dialCode && dialCode !== '+' ? dialCode + nationalPhone : '';
 
     if (!/^[A-Z0-9]{5,32}$/.test(nin)) {
       showMessage('Please enter a valid NIN using 5 to 32 letters or numbers.', 'error');
       return;
     }
 
-    if (!/^\+[1-9][0-9]{7,14}$/.test(phone)) {
-      showMessage('Enter your phone number in international format, for example +256XXXXXXXXX.', 'error');
+    if (!/^\+[1-9][0-9]{7,14}$/.test(phone) || !/^\d{4,14}$/.test(nationalPhone)) {
+      showMessage('Enter a valid phone number using digits only. Choose your country to add its calling code.', 'error');
       return;
     }
 
