@@ -208,14 +208,19 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
   #home .market-banner{padding:7px 10px}
 }
 </style>
+<style>
+/* Avoid flashing the default protected section before Clerk restores the session. */
+body.auth-pending main section:not(#welcome){visibility:hidden!important}
+body.auth-pending #welcome{visibility:visible!important}
+</style>
 </head>
-<body>
+<body class="auth-pending">
 <div id="startupOverlay" class="startup-overlay hidden" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
 <script>
 // Keep the public welcome page usable even if the external sign-in service stalls.
 (function () {
   function releasePamojaStartup() {
-    if (document.body) document.body.classList.remove('starting');
+    if (document.body) document.body.classList.remove('starting','auth-pending');
     var overlay = document.getElementById('startupOverlay');
     if (overlay) overlay.classList.add('hidden');
     if (!window.yembridgeAuthReady) {
@@ -402,7 +407,7 @@ const API_URL='https://yembridge-api.c07057702.workers.dev';
 const PRODUCT_KEY='yembridgeProductSubmissions';
 function openPamojaAuth(mode){if(mode!=='sign-in'&&mode!=='sign-up')return;window.location.href=HOME_URL+'?auth='+mode;}
 
-function finishStartup(){document.body.classList.remove('starting');const overlay=document.getElementById('startupOverlay');if(overlay)overlay.classList.add('hidden')}
+function finishStartup(){document.body.classList.remove('starting','auth-pending');const overlay=document.getElementById('startupOverlay');if(overlay)overlay.classList.add('hidden')}
 function navButtonFor(id){return Array.from(document.querySelectorAll('nav button')).find(button=>(button.getAttribute('onclick')||'').includes("'"+id+"'"))}
 function refreshPamojaMenu(){const signedIn=!!(window.yembridgeAuthReady&&window.Clerk?.isSignedIn);document.getElementById('menuSignedOut')?.classList.toggle('hidden',signedIn);document.getElementById('menuSignedIn')?.classList.toggle('hidden',!signedIn)}
 function togglePamojaMenu(){const menu=document.getElementById('pamojaMenu'),backdrop=document.getElementById('menuBackdrop'),toggle=document.getElementById('menuToggle');if(!menu||!backdrop)return;const opening=menu.classList.contains('hidden');if(opening){try{const state={...(window.history.state||{}),pamojaSection:window.history.state?.pamojaSection||sessionStorage.getItem('yembridgeLastSection')||'home',pamojaMenuOpen:true};window.history.pushState(state,'',window.location.href)}catch(e){console.warn('PAMOJA menu history could not be updated.',e)}}menu.classList.toggle('hidden',!opening);backdrop.classList.toggle('hidden',!opening);menu.setAttribute('aria-hidden',String(!opening));backdrop.setAttribute('aria-hidden',String(!opening));if(toggle){toggle.setAttribute('aria-expanded',String(opening));toggle.setAttribute('aria-label',opening?'Close menu':'Open menu')}if(opening)refreshPamojaMenu()}
@@ -850,7 +855,7 @@ window.addEventListener('load',async()=>{
  function mountAuth(mode){
   if(!window.Clerk||!authContainer||authMounted)return;authContainer.innerHTML='';
   try{
-   if(mode==='sign-up')Clerk.mountSignUp(authContainer,{routing:'hash',signInUrl:HOME_URL+'?auth=sign-in',forceRedirectUrl:HOME_URL});
+   if(mode==='sign-up')Clerk.mountSignUp(authContainer,{routing:'hash',signInUrl:HOME_URL+'?auth=sign-in',forceRedirectUrl:HOME_URL+'?auth=complete'});
    else Clerk.mountSignIn(authContainer,{routing:'hash',signUpUrl:HOME_URL+'?auth=sign-up',forceRedirectUrl:HOME_URL});
    authMounted=true;if(authLoadMessage)authLoadMessage.textContent='';
   }catch(e){console.error(e);if(authLoadMessage)authLoadMessage.textContent='Sign-in could not be displayed. Please refresh and try again.'}
@@ -867,7 +872,7 @@ window.addEventListener('load',async()=>{
   if(settingsContent)settingsContent.classList.toggle('hidden',!Clerk.isSignedIn);
   let rememberedSection='',authFlow='';try{rememberedSection=sessionStorage.getItem('yembridgeLastSection')||'';authFlow=sessionStorage.getItem('yembridgeAuthFlow')||''}catch(e){}
   const isNewSignIn=Clerk.isSignedIn&&authFlow==='new-sign-in';
-  const desired=Clerk.isSignedIn?(isNewSignIn?'home':(PROTECTED_SECTIONS.includes(rememberedSection)||rememberedSection==='account'?rememberedSection:'home')):((authMode==='sign-in'||authMode==='sign-up')?'account':'welcome');
+  const desired=Clerk.isSignedIn?((isNewSignIn||authMode==='complete')?'home':(PROTECTED_SECTIONS.includes(rememberedSection)||rememberedSection==='account'?rememberedSection:'home')):((authMode==='sign-in'||authMode==='sign-up')?'account':'welcome');
   if(isNewSignIn){try{sessionStorage.removeItem('yembridgeAuthFlow');sessionStorage.removeItem('yembridgeLastSection')}catch(e){console.warn('Could not clear the completed sign-in navigation state.',e)}}
   refreshPamojaMenu();
   if(Clerk.isSignedIn&&Clerk.user){
@@ -878,6 +883,22 @@ window.addEventListener('load',async()=>{
   }else{
    loggedIn.classList.add('hidden');loggedOut.classList.remove('hidden');window.yembridgeAccount=null;
    document.getElementById('displayName').textContent='';document.getElementById('displayEmail').textContent='';
+  }
+  // Re-route if Clerk restores the signed-in session just after startup.
+  let lastObservedSignedIn=!!Clerk.isSignedIn;
+  if(typeof Clerk.addListener==='function'){
+   Clerk.addListener(({session,user})=>{
+    const nowSignedIn=!!(session||user);
+    if(nowSignedIn&&!lastObservedSignedIn){
+     lastObservedSignedIn=true;
+     window.location.replace(HOME_URL+'?auth=complete');
+    }else if(!nowSignedIn){
+     lastObservedSignedIn=false;
+    }
+   },{skipInitialEmit:true});
+  }
+  if(authMode==='complete'&&Clerk.isSignedIn){
+   try{window.history.replaceState(window.history.state,'',HOME_URL)}catch(e){}
   }
   show(desired,navButtonFor(desired));finishStartup();
   if(!Clerk.isSignedIn&&desired==='account')mountAuth(authMode==='sign-up'?'sign-up':'sign-in');
