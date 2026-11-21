@@ -400,6 +400,9 @@ body.auth-pending #welcome{visibility:visible!important}
 window.yembridgeAuthReady=false;
 window.yembridgeAccount=null;
 window.yembridgePendingSection=null;
+// KYC access gate defaults to blocked until the server confirms approval.
+window.pamojaKycStatus='unknown';
+const KYC_RESTRICTED_SECTIONS=['services'];
 const PROTECTED_SECTIONS=['home','services','shop','activity','trade','profile','merchant','admin'];
 const VALID_SECTIONS=['welcome','home','services','shop','activity','trade','account','profile','merchant','admin'];
 const HOME_URL='https://c07057702-ui.github.io/yembridge-platform/';
@@ -416,6 +419,11 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape')closePamojaM
 let pamojaHistoryReady=false;
 function show(id,btn,fromHistory=false){
  if(!VALID_SECTIONS.includes(id))id='home';
+ if(KYC_RESTRICTED_SECTIONS.includes(id)&&window.pamojaKycStatus!=='approved'){
+  const status=window.pamojaKycStatus;
+  id='profile';
+  alert(status==='unknown'||status==='unavailable'?'PAMOJA is checking your identity verification status. Please try again shortly.':'Identity verification is required to access PAMOJA Services. Complete KYC and wait for approval.');
+ }
  if(!window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)){window.yembridgePendingSection=id;id='welcome'}
  else if(window.yembridgeAuthReady&&PROTECTED_SECTIONS.includes(id)&&!window.Clerk?.isSignedIn)id='welcome';
  if(id==='welcome'&&window.yembridgeAuthReady&&window.Clerk?.isSignedIn)id='home';
@@ -433,7 +441,7 @@ function show(id,btn,fromHistory=false){
  if(id==='admin')loadAdminKycQueue();
 }
 window.addEventListener('popstate',event=>{const previous=event.state?.pamojaSection;if(!VALID_SECTIONS.includes(previous))return;closePamojaMenu();show(previous,navButtonFor(previous),true)});
-function demo(service){alert(service+' is a demonstration only. No real transaction has been made.')}
+function demo(service){if(window.pamojaKycStatus!=='approved'){alert('Identity verification is required before accessing PAMOJA Services. Complete KYC and wait for approval.');show('profile');return}alert(service+' is a demonstration only. No real transaction has been made.')}
 async function logoutUser(){if(!window.Clerk||!window.Clerk.isSignedIn){show('welcome');return}try{await window.Clerk.signOut();window.yembridgeAccount=null;try{sessionStorage.removeItem('yembridgeLastSection')}catch(e){console.warn('Could not clear the last PAMOJA screen.',e)}updateYemBridgeAccountDisplay();refreshPamojaMenu();window.location.replace(HOME_URL)}catch(error){console.error(error);alert('Sign out failed. Please try again.')}}
 
 function openClerkPasswordSettings(){if(window.Clerk&&typeof window.Clerk.openUserProfile==='function'){window.Clerk.openUserProfile()}else{alert('Secure password settings are not available yet. Please try again after signing in.')}}
@@ -1675,9 +1683,11 @@ window.addEventListener('load',async()=>{
       const result = await readResponse(response);
 
       kycStatus = result.kyc || { status: 'unverified' };
+      window.pamojaKycStatus = String(kycStatus.status || 'unverified').toLowerCase();
       renderKycStatus();
 
     } catch (error) {
+      window.pamojaKycStatus = 'unavailable';
       if (details) {
         details.textContent = error.message ||
           'Unable to load verification status. Please try again.';
