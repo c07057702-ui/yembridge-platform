@@ -856,7 +856,7 @@ window.addEventListener('load',async()=>{
   if(!window.Clerk||!authContainer||authMounted)return;authContainer.innerHTML='';
   try{
    if(mode==='sign-up')Clerk.mountSignUp(authContainer,{routing:'hash',signInUrl:HOME_URL+'?auth=sign-in',forceRedirectUrl:HOME_URL+'?auth=complete'});
-   else Clerk.mountSignIn(authContainer,{routing:'hash',signUpUrl:HOME_URL+'?auth=sign-up',forceRedirectUrl:HOME_URL});
+   else Clerk.mountSignIn(authContainer,{routing:'hash',signUpUrl:HOME_URL+'?auth=sign-up',forceRedirectUrl:HOME_URL+'?auth=complete'});
    authMounted=true;if(authLoadMessage)authLoadMessage.textContent='';
   }catch(e){console.error(e);if(authLoadMessage)authLoadMessage.textContent='Sign-in could not be displayed. Please refresh and try again.'}
  }
