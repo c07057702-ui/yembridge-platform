@@ -168,7 +168,47 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 @media(max-width:390px){.card{padding:16px}.welcome h3{font-size:26px}}
 
-</style></head>
+</style>
+<style>
+/* Compact signed-in home dashboard for small screens */
+@media(max-width:480px){
+  main:has(#home:not(.hidden)){padding:10px 12px 88px}
+  #home .balance{padding:12px 14px;margin-bottom:9px;border-radius:18px}
+  #home .balance-top{margin-bottom:6px;font-size:9px}
+  #home #homeAccountSummary{margin:5px 0 8px!important;padding:7px 9px!important;gap:8px!important}
+  #home #homeAccountNumber{font-size:17px!important;letter-spacing:.5px!important}
+  #home #homeKycStatus{font-size:13px!important}
+  #home .balance>small{font-size:10px}
+  #home .balance .amount{font-size:clamp(23px,6vw,28px);margin:3px 0}
+  #home .balance .amount-row{gap:7px;margin:1px 0}
+  #home .balance .balance-visibility{padding:6px 9px;font-size:10px}
+  #home .balance-bottom{padding-top:6px;margin-top:7px;font-size:9px}
+  #home .balance-bottom b{font-size:16px}
+  #home .welcome{padding:4px 3px 7px}
+  #home .welcome-tag{font-size:9px;margin-bottom:3px}
+  #home .welcome h3{font-size:21px;margin:3px 0;line-height:1.12}
+  #home .welcome .muted{font-size:10px;margin:4px 0}
+  #home .welcome button{padding:8px 11px;font-size:11px}
+  #home .section-heading{margin:5px 0 7px}
+  #home .section-heading h3{font-size:17px;margin:0}
+  #home .section-heading span{font-size:8px}
+  #home .grid{gap:7px}
+  #home .grid .service{min-height:72px;padding:8px 6px;border-radius:13px}
+  #home .grid .service span{font-size:19px;margin-bottom:2px}
+  #home .grid .service b{font-size:11px}
+  #home .grid .service small{font-size:9px;margin-top:2px}
+  #home .market-banner{margin-top:8px;padding:9px 12px;border-radius:14px}
+  #home .market-banner h3{font-size:15px;margin:3px 0;line-height:1.1}
+  #home .market-banner p{font-size:9px;margin:3px 0}
+  #home .market-banner b{font-size:10px}
+  #home .market-symbol{font-size:25px}
+}
+@media(max-height:760px) and (max-width:480px){
+  #home .welcome{display:none}
+  #home .market-banner{padding:7px 10px}
+}
+</style>
+</head>
 <body class="starting">
 <div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
 
