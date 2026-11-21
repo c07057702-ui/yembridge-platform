@@ -244,7 +244,12 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 <p class="muted" style="text-align:center;font-size:10px;margin:12px 0 20px">PAMOJA · Together. More Possible.</p>
 </section>
 <section id="home" class="hidden">
-<div class="card balance"><div class="balance-top"><span>◈ YOUR PAMOJA WALLET</span><span class="demo-label">DEMO</span></div><small>Available spending balance</small><div class="amount-row"><div class="amount">UGX 1,500,000</div><button type="button" class="balance-visibility" id="walletVisibilityButton" onclick="toggleWalletBalance()" aria-label="Hide wallet balance" aria-pressed="false"><span id="walletVisibilityIcon" aria-hidden="true">◉</span><span id="walletVisibilityText">Hide</span></button></div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>P</b></div></div>
+<div class="card balance"><div class="balance-top"><span>◈ YOUR PAMOJA WALLET</span><span class="demo-label">DEMO</span></div>
+<div id="homeAccountSummary" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0 16px;padding:10px 12px;border:1px solid rgba(255,255,255,.28);border-radius:12px;background:rgba(0,0,0,.12)">
+  <div><small style="display:block;color:#D5E8E2;font-size:11px;font-weight:700">ACCOUNT NUMBER</small><strong id="homeAccountNumber" style="display:block;color:#F2B84B;font-size:20px;letter-spacing:1px">Awaiting connection</strong></div>
+  <div style="text-align:right"><small style="display:block;color:#D5E8E2;font-size:11px;font-weight:700">KYC STATUS</small><strong id="homeKycStatus" style="display:inline-block;color:#FFFFFF;font-size:14px">Checking status...</strong></div>
+</div>
+<small>Available spending balance</small><div class="amount-row"><div class="amount">UGX 1,500,000</div><button type="button" class="balance-visibility" id="walletVisibilityButton" onclick="toggleWalletBalance()" aria-label="Hide wallet balance" aria-pressed="false"><span id="walletVisibilityIcon" aria-hidden="true">◉</span><span id="walletVisibilityText">Hide</span></button></div><small>Illustrative demo balance · No real funds</small><div class="balance-bottom"><span>Everyday commerce, made easier.</span><b>P</b></div></div>
 <div class="welcome"><p class="welcome-tag">WELCOME TO PAMOJA</p><h3>Together. More Possible.</h3><p class="muted">Your everyday money, shopping and services in one place.</p><button onclick="show('services')">Explore services →</button></div>
 <div class="section-heading"><h3>Quick access</h3><span>YOUR PAMOJA</span></div>
 <div class="grid"><div class="service" onclick="show('services')"><span>📱</span><b>Digital Services</b><small>Airtime, bills and more</small></div><div class="service" onclick="show('shop')"><span>🛍️</span><b>PAMOJA Market</b><small>Shop local</small></div><div class="service" onclick="show('trade')"><span>🔄</span><b>Trade</b><small>Wallets and exchange</small></div><div class="service" onclick="show('activity')"><span>📋</span><b>Transactions</b><small>View account activity</small></div></div>
@@ -901,6 +906,8 @@ window.addEventListener('load',async()=>{
     }
 
     const account = window.yembridgeAccount;
+    const homeNumber = document.getElementById('homeAccountNumber');
+    if (homeNumber) homeNumber.textContent = account && account.accountNo ? String(account.accountNo) : 'Awaiting connection';
     const number = document.getElementById('yembridgeAccountNumber');
     const opened = document.getElementById('yembridgeAccountOpened');
 
@@ -1428,6 +1435,19 @@ window.addEventListener('load',async()=>{
 
     const kyc = kycStatus || { status: 'unverified' };
     const status = String(kyc.status || 'unverified').toLowerCase();
+    const homeKycStatus = el('homeKycStatus');
+    if (homeKycStatus) {
+      const homeLabels = {
+        approved: 'Verified',
+        pending: 'Pending',
+        under_review: 'Under review',
+        requires_information: 'More information required',
+        rejected: 'Rejected',
+        unverified: 'Unverified'
+      };
+      homeKycStatus.textContent = homeLabels[status] || 'Unverified';
+      homeKycStatus.style.color = status === 'approved' ? '#8FF0C6' : (status === 'rejected' ? '#FFD0C8' : '#FFFFFF');
+    }
 
     const labels = {
       unverified: 'Unverified',
