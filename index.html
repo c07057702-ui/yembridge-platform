@@ -810,7 +810,7 @@ window.addEventListener('load',async()=>{
     const token=await Clerk.session.getToken();if(!token)throw new Error('No Clerk session token was returned.');
     const response=await fetch(API_URL+'/account-sync',{method:'POST',headers:{Authorization:'Bearer '+token}});
     const responseText=await response.text();let result={};try{result=JSON.parse(responseText)}catch(e){throw new Error('Unreadable account service response.')}
-    if(!response.ok){const err=new Error('Account synchronization failed with HTTP '+response.status);err.diagnostic=result.diagnostic||null;throw err}
+    if(!response.ok){const err=new Error('Account synchronization failed with HTTP '+response.status);err.userMessage=typeof result.error==='string'&&result.error.length<=240?result.error:'PAMOJA account setup could not be completed. Please try again later.';err.diagnostic=result.diagnostic||null;throw err}
     window.yembridgeAccount=result;
     updateYemBridgeAccountDisplay();
     if(syncMessage)syncMessage.textContent=result.accountNo?'PAMOJA account connected. Account number: '+result.accountNo:'Your PAMOJA profile is connected.';
@@ -832,7 +832,7 @@ window.addEventListener('load',async()=>{
       }
      }catch(adminError){console.error('KYC reviewer permission check failed:',adminError);adminPanel.textContent='KYC reviewer access could not be checked. Your normal account remains available.'}
     }
-   }catch(error){console.error('PAMOJA account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent='Your profile is signed in, but PAMOJA account setup could not be completed. Please try again later.'}
+   }catch(error){console.error('PAMOJA account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent=error.userMessage||'Your profile is signed in, but PAMOJA account setup could not be completed. Please try again later.'}
   }
  }catch(error){
   console.error('Clerk initialization failed:',error);window.yembridgeAuthReady=true;window.yembridgeAccount=null;
