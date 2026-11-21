@@ -1989,8 +1989,15 @@ window.addEventListener('load',async()=>{
     installDelegatedHandlers();
     startKyc();
 
-    if (!kycObserver && document.body) {
+    // Watch only until the account's identity-verification row appears.
+    // Disconnect BEFORE installing the interface: installKycInterface changes
+    // attributes/styles and inserts DOM nodes, which would otherwise retrigger
+    // this same observer indefinitely and freeze the page.
+    if (!findIdentityRow() && !kycObserver && document.body) {
       kycObserver = new MutationObserver(function () {
+        if (!findIdentityRow()) return;
+        kycObserver.disconnect();
+        kycObserver = null;
         installKycInterface();
       });
 
