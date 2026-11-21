@@ -229,7 +229,7 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 <aside class="pamoja-menu hidden" id="pamojaMenu" aria-label="Account menu" aria-hidden="true"><div class="menu-top"><div><small>PAMOJA MENU</small><b>Together. More Possible.</b></div><button type="button" class="menu-close" aria-label="Close menu" onclick="closePamojaMenu()">×</button></div><div id="menuSignedOut"><button type="button" class="drawer-link" onclick="closePamojaMenu();openPamojaAuth('sign-in')"><span>↪</span><span><b>Sign in</b><small>Access your PAMOJA account</small></span><i>→</i></button></div><div id="menuSignedIn" class="hidden"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('profile')"><span>◉</span><span><b>Profile</b><small>Account details and status</small></span><i>→</i></button><button type="button" class="drawer-link drawer-signout" onclick="closePamojaMenu();logoutUser()"><span>↗</span><span><b>Sign out</b><small>Securely leave your account</small></span><i>→</i></button></div></aside>
 
 <main>
-<section id="welcome" class="hidden">
+<section id="welcome">
 <style>
 .landing-hero{margin-top:18px;padding:27px 21px;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(230,245,238,.92));overflow:hidden;position:relative}
 .landing-kicker{color:#087F68;font-size:10px;font-weight:900;letter-spacing:1.7px;margin:0 0 9px}
