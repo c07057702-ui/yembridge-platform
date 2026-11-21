@@ -1450,6 +1450,7 @@ window.addEventListener('load',async()=>{
 
     if (status === 'approved') {
       lines.push('Your identity has been verified.');
+      lines.push('Message from PAMOJA: ' + (typeof kyc.reviewNotes === 'string' && kyc.reviewNotes.trim() ? kyc.reviewNotes.trim() : 'Now you can access all PAMOJA Services'));
     } else if (status === 'pending' || status === 'under_review') {
       lines.push('Your documents have been received. Please wait while they are reviewed.');
     } else if (status === 'rejected' || status === 'requires_information') {
