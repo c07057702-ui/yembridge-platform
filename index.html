@@ -381,7 +381,20 @@ body.auth-pending #welcome{visibility:visible!important}
 <div id="adminKycDetail"></div><div id="adminKycDocuments" class="admin-documents"></div>
 <div id="adminKycReviewForm" class="hidden"><h4>Record review decision</h4><label for="adminKycDecision">Decision</label><select id="adminKycDecision"><option value="approved">Approve</option><option value="rejected">Reject</option><option value="requires_information">Request more information</option></select>
 <div id="adminKycApprovalFields"><label for="adminKycDistrict">District / City (as shown on National ID)</label><input id="adminKycDistrict" maxlength="100" placeholder="Enter District / City"><label for="adminKycTown">Town / Village (as shown on National ID)</label><input id="adminKycTown" maxlength="100" placeholder="Enter Town / Village"></div>
-<label for="adminKycNotes">Review notes (optional)</label><textarea id="adminKycNotes" maxlength="1000" placeholder="Add a short reason or instruction"></textarea><button type="button" id="adminKycSubmitDecision">Save review decision</button><p id="adminKycReviewMessage" class="muted" aria-live="polite"></p></div></div></section>
+<label for="adminKycNotes">Review notes (optional)</label><textarea id="adminKycNotes" maxlength="1000" placeholder="Add a short reason or instruction"></textarea><button type="button" id="adminKycSubmitDecision">Save review decision</button><p id="adminKycReviewMessage" class="muted" aria-live="polite"></p></div></div>
+<div class="card">
+ <div class="section-heading"><h3>Marketplace Product Reviews</h3><span class="welcome-tag">ADMIN ONLY</span></div>
+ <p class="muted">Review real merchant submissions and their securely stored product photos. Approved products become eligible for the buyer Market.</p>
+ <label for="adminProductStatusFilter">Product submissions</label>
+ <select id="adminProductStatusFilter">
+  <option value="pending">Pending review</option>
+  <option value="approved">Approved</option>
+  <option value="rejected">Rejected</option>
+ </select>
+ <button type="button" id="adminProductRefresh">Refresh product submissions</button>
+ <p id="adminProductQueueMessage" class="muted" aria-live="polite">Loading product submissions...</p>
+ <div id="adminProductQueue"></div>
+</div></section>
 <section id="merchant" class="hidden">
 <div class="welcome merchant-welcome"><span class="welcome-tag">PAMOJA BUSINESS</span><h3>Merchant Dashboard</h3><p class="muted">Your store, orders and earnings in one simple place.</p></div>
 
@@ -508,7 +521,7 @@ function show(id,btn,fromHistory=false){
  if(id==='activity'){renderCustomerOrders();renderActivity()}
  if(id==='merchant'){renderMerchantOrders();renderMerchantSalesReport();renderMerchantWithdrawals();renderMerchantProductSubmissions()}
  if(id==='shop'){renderShopProducts();loadCentralMarketplaceProducts();}
- if(id==='admin')loadAdminKycQueue();
+ if(id==='admin'){loadAdminKycQueue();loadAdminProductQueue();}
 }
 window.addEventListener('popstate',event=>{const previous=event.state?.pamojaSection;if(!VALID_SECTIONS.includes(previous))return;closePamojaMenu();show(previous,navButtonFor(previous),true)});
 function demo(service){if(window.pamojaKycStatus!=='approved'){alert('Identity verification is required before accessing PAMOJA Services. Complete KYC and wait for approval.');show('profile');return}alert(service+' is a demonstration only. No real transaction has been made.')}
@@ -879,10 +892,11 @@ async function renderMerchantProductSubmissions(){
   products.forEach(p=>{
    const card=document.createElement('div');card.className='listing-card';
    const title=document.createElement('b');title.textContent=p.product_name||'Product';
-   const status=document.createElement('strong');status.textContent='Status: '+String(p.listing_status||'pending').replace(/_/g,' ');status.className=p.listing_status==='approved'?'status-success':'status-pending';
+   const status=document.createElement('strong');status.textContent='Status: '+(p.listing_status==='pending'&&p.review_notes?'changes requested':String(p.listing_status||'pending').replace(/_/g,' '));status.className=p.listing_status==='approved'?'status-success':'status-pending';
    const details=document.createElement('small');details.textContent='UGX '+Number(p.unit_price||0).toLocaleString('en-UG')+' · Listed: '+new Date(p.listed_at).toLocaleDateString('en-UG');
    const stock=document.createElement('p');stock.textContent='Original quantity: '+p.initial_quantity+' · Sold: '+p.sold_quantity+' · Available stock: '+p.stock_quantity;
    card.append(title,status,details,stock);
+   if(p.review_notes){const feedback=document.createElement('p');feedback.className='muted';feedback.textContent='Admin feedback: '+p.review_notes;card.appendChild(feedback)}
    if(!['archived','rejected'].includes(p.listing_status)){
     const photoPicker=document.createElement('input');photoPicker.type='file';photoPicker.accept='image/jpeg,image/png,image/webp';photoPicker.multiple=true;photoPicker.hidden=true;
     const photoButton=document.createElement('button');photoButton.type='button';photoButton.textContent='Upload / Replace Photos';
@@ -2257,6 +2271,65 @@ let selectedKycId=null,documentUrls=[];
 async function token(){if(!window.Clerk||!window.Clerk.isSignedIn||!window.Clerk.session)throw Error('Please sign in again.');const t=await window.Clerk.session.getToken();if(!t)throw Error('Your secure session could not be verified.');return t}
 async function api(path,options){const bearer=await token();const response=await fetch(API+path,Object.assign({},options||{},{headers:Object.assign({Authorization:'Bearer '+bearer},options&&options.headers||{})}));if(!response.ok){let msg='Request failed (HTTP '+response.status+').';try{const d=await response.json();if(d.error)msg=d.error}catch(e){}throw Error(msg)}return response}
 function releaseUrls(){documentUrls.forEach(u=>URL.revokeObjectURL(u));documentUrls=[]}
+
+let productPhotoUrls=[];
+function releaseProductPhotoUrls(){productPhotoUrls.forEach(u=>URL.revokeObjectURL(u));productPhotoUrls=[]}
+async function loadAdminProductQueue(){
+ const queue=byId('adminProductQueue');if(!queue)return;
+ releaseProductPhotoUrls();queue.textContent='';byId('adminProductQueueMessage').textContent='Loading product submissions...';
+ try{
+  const status=byId('adminProductStatusFilter').value;
+  const response=await api('/admin/marketplace-products?limit=50&offset=0&status='+encodeURIComponent(status));
+  const data=await response.json(),products=data.products||[];
+  byId('adminProductQueueMessage').textContent=products.length?'Showing '+products.length+' product submission(s).':'No products found for this filter.';
+  products.forEach(async product=>{
+   const card=document.createElement('div');card.className='admin-application';
+   const title=document.createElement('strong');title.textContent=product.product_name||'Unnamed product';
+   const meta=document.createElement('small');meta.textContent='Merchant: '+(((product.first_name||'')+' '+(product.second_name||'')).trim()||'Account holder')+' · Account: '+(product.account_no||'—')+' · Submitted: '+(product.created_at?new Date(product.created_at).toLocaleString():'—');
+   const details=document.createElement('p');details.className='muted';details.textContent='Category: '+(product.category||'—')+' · Price: UGX '+Number(product.unit_price||0).toLocaleString('en-UG')+' · Stock: '+Number(product.stock_quantity||0);
+   const description=document.createElement('p');description.textContent=product.description||'No description supplied.';
+   card.append(title,meta,details,description);
+   const photos=document.createElement('div');photos.className='admin-documents';
+   const photoList=Array.isArray(product.photos)?product.photos:[];
+   for(const item of photoList){
+    try{
+     const photoResponse=await api('/admin/marketplace-product-photo?photoId='+encodeURIComponent(item.photoId));
+     const objectUrl=URL.createObjectURL(await photoResponse.blob());productPhotoUrls.push(objectUrl);
+     const img=document.createElement('img');img.src=objectUrl;img.alt='Merchant product photo';img.style.maxWidth='112px';img.style.maxHeight='112px';img.style.objectFit='cover';img.style.borderRadius='10px';img.style.margin='5px';photos.appendChild(img);
+    }catch(error){
+     const unavailable=document.createElement('small');unavailable.textContent='A product photo could not be loaded.';photos.appendChild(unavailable);
+    }
+   }
+   card.appendChild(photos);
+   const photoCount=document.createElement('p');photoCount.className='muted';photoCount.textContent='Stored photos: '+photoList.length;card.appendChild(photoCount);
+   if(product.review_notes){const note=document.createElement('p');note.className='muted';note.textContent='Previous review note: '+product.review_notes;card.appendChild(note)}
+   if(status==='pending'){
+    const approve=document.createElement('button');approve.type='button';approve.textContent='Approve product';approve.addEventListener('click',()=>reviewAdminProduct(product.product_id,'approved'));
+    const reject=document.createElement('button');reject.type='button';reject.textContent='Reject';reject.className='kyc-secondary';reject.addEventListener('click',()=>reviewAdminProduct(product.product_id,'rejected'));
+    const corrections=document.createElement('button');corrections.type='button';corrections.textContent='Request corrections';corrections.className='kyc-secondary';corrections.addEventListener('click',()=>reviewAdminProduct(product.product_id,'requires_changes'));
+    card.append(approve,reject,corrections);
+   }
+   queue.appendChild(card);
+  });
+ }catch(error){byId('adminProductQueueMessage').textContent=error.message||'Unable to load product submissions. Check that your admin account has product-review access.'}
+}
+async function reviewAdminProduct(productId,decision){
+ let notes='';
+ if(decision!=='approved'){
+  notes=prompt(decision==='rejected'?'Please explain why this product is rejected:':'Tell the merchant what needs to be corrected:');
+  if(notes===null)return;
+  notes=notes.trim();
+  if(notes.length<2){alert('Please enter a short reason for the merchant.');return}
+ }
+ const action=decision==='approved'?'approve and publish this product':decision==='rejected'?'reject this product':'return this product to the merchant for corrections';
+ if(!confirm('Are you sure you want to '+action+'?'))return;
+ byId('adminProductQueueMessage').textContent='Saving product review...';
+ try{
+  await api('/admin/marketplace-product-review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({productId,decision,notes})});
+  byId('adminProductQueueMessage').textContent=decision==='approved'?'Product approved. It is now eligible to appear in Market.':decision==='rejected'?'Product rejected.':'Product returned to the merchant with correction notes.';
+  await loadAdminProductQueue();
+ }catch(error){byId('adminProductQueueMessage').textContent=error.message||'Unable to save the product review.'}
+}
 async function loadAdminKycQueue(){
  const queue=byId('adminKycQueue');if(!queue)return;queue.textContent='';byId('adminKycQueueMessage').textContent='Loading applications...';byId('adminKycDetailCard').classList.add('hidden');
  try{
@@ -2283,8 +2356,8 @@ async function submitDecision(){
  try{await api('/admin/kyc-review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});byId('adminKycReviewMessage').textContent='Review decision saved.';releaseUrls();selectedKycId=null;await loadAdminKycQueue();byId('adminKycDetailCard').classList.add('hidden')}
  catch(e){byId('adminKycReviewMessage').textContent=e.message||'Unable to save decision.'}finally{button.disabled=false}
 }
-function bind(){byId('adminKycRefresh')?.addEventListener('click',loadAdminKycQueue);byId('adminKycStatusFilter')?.addEventListener('change',loadAdminKycQueue);byId('adminKycDecision')?.addEventListener('change',updateApprovalFields);byId('adminKycSubmitDecision')?.addEventListener('click',submitDecision);byId('adminKycBack')?.addEventListener('click',()=>{releaseUrls();selectedKycId=null;byId('adminKycDetailCard').classList.add('hidden')})}
-window.loadAdminKycQueue=loadAdminKycQueue;if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();window.addEventListener('pagehide',releaseUrls);
+function bind(){byId('adminKycRefresh')?.addEventListener('click',loadAdminKycQueue);byId('adminProductRefresh')?.addEventListener('click',loadAdminProductQueue);byId('adminProductStatusFilter')?.addEventListener('change',loadAdminProductQueue);byId('adminKycStatusFilter')?.addEventListener('change',loadAdminKycQueue);byId('adminKycDecision')?.addEventListener('change',updateApprovalFields);byId('adminKycSubmitDecision')?.addEventListener('click',submitDecision);byId('adminKycBack')?.addEventListener('click',()=>{releaseUrls();selectedKycId=null;byId('adminKycDetailCard').classList.add('hidden')})}
+window.loadAdminKycQueue=loadAdminKycQueue;if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();window.addEventListener('pagehide',()=>{releaseUrls();releaseProductPhotoUrls()});
 })();
 </script>
 </body>
