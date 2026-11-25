@@ -769,7 +769,17 @@ document.addEventListener('DOMContentLoaded',()=>{
  });
 });
 
-function submitMerchantProduct(){
+async function merchantApiRequest(path, options={}){
+ const session=window.Clerk?.session;
+ if(!session)throw new Error('Please sign in again to manage your products.');
+ const token=await session.getToken();
+ if(!token)throw new Error('Your secure session could not be verified. Please sign in again.');
+ const response=await fetch('https://yembridge-api.c07057702.workers.dev'+path,{...options,headers:{'Content-Type':'application/json',Authorization:'Bearer '+token,...(options.headers||{})}});
+ let result={};try{result=await response.json()}catch(e){throw new Error('The marketplace server returned an unreadable response.')}
+ if(!response.ok)throw new Error(result.error||'The marketplace request could not be completed.');
+ return result;
+}
+async function submitMerchantProduct(){
  const message=document.getElementById('merchantProductMessage');
  if(!window.yembridgeAuthReady||!window.Clerk?.isSignedIn||!window.Clerk.user){message.textContent='Please sign in before submitting a product.';show('account');return}
  const name=document.getElementById('merchantProductName').value.trim();
@@ -781,41 +791,57 @@ function submitMerchantProduct(){
  const quantity=Number(document.getElementById('merchantProductQuantity').value);
  if(!name||!description||!category||!location||!phone||!Number.isInteger(price)||price<=0||!Number.isInteger(quantity)||quantity<=0){message.textContent='Please complete every field with a valid price and quantity.';return}
  if(selectedProductPhotos.length<2){message.textContent='At least two product photos are required.';return}
- const user=window.Clerk.user;
- const product={
-  id:'YBP-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
-  name,description,category,location,phone,price,quantity,
-  photos:selectedProductPhotos.slice(),
-  merchantId:user.id,
-  merchantName:((user.firstName||'')+' '+(user.lastName||'')).trim()||'PAMOJA Merchant',
-  merchantEmail:user.primaryEmailAddress?.emailAddress||'',
-  status:'Pending Review',
-  submittedAt:new Date().toLocaleString('en-UG'),
-  reviewedAt:null,
-  reviewReason:''
- };
- const items=getProductSubmissions();items.unshift(product);
- if(!saveProductSubmissions(items))return;
- ['merchantProductName','merchantProductDescription','merchantProductCategory','merchantProductLocation','merchantProductPhone','merchantProductPrice','merchantProductQuantity','merchantProductPhotos'].forEach(id=>document.getElementById(id).value='');
- selectedProductPhotos=[];document.getElementById('merchantPhotoPreview').innerHTML='';
- message.textContent='Product submitted. It is now Pending Review and will not appear in the Shop until approved.';
- renderMerchantProductSubmissions();renderShopProducts();
+ const button=document.getElementById('submitProductButton');if(button)button.disabled=true;
+ message.textContent='Securely saving your product...';
+ try{
+  const result=await merchantApiRequest('/merchant/products',{method:'POST',body:JSON.stringify({productName:name,description,category,unitPrice:price,quantity})});
+  const product=result.product;
+  const metadata=getProductSubmissions();
+  metadata.unshift({id:product.product_id,productId:product.product_id,name,description,category,location,phone,price,quantity:product.stock_quantity,photos:selectedProductPhotos.slice(),merchantId:window.Clerk.user.id,merchantName:((window.Clerk.user.firstName||'')+' '+(window.Clerk.user.lastName||'')).trim()||'PAMOJA Merchant',status:'Pending Review',submittedAt:new Date(product.listed_at||Date.now()).toLocaleString('en-UG'),reviewedAt:null,reviewReason:''});
+  if(!saveProductSubmissions(metadata))message.textContent='Product saved centrally, but this device could not save its photo/contact details. Keep the photos available until we add secure photo storage.';
+  else message.textContent='Product saved to PAMOJA and submitted for approval. Photos and contact details are currently kept only on this device; central photo storage is the next stage.';
+  ['merchantProductName','merchantProductDescription','merchantProductCategory','merchantProductLocation','merchantProductPhone','merchantProductPrice','merchantProductQuantity','merchantProductPhotos'].forEach(id=>document.getElementById(id).value='');
+  selectedProductPhotos=[];document.getElementById('merchantPhotoPreview').innerHTML='';
+  await renderMerchantProductSubmissions();renderShopProducts();
+ }catch(error){message.textContent=error.message||'Product could not be saved. Please try again.'}
+ finally{if(button)button.disabled=false}
 }
-function renderMerchantProductSubmissions(){
+
+async function renderMerchantProductSubmissions(){
  const container=document.getElementById('merchantProductSubmissions');if(!container)return;container.innerHTML='';
  if(!window.Clerk?.user){container.textContent='Sign in to view your product submissions.';return}
- const mine=getProductSubmissions().filter(p=>p.merchantId===window.Clerk.user.id);
- if(!mine.length){container.textContent='No product submissions yet.';return}
- mine.forEach(p=>{
-  const card=document.createElement('div');card.className='listing-card';
-  const title=document.createElement('b');title.textContent=p.name;
-  const status=document.createElement('strong');status.textContent='Status: '+p.status;status.className=p.status==='Approved'?'status-success':(p.status==='Rejected'?'status-rejected':'status-pending');
-  const details=document.createElement('small');details.textContent='UGX '+Number(p.price).toLocaleString('en-UG')+' · Quantity: '+p.quantity+' · Submitted: '+p.submittedAt;
-  card.append(title,status,details);
-  if(p.reviewReason){const reason=document.createElement('p');reason.textContent='Administrator feedback: '+p.reviewReason;card.appendChild(reason)}
-  if(p.photos?.length){const strip=document.createElement('div');strip.className='product-photo-strip';p.photos.forEach(src=>{const img=document.createElement('img');img.src=src;img.alt='Submitted product photo';strip.appendChild(img)});card.appendChild(strip)}
-  container.appendChild(card);
- });
+ container.textContent='Loading your products...';
+ try{
+  const result=await merchantApiRequest('/merchant/products');
+  const products=Array.isArray(result.products)?result.products:[];
+  const local=getProductSubmissions().filter(p=>p.merchantId===window.Clerk.user.id);
+  container.innerHTML='';
+  if(!products.length){container.textContent='No products saved to your PAMOJA merchant account yet.';return}
+  products.forEach(p=>{
+   const card=document.createElement('div');card.className='listing-card';
+   const title=document.createElement('b');title.textContent=p.product_name||'Product';
+   const status=document.createElement('strong');status.textContent='Status: '+String(p.listing_status||'pending').replace(/_/g,' ');status.className=p.listing_status==='approved'?'status-success':'status-pending';
+   const details=document.createElement('small');details.textContent='UGX '+Number(p.unit_price||0).toLocaleString('en-UG')+' · Listed: '+new Date(p.listed_at).toLocaleDateString('en-UG');
+   const stock=document.createElement('p');stock.textContent='Original quantity: '+p.initial_quantity+' · Sold: '+p.sold_quantity+' · Available stock: '+p.stock_quantity;
+   card.append(title,status,details,stock);
+   if(Number(p.stock_quantity)===0){const soldOut=document.createElement('p');soldOut.textContent='Sold out — restock this same listing.';card.appendChild(soldOut)}
+   if(!['archived','rejected'].includes(p.listing_status)){
+    const restock=document.createElement('button');restock.type='button';restock.textContent='Add Stock';restock.addEventListener('click',async()=>{
+     const raw=window.prompt('How many units would you like to add to this product?');
+     if(raw===null)return;const amount=Number(raw);
+     if(!Number.isSafeInteger(amount)||amount<1||amount>1000000){alert('Enter a whole number from 1 to 1,000,000.');return}
+     restock.disabled=true;restock.textContent='Adding...';
+     try{await merchantApiRequest('/merchant/products/restock',{method:'POST',body:JSON.stringify({productId:p.product_id,quantity:amount})});await renderMerchantProductSubmissions();alert('Stock added to the existing product listing.')}
+     catch(error){alert(error.message||'Stock could not be added.');restock.disabled=false;restock.textContent='Add Stock'}
+    });card.appendChild(restock);
+   }
+   const history=Array.isArray(p.inventory_history)?p.inventory_history:[];
+   if(history.length){const label=document.createElement('small');label.textContent='Stock history: '+history.map(e=>String(e.eventType||'').replace(/_/g,' ')+ ' ('+(Number(e.quantityChange)>0?'+':'')+e.quantityChange+')').join(' · ');card.appendChild(label)}
+   const localInfo=local.find(item=>item.productId===p.product_id||item.id===p.product_id);
+   if(localInfo?.photos?.length){const strip=document.createElement('div');strip.className='product-photo-strip';localInfo.photos.forEach(src=>{const img=document.createElement('img');img.src=src;img.alt='Product photo saved on this device';strip.appendChild(img)});card.appendChild(strip)}
+   container.appendChild(card);
+  });
+ }catch(error){container.textContent=(error.message||'Unable to load merchant products.')+' Please refresh and try again.'}
 }
 
 function renderMerchantOrders(){
