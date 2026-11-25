@@ -272,7 +272,7 @@ body.auth-pending #welcome{visibility:visible!important}
 
 <header class="site-header"><div class="brand"><div class="brand-mark" aria-label="PAMOJA multicolour brand mark">P</div><div class="brand-divider"></div><div class="brand-copy"><h2>PAMOJA</h2><p>TOGETHER. MORE POSSIBLE.</p></div></div><div class="header-actions"><div class="demo-label">DEMO</div><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="pamojaMenu" aria-expanded="false" onclick="togglePamojaMenu()"><span></span><span></span><span></span></button></div></header>
 <div class="menu-backdrop hidden" id="menuBackdrop" onclick="closePamojaMenu()" aria-hidden="true"></div>
-<aside class="pamoja-menu hidden" id="pamojaMenu" aria-label="Account menu" aria-hidden="true"><div class="menu-top"><div><small>PAMOJA MENU</small><b>Together. More Possible.</b></div><button type="button" class="menu-close" aria-label="Close menu" onclick="closePamojaMenu()">×</button></div><div id="menuSignedOut"><button type="button" class="drawer-link" onclick="closePamojaMenu();openPamojaAuth('sign-in')"><span>↪</span><span><b>Sign in</b><small>Access your PAMOJA account</small></span><i>→</i></button></div><div id="menuSignedIn" class="hidden"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('profile')"><span>◉</span><span><b>Profile</b><small>Account details and status</small></span><i>→</i></button><button type="button" class="drawer-link drawer-signout" onclick="closePamojaMenu();logoutUser()"><span>↗</span><span><b>Sign out</b><small>Securely leave your account</small></span><i>→</i></button></div></aside>
+<aside class="pamoja-menu hidden" id="pamojaMenu" aria-label="Account menu" aria-hidden="true"><div class="menu-top"><div><small>PAMOJA MENU</small><b>Together. More Possible.</b></div><button type="button" class="menu-close" aria-label="Close menu" onclick="closePamojaMenu()">×</button></div><div id="menuSignedOut"><button type="button" class="drawer-link" onclick="closePamojaMenu();openPamojaAuth('sign-in')"><span>↪</span><span><b>Sign in</b><small>Access your PAMOJA account</small></span><i>→</i></button></div><div id="menuSignedIn" class="hidden"><button type="button" class="drawer-link" onclick="closePamojaMenu();show('profile')"><span>◉</span><span><b>Profile</b><small>Account details and status</small></span><i>→</i></button><button type="button" class="drawer-link hidden" id="adminMenuLink" onclick="closePamojaMenu();show('admin')"><span>▣</span><span><b>Admin</b><small>Review KYC and marketplace products</small></span><i>→</i></button><button type="button" class="drawer-link drawer-signout" onclick="closePamojaMenu();logoutUser()"><span>↗</span><span><b>Sign out</b><small>Securely leave your account</small></span><i>→</i></button></div></aside>
 
 <main>
 <section id="welcome">
@@ -1131,6 +1131,14 @@ window.addEventListener('load',async()=>{
        adminPanel.appendChild(document.createElement('br'));adminPanel.appendChild(openButton);
       }
      }catch(adminError){console.error('KYC reviewer permission check failed:',adminError);adminPanel.textContent='KYC reviewer access could not be checked. Your normal account remains available.'}
+    }
+    const adminMenuLink=document.getElementById('adminMenuLink');
+    if(adminMenuLink){
+     adminMenuLink.classList.add('hidden');
+     try{
+      const productAdminResponse=await fetch(API_URL+'/admin/marketplace-products?limit=1&offset=0&status=pending',{headers:{Authorization:'Bearer '+token}});
+      if(productAdminResponse.ok){await productAdminResponse.json();adminMenuLink.classList.remove('hidden')}
+     }catch(productAdminError){console.warn('Marketplace product-review permission check failed.',productAdminError)}
     }
    }catch(error){console.error('PAMOJA account synchronization failed:',error);if(error.diagnostic)console.error(error.diagnostic);if(syncMessage)syncMessage.textContent=error.userMessage||'Your profile is signed in, but PAMOJA account setup could not be completed. Please try again later.'}
   }
