@@ -507,7 +507,7 @@ function show(id,btn,fromHistory=false){
  if(!fromHistory){try{const state={...(window.history.state||{}),pamojaSection:id};if(!pamojaHistoryReady){window.history.replaceState(state,'',window.location.href);pamojaHistoryReady=true}else if(window.history.state?.pamojaSection!==id){window.history.pushState(state,'',window.location.href)}}catch(e){console.warn('PAMOJA screen history could not be updated.',e)}}
  if(id==='activity'){renderCustomerOrders();renderActivity()}
  if(id==='merchant'){renderMerchantOrders();renderMerchantSalesReport();renderMerchantWithdrawals();renderMerchantProductSubmissions()}
- if(id==='shop')renderShopProducts();
+ if(id==='shop'){renderShopProducts();loadCentralMarketplaceProducts();}
  if(id==='admin')loadAdminKycQueue();
 }
 window.addEventListener('popstate',event=>{const previous=event.state?.pamojaSection;if(!VALID_SECTIONS.includes(previous))return;closePamojaMenu();show(previous,navButtonFor(previous),true)});
@@ -681,6 +681,42 @@ function renderActivity(){
  });
 }
 
+let centralMarketplaceProducts=[];
+let centralMarketplacePhotoUrls=[];
+let centralMarketplaceLoading=false;
+async function loadCentralMarketplaceProducts(){
+ if(centralMarketplaceLoading||!window.Clerk?.session)return;
+ centralMarketplaceLoading=true;
+ centralMarketplacePhotoUrls.forEach(url=>URL.revokeObjectURL(url));centralMarketplacePhotoUrls=[];
+ try{
+  const token=await window.Clerk.session.getToken();
+  if(!token)throw new Error('Sign in again to view marketplace products.');
+  const base='https://yembridge-api.c07057702.workers.dev';
+  const response=await fetch(base+'/marketplace/products',{headers:{Authorization:'Bearer '+token}});
+  if(!response.ok)throw new Error('The marketplace catalogue could not be loaded.');
+  const data=await response.json();
+  const products=Array.isArray(data.products)?data.products:[];
+  centralMarketplaceProducts=await Promise.all(products.map(async product=>{
+   const photoIds=Array.isArray(product.photo_ids)?product.photo_ids:[];
+   let photos=[];
+   if(photoIds.length){
+    try{
+     const photoResponse=await fetch(base+'/marketplace/product-photo?photoId='+encodeURIComponent(photoIds[0]),{headers:{Authorization:'Bearer '+token}});
+     if(photoResponse.ok){const objectUrl=URL.createObjectURL(await photoResponse.blob());centralMarketplacePhotoUrls.push(objectUrl);photos.push(objectUrl)}
+    }catch(photoError){console.warn('A marketplace product photo could not be loaded.')}
+   }
+   return {id:product.product_id,name:product.product_name,description:product.description,category:product.category,price:Number(product.unit_price),quantity:Number(product.stock_quantity),photos,central:true};
+  }));
+ }catch(error){
+  console.warn('PAMOJA central marketplace could not be loaded:',error);
+  centralMarketplaceProducts=[];
+  const count=document.getElementById('marketResultsCount');
+  if(count)count.textContent='Central products are temporarily unavailable. Demo products are still shown.';
+ }finally{
+  centralMarketplaceLoading=false;
+  renderShopProducts();
+ }
+}
 function renderShopProducts(){
  const container=document.getElementById('shopProducts');if(!container)return;container.innerHTML='';
  const demoItems=[
@@ -690,14 +726,29 @@ function renderShopProducts(){
   {name:'Wireless Earphones',price:35000,category:'ELECTRONICS',emoji:'🎧'}
  ];
  const approved=getProductSubmissions().filter(p=>p.status==='Approved');
- const allProducts=demoItems.concat(approved);
+ const central=centralMarketplaceProducts;
+ const allProducts=demoItems.concat(approved,central);
  const search=(document.getElementById('marketSearch')?.value||'').trim().toLowerCase();
  const visible=allProducts.filter(p=>[p.name,p.category,p.description,p.location].some(v=>String(v||'').toLowerCase().includes(search)));
- visible.forEach(p=>container.appendChild(makeShopCard(p)));
+ visible.forEach(p=>container.appendChild(p.central?makeCentralShopCard(p):makeShopCard(p)));
  const count=document.getElementById('marketResultsCount');
  if(count)count.textContent=search?'Showing '+visible.length+' of '+allProducts.length+' products':'Showing '+allProducts.length+' demo and approved products';
  if(!visible.length){const note=document.createElement('p');note.className='muted';note.textContent='No products match that search. Try another name or category.';container.appendChild(note)}
- if(!approved.length&&!search){const note=document.createElement('p');note.className='muted';note.textContent='More products from local merchants will appear here after administrator approval.';container.appendChild(note)}
+ if(!approved.length&&!central.length&&!search){const note=document.createElement('p');note.className='muted';note.textContent='More products from local merchants will appear here after administrator approval.';container.appendChild(note)}
+}
+function makeCentralShopCard(p){
+ const card=document.createElement('div');card.className='product-card';
+ if(p.photos?.length){const img=document.createElement('img');img.className='product-image';img.src=p.photos[0];img.alt=(p.name||'Product')+' photo';card.appendChild(img)}
+ else{const image=document.createElement('div');image.className='product-image';image.textContent='📦';card.appendChild(image)}
+ const category=document.createElement('small');category.className='product-category';category.textContent=p.category||'PRODUCT';
+ const name=document.createElement('b');name.textContent=p.name||'Product';
+ const price=document.createElement('strong');price.textContent='UGX '+Number(p.price||0).toLocaleString('en-UG');
+ const stock=document.createElement('small');stock.textContent=Number(p.quantity)>0?'Available: '+Number(p.quantity):'SOLD OUT';stock.className=Number(p.quantity)>0?'status-success':'status-rejected';
+ const note=document.createElement('small');note.className='muted';note.textContent='Ordering through PAMOJA is coming soon.';
+ card.append(category,name,price);
+ if(p.description){const description=document.createElement('small');description.textContent=p.description;card.appendChild(description)}
+ card.append(stock,note);
+ return card;
 }
 document.addEventListener('DOMContentLoaded',()=>{
  const search=document.getElementById('marketSearch');
