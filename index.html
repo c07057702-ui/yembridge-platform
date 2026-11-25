@@ -832,6 +832,30 @@ async function renderMerchantProductSubmissions(){
    const details=document.createElement('small');details.textContent='UGX '+Number(p.unit_price||0).toLocaleString('en-UG')+' · Listed: '+new Date(p.listed_at).toLocaleDateString('en-UG');
    const stock=document.createElement('p');stock.textContent='Original quantity: '+p.initial_quantity+' · Sold: '+p.sold_quantity+' · Available stock: '+p.stock_quantity;
    card.append(title,status,details,stock);
+   if(!['archived','rejected'].includes(p.listing_status)){
+    const photoPicker=document.createElement('input');photoPicker.type='file';photoPicker.accept='image/jpeg,image/png,image/webp';photoPicker.multiple=true;photoPicker.hidden=true;
+    const photoButton=document.createElement('button');photoButton.type='button';photoButton.textContent='Upload / Replace Photos';
+    const photoMessage=document.createElement('small');photoMessage.textContent='Choose 2–5 product photos. Uploading replaces the photos currently stored for this listing.';
+    photoButton.addEventListener('click',()=>photoPicker.click());
+    photoPicker.addEventListener('change',async()=>{
+     const files=Array.from(photoPicker.files||[]);
+     if(files.length<2||files.length>5){photoMessage.textContent='Please choose between 2 and 5 photos.';photoPicker.value='';return}
+     if(files.some(file=>!['image/jpeg','image/png','image/webp'].includes(file.type))){photoMessage.textContent='Use JPEG, PNG or WebP image files only.';photoPicker.value='';return}
+     photoButton.disabled=true;photoButton.textContent='Preparing photos...';photoMessage.textContent='Preparing and securely uploading your photos...';
+     try{
+      const photoForm=new FormData();photoForm.append('productId',p.product_id);
+      for(let i=0;i<files.length;i++){
+       const dataUrl=await compressPhoto(files[i]);const blob=await (await fetch(dataUrl)).blob();
+       photoForm.append('photos',blob,'product-photo-'+(i+1)+'.jpg');
+      }
+      await merchantApiRequest('/merchant/products/photos',{method:'POST',body:photoForm});
+      photoMessage.textContent='Photos uploaded successfully to PAMOJA.';
+      photoButton.textContent='Replace Photos';
+     }catch(error){photoMessage.textContent=error.message||'Photo upload failed. Please try again.';photoButton.textContent='Upload / Replace Photos'}
+     finally{photoButton.disabled=false;photoPicker.value=''}
+    });
+    card.append(photoPicker,photoButton,photoMessage);
+   }
    if(Number(p.stock_quantity)===0){const soldOut=document.createElement('p');soldOut.textContent='Sold out — restock this same listing.';card.appendChild(soldOut)}
    if(!['archived','rejected'].includes(p.listing_status)){
     const restock=document.createElement('button');restock.type='button';restock.textContent='Add Stock';restock.addEventListener('click',async()=>{
