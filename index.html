@@ -807,21 +807,41 @@ async function submitMerchantProduct(){
  finally{if(button)button.disabled=false}
 }
 
-function renderMerchantProductSubmissions(){
+async function renderMerchantProductSubmissions(){
  const container=document.getElementById('merchantProductSubmissions');if(!container)return;container.innerHTML='';
  if(!window.Clerk?.user){container.textContent='Sign in to view your product submissions.';return}
- const mine=getProductSubmissions().filter(p=>p.merchantId===window.Clerk.user.id);
- if(!mine.length){container.textContent='No product submissions yet.';return}
- mine.forEach(p=>{
-  const card=document.createElement('div');card.className='listing-card';
-  const title=document.createElement('b');title.textContent=p.name;
-  const status=document.createElement('strong');status.textContent='Status: '+p.status;status.className=p.status==='Approved'?'status-success':(p.status==='Rejected'?'status-rejected':'status-pending');
-  const details=document.createElement('small');details.textContent='UGX '+Number(p.price).toLocaleString('en-UG')+' · Quantity: '+p.quantity+' · Submitted: '+p.submittedAt;
-  card.append(title,status,details);
-  if(p.reviewReason){const reason=document.createElement('p');reason.textContent='Administrator feedback: '+p.reviewReason;card.appendChild(reason)}
-  if(p.photos?.length){const strip=document.createElement('div');strip.className='product-photo-strip';p.photos.forEach(src=>{const img=document.createElement('img');img.src=src;img.alt='Submitted product photo';strip.appendChild(img)});card.appendChild(strip)}
-  container.appendChild(card);
- });
+ container.textContent='Loading your products...';
+ try{
+  const result=await merchantApiRequest('/merchant/products');
+  const products=Array.isArray(result.products)?result.products:[];
+  const local=getProductSubmissions().filter(p=>p.merchantId===window.Clerk.user.id);
+  container.innerHTML='';
+  if(!products.length){container.textContent='No products saved to your PAMOJA merchant account yet.';return}
+  products.forEach(p=>{
+   const card=document.createElement('div');card.className='listing-card';
+   const title=document.createElement('b');title.textContent=p.product_name||'Product';
+   const status=document.createElement('strong');status.textContent='Status: '+String(p.listing_status||'pending').replace(/_/g,' ');status.className=p.listing_status==='approved'?'status-success':'status-pending';
+   const details=document.createElement('small');details.textContent='UGX '+Number(p.unit_price||0).toLocaleString('en-UG')+' · Listed: '+new Date(p.listed_at).toLocaleDateString('en-UG');
+   const stock=document.createElement('p');stock.textContent='Original quantity: '+p.initial_quantity+' · Sold: '+p.sold_quantity+' · Available stock: '+p.stock_quantity;
+   card.append(title,status,details,stock);
+   if(Number(p.stock_quantity)===0){const soldOut=document.createElement('p');soldOut.textContent='Sold out — restock this same listing.';card.appendChild(soldOut)}
+   if(!['archived','rejected'].includes(p.listing_status)){
+    const restock=document.createElement('button');restock.type='button';restock.textContent='Add Stock';restock.addEventListener('click',async()=>{
+     const raw=window.prompt('How many units would you like to add to this product?');
+     if(raw===null)return;const amount=Number(raw);
+     if(!Number.isSafeInteger(amount)||amount<1||amount>1000000){alert('Enter a whole number from 1 to 1,000,000.');return}
+     restock.disabled=true;restock.textContent='Adding...';
+     try{await merchantApiRequest('/merchant/products/restock',{method:'POST',body:JSON.stringify({productId:p.product_id,quantity:amount})});await renderMerchantProductSubmissions();alert('Stock added to the existing product listing.')}
+     catch(error){alert(error.message||'Stock could not be added.');restock.disabled=false;restock.textContent='Add Stock'}
+    });card.appendChild(restock);
+   }
+   const history=Array.isArray(p.inventory_history)?p.inventory_history:[];
+   if(history.length){const label=document.createElement('small');label.textContent='Stock history: '+history.map(e=>String(e.eventType||'').replace(/_/g,' ')+ ' ('+(Number(e.quantityChange)>0?'+':'')+e.quantityChange+')').join(' · ');card.appendChild(label)}
+   const localInfo=local.find(item=>item.productId===p.product_id||item.id===p.product_id);
+   if(localInfo?.photos?.length){const strip=document.createElement('div');strip.className='product-photo-strip';localInfo.photos.forEach(src=>{const img=document.createElement('img');img.src=src;img.alt='Product photo saved on this device';strip.appendChild(img)});card.appendChild(strip)}
+   container.appendChild(card);
+  });
+ }catch(error){container.textContent=(error.message||'Unable to load merchant products.')+' Please refresh and try again.'}
 }
 
 function renderMerchantOrders(){
