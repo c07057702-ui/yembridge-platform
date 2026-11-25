@@ -892,10 +892,11 @@ async function renderMerchantProductSubmissions(){
   products.forEach(p=>{
    const card=document.createElement('div');card.className='listing-card';
    const title=document.createElement('b');title.textContent=p.product_name||'Product';
-   const status=document.createElement('strong');status.textContent='Status: '+String(p.listing_status||'pending').replace(/_/g,' ');status.className=p.listing_status==='approved'?'status-success':'status-pending';
+   const status=document.createElement('strong');status.textContent='Status: '+(p.listing_status==='pending'&&p.review_notes?'changes requested':String(p.listing_status||'pending').replace(/_/g,' '));status.className=p.listing_status==='approved'?'status-success':'status-pending';
    const details=document.createElement('small');details.textContent='UGX '+Number(p.unit_price||0).toLocaleString('en-UG')+' · Listed: '+new Date(p.listed_at).toLocaleDateString('en-UG');
    const stock=document.createElement('p');stock.textContent='Original quantity: '+p.initial_quantity+' · Sold: '+p.sold_quantity+' · Available stock: '+p.stock_quantity;
    card.append(title,status,details,stock);
+   if(p.review_notes){const feedback=document.createElement('p');feedback.className='muted';feedback.textContent='Admin feedback: '+p.review_notes;card.appendChild(feedback)}
    if(!['archived','rejected'].includes(p.listing_status)){
     const photoPicker=document.createElement('input');photoPicker.type='file';photoPicker.accept='image/jpeg,image/png,image/webp';photoPicker.multiple=true;photoPicker.hidden=true;
     const photoButton=document.createElement('button');photoButton.type='button';photoButton.textContent='Upload / Replace Photos';
