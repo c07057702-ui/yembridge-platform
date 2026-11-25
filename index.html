@@ -213,6 +213,38 @@ nav button.active{background:linear-gradient(120deg,rgba(8,134,111,.15),rgba(242
 body.auth-pending main section:not(#welcome){visibility:hidden!important}
 body.auth-pending #welcome{visibility:visible!important}
 </style>
+
+<style>
+.merchant-welcome{padding:5px 3px 12px}
+.merchant-wallet{background:linear-gradient(135deg,#0B2944 0%,#0A5360 100%);color:#fff;border:0;padding:18px}
+.merchant-wallet h3{color:#fff;margin:4px 0;font-size:18px}
+.merchant-wallet .muted{color:#D5E8E2}
+.merchant-wallet-top{display:flex;justify-content:space-between;align-items:center}
+.merchant-kicker{font-size:10px;font-weight:800;letter-spacing:1.2px;color:#F2C45C}
+.merchant-wallet-icon{font-size:25px;background:#FFFFFF18;border-radius:12px;padding:9px}
+.merchant-wallet-balance{font-size:27px;font-weight:800;margin:8px 0}
+.merchant-wallet-estimate{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid #FFFFFF35;padding-top:12px;margin-top:12px;font-size:12px}
+.merchant-wallet-estimate strong{font-size:13px}
+.merchant-withdraw-button{width:100%;margin-top:14px;background:#F2B84B;color:#102B46}
+.merchant-panel{background:#fff;border:1px solid #E2EBE6;border-radius:15px;margin:10px 0;overflow:hidden;box-shadow:0 4px 14px #193E5D09}
+.merchant-panel>summary{list-style:none;cursor:pointer;position:relative;padding:15px 42px 15px 15px;font-weight:800;color:#102B46;font-size:14px}
+.merchant-panel>summary::-webkit-details-marker{display:none}
+.merchant-panel>summary:after{content:'＋';position:absolute;right:15px;top:13px;color:#087F68;font-size:20px}
+.merchant-panel[open]>summary:after{content:'−'}
+.merchant-panel>summary span,.merchant-panel>summary small{display:block}
+.merchant-panel>summary small{font-size:10px;color:#718092;font-weight:400;margin-top:3px}
+.merchant-panel-content{padding:0 14px 15px;border-top:1px solid #EDF2EF}
+.merchant-panel-content>.muted:first-child{margin-top:12px}
+.merchant-tools-heading{margin:19px 2px 8px}
+.merchant-tools-heading h3{font-size:18px;margin:0 0 3px}
+.merchant-tools-heading p{margin:0}
+.merchant-withdraw-panel{margin-top:12px;border-color:#FFFFFF45;background:#FFFFFF0D;color:#fff;box-shadow:none}
+.merchant-withdraw-panel>summary{color:#fff;font-size:12px;padding:10px 35px 10px 11px}
+.merchant-withdraw-panel>summary:after{right:11px;top:8px;color:#F2C45C}
+.merchant-withdraw-panel .merchant-panel-content{border-top-color:#FFFFFF30;padding:8px 10px 12px}
+.merchant-withdraw-panel h4{color:#fff}
+.merchant-demo-note{font-size:10px;text-align:center;margin:15px 0}
+</style>
 </head>
 <body class="starting auth-pending">
 <div id="startupOverlay" class="startup-overlay" role="status" aria-live="polite"><div class="startup-box"><div class="startup-spinner"></div><b>Loading PAMOJA...</b><small>Checking your secure account</small></div></div>
@@ -351,29 +383,67 @@ body.auth-pending #welcome{visibility:visible!important}
 <div id="adminKycApprovalFields"><label for="adminKycDistrict">District / City (as shown on National ID)</label><input id="adminKycDistrict" maxlength="100" placeholder="Enter District / City"><label for="adminKycTown">Town / Village (as shown on National ID)</label><input id="adminKycTown" maxlength="100" placeholder="Enter Town / Village"></div>
 <label for="adminKycNotes">Review notes (optional)</label><textarea id="adminKycNotes" maxlength="1000" placeholder="Add a short reason or instruction"></textarea><button type="button" id="adminKycSubmitDecision">Save review decision</button><p id="adminKycReviewMessage" class="muted" aria-live="polite"></p></div></div></section>
 <section id="merchant" class="hidden">
-<div class="card"><h3>🏪 Merchant Dashboard</h3><p class="muted">Welcome to your PAMOJA merchant space. This demonstration uses your signed-in account.</p><h3>📦 Incoming Customer Orders</h3><p class="muted">View and manage purchases from customers.</p><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
-<div class="card"><h3>💰 My Merchant Balance</h3><div class="amount">Not configured</div><p class="muted">Merchant settlement rules have not yet been configured. No real money is held here.</p></div>
-<div class="card"><h3>💸 Merchant Withdrawals</h3><p class="muted">Withdrawal availability:</p><div class="amount" id="merchantAvailableWithdrawal">Not available</div><input id="withdrawalAmount" type="number" min="1" placeholder="Enter withdrawal amount in UGX"><button onclick="requestMerchantWithdrawal()">Request Withdrawal</button><p id="withdrawalMessage" class="muted"></p><h3>📋 Withdrawal History</h3><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div></div>
-<div class="card"><h3>📊 Merchant Sales Report</h3><div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div><div class="activity-summary"><div><small>PAMOJA Commission (0.98%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>URA Tax (0.60%)</small><strong id="merchantUraTax">UGX 0</strong></div></div><div class="activity-summary"><div><small>Net Merchant Proceeds</small><strong id="merchantNetProceeds">Not configured</strong></div></div><p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p><p class="muted">The URA amount is shown as a proposed deduction from merchant sales for tax remittance. PAMOJA does not yet collect or remit it. Confirm the applicable tax, rate and collection obligations with URA or a qualified tax adviser before live use. Demo report only; these figures are not real earnings.</p></div>
+<div class="welcome merchant-welcome"><span class="welcome-tag">PAMOJA BUSINESS</span><h3>Merchant Dashboard</h3><p class="muted">Your store, orders and earnings in one simple place.</p></div>
 
-<div class="card">
-<h3>➕ Submit a Product for Approval</h3>
-<p class="muted">Your product will remain hidden from customers until an administrator approves it. Complete all fields and upload at least two clear photos.</p>
-<label for="merchantProductName">Product name</label><input id="merchantProductName" maxlength="80" placeholder="e.g. Handmade liquid soap">
-<label for="merchantProductDescription">Product description</label><textarea id="merchantProductDescription" maxlength="1000" placeholder="Describe the product, its features and condition"></textarea>
-<label for="merchantProductCategory">Product category</label><input id="merchantProductCategory" maxlength="50" placeholder="e.g. Home care">
-<label for="merchantProductLocation">Product location</label><input id="merchantProductLocation" maxlength="120" placeholder="District, town or area">
-<label for="merchantProductPhone">Contact phone number</label><input id="merchantProductPhone" type="tel" maxlength="25" placeholder="Merchant contact number">
-<label for="merchantProductPrice">Price in UGX</label><input id="merchantProductPrice" type="number" min="1" step="1" placeholder="e.g. 15000">
-<label for="merchantProductQuantity">Available quantity</label><input id="merchantProductQuantity" type="number" min="1" step="1" placeholder="e.g. 20">
-<label for="merchantProductPhotos">Product photos (at least 2)</label><input id="merchantProductPhotos" type="file" accept="image/*" multiple>
-<p class="muted">Choose at least two clear photos of this product. Photos are resized for this browser demonstration.</p>
-<div id="merchantPhotoPreview" class="photo-preview"></div>
-<button id="submitProductButton" onclick="submitMerchantProduct()">Submit Product for Review</button>
-<p id="merchantProductMessage" class="muted" aria-live="polite"></p>
+<div class="card merchant-wallet">
+ <div class="merchant-wallet-top"><div><span class="merchant-kicker">MERCHANT WALLET</span><h3>Available balance</h3></div><span class="merchant-wallet-icon">💼</span></div>
+ <div class="merchant-wallet-balance" id="merchantAvailableWithdrawal">Not configured</div>
+ <p class="muted">Merchant settlement is not yet enabled. No real funds are held in this demo wallet.</p>
+ <div class="merchant-wallet-estimate"><span>Estimated net sales</span><strong id="merchantNetProceeds">Not configured</strong></div>
+ <button type="button" class="merchant-withdraw-button" onclick="toggleMerchantPanel('merchantWithdrawPanel')">Withdraw</button>
+ <details class="merchant-panel merchant-withdraw-panel" id="merchantWithdrawPanel">
+  <summary>Withdrawal details</summary>
+  <div class="merchant-panel-content">
+   <p class="muted">Withdrawal requests are not available until PAMOJA configures and verifies merchant settlement and payment processing.</p>
+   <label for="withdrawalAmount">Amount (UGX)</label><input id="withdrawalAmount" type="number" min="1" placeholder="Enter amount">
+   <button type="button" onclick="requestMerchantWithdrawal()">Request Withdrawal</button>
+   <p id="withdrawalMessage" class="muted" aria-live="polite"></p>
+   <h4>Withdrawal history</h4><div id="merchantWithdrawalHistory"><p class="muted">No withdrawal requests yet.</p></div>
+  </div>
+ </details>
 </div>
-<div class="card"><h3>🗂 My Product Submissions</h3><p class="muted">Check whether your submitted products are pending, approved, rejected or awaiting corrections.</p><div id="merchantProductSubmissions">No product submissions yet.</div></div>
-<p class="muted">Merchant dashboard demonstration only.</p>
+
+<div class="merchant-tools-heading"><h3>Manage your business</h3><p class="muted">Choose a button to open its tools. Close it when you are finished.</p></div>
+
+<details class="merchant-panel" id="merchantOrdersPanel">
+ <summary><span>📦 Orders</span><small>View and update customer orders</small></summary>
+ <div class="merchant-panel-content"><div id="merchantOrders"><p class="muted">No customer orders yet.</p></div></div>
+</details>
+
+<details class="merchant-panel" id="merchantSalesPanel">
+ <summary><span>📊 Sales report</span><small>Sales, completed orders and deductions</small></summary>
+ <div class="merchant-panel-content">
+  <div class="activity-summary"><div><small>Total Sales</small><strong id="merchantTotalSales">UGX 0</strong></div><div><small>Completed Orders</small><strong id="merchantCompletedCount">0</strong></div></div>
+  <div class="activity-summary"><div><small>PAMOJA Commission (0.98%)</small><strong id="merchantCommission">UGX 0</strong></div><div><small>Proposed URA Tax (0.60%)</small><strong id="merchantUraTax">UGX 0</strong></div></div>
+  <p class="muted">Pending Orders: <strong id="merchantPendingCount">0</strong></p>
+  <p class="muted">Demo estimates only. The proposed URA amount is not collected or remitted by PAMOJA. Confirm applicable tax obligations and rates with URA or a qualified tax adviser before live use.</p>
+ </div>
+</details>
+
+<details class="merchant-panel" id="merchantAddProductPanel">
+ <summary><span>➕ Add a product</span><small>Submit a product for administrator approval</small></summary>
+ <div class="merchant-panel-content">
+  <p class="muted">Products stay hidden from customers until approved. Add all details and at least two clear photos.</p>
+  <label for="merchantProductName">Product name</label><input id="merchantProductName" maxlength="80" placeholder="e.g. Handmade liquid soap">
+  <label for="merchantProductDescription">Product description</label><textarea id="merchantProductDescription" maxlength="1000" placeholder="Describe the product, its features and condition"></textarea>
+  <label for="merchantProductCategory">Product category</label><input id="merchantProductCategory" maxlength="50" placeholder="e.g. Home care">
+  <label for="merchantProductLocation">Product location</label><input id="merchantProductLocation" maxlength="120" placeholder="District, town or area">
+  <label for="merchantProductPhone">Contact phone number</label><input id="merchantProductPhone" type="tel" maxlength="25" placeholder="Merchant contact number">
+  <label for="merchantProductPrice">Price in UGX</label><input id="merchantProductPrice" type="number" min="1" step="1" placeholder="e.g. 15000">
+  <label for="merchantProductQuantity">Available quantity</label><input id="merchantProductQuantity" type="number" min="1" step="1" placeholder="e.g. 20">
+  <label for="merchantProductPhotos">Product photos (at least 2)</label><input id="merchantProductPhotos" type="file" accept="image/*" multiple>
+  <p class="muted">Photos are resized for this browser demonstration.</p>
+  <div id="merchantPhotoPreview" class="photo-preview"></div>
+  <button id="submitProductButton" type="button" onclick="submitMerchantProduct()">Submit Product for Review</button>
+  <p id="merchantProductMessage" class="muted" aria-live="polite"></p>
+ </div>
+</details>
+
+<details class="merchant-panel" id="merchantProductsPanel">
+ <summary><span>🗂 My products</span><small>Check approval status and feedback</small></summary>
+ <div class="merchant-panel-content"><div id="merchantProductSubmissions">No product submissions yet.</div></div>
+</details>
+<p class="muted merchant-demo-note">Merchant dashboard demonstration only. Wallet balances and withdrawals are not connected to live settlement.</p>
 </section>
 </main>
 
@@ -812,6 +882,7 @@ function renderMerchantSalesReport(){
  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
  set('merchantTotalSales','UGX '+total.toLocaleString('en-UG'));set('merchantCompletedCount',String(completed.length));set('merchantCommission','UGX '+commission.toLocaleString('en-UG'));set('merchantUraTax','UGX '+uraTax.toLocaleString('en-UG'));set('merchantNetProceeds','UGX '+netProceeds.toLocaleString('en-UG'));set('merchantPendingCount',String(pending.length));
 }
+function toggleMerchantPanel(id){const panel=document.getElementById(id);if(panel)panel.open=!panel.open}
 function renderMerchantWithdrawals(){
  const balance=document.getElementById('merchantAvailableWithdrawal'),history=document.getElementById('merchantWithdrawalHistory');if(!balance||!history)return;
  const userId=window.Clerk?.user?.id;balance.textContent='Not available';history.innerHTML='';
