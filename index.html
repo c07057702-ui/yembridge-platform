@@ -2345,5 +2345,156 @@ function bind(){byId('adminKycRefresh')?.addEventListener('click',loadAdminKycQu
 window.loadAdminKycQueue=loadAdminKycQueue;if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();window.addEventListener('pagehide',()=>{releaseUrls();releaseProductPhotoUrls()});
 })();
 </script>
+
+<script>
+/* PAMOJA live marketplace ordering: unpaid order requests only. */
+(function(){
+'use strict';
+const ORDER_API='https://yembridge-api.c07057702.workers.dev';
+const money=v=>'UGX '+Number(v||0).toLocaleString('en-UG');
+async function orderRequest(path,options){
+ const clerk=window.Clerk;
+ if(!clerk?.isSignedIn||!clerk.session)throw new Error('Please sign in to your PAMOJA account first.');
+ const bearer=await clerk.session.getToken();
+ if(!bearer)throw new Error('Your secure sign-in session could not be verified. Please sign in again.');
+ const response=await fetch(ORDER_API+path,{...(options||{}),headers:{Authorization:'Bearer '+bearer,'Content-Type':'application/json',...((options&&options.headers)||{})}});
+ let data={};try{data=await response.json()}catch(e){}
+ if(!response.ok)throw new Error(data.error||'The request could not be completed (HTTP '+response.status+').');
+ return data;
+}
+function safeText(tag,value,className){
+ const el=document.createElement(tag);if(className)el.className=className;el.textContent=value==null?'':String(value);return el;
+}
+function getCentralProduct(id){return (centralMarketplaceProducts||[]).find(p=>p.id===id)}
+window.addToCart=function(name,price,productId,quantity){
+ const p=getCentralProduct(productId);quantity=Number(quantity);
+ if(!p||!Number.isInteger(quantity)||quantity<1)return alert('Please choose an available PAMOJA product and a valid quantity.');
+ if(quantity>Number(p.quantity||0))return alert('There is not enough stock available. Please refresh Market.');
+ const existing=yemCart.find(x=>x.productId===productId);
+ if(existing){if(existing.quantity+quantity>Number(p.quantity||0))return alert('Your basket quantity is greater than the available stock.');existing.quantity+=quantity}
+ else yemCart.push({name:p.name,price:Number(p.price),productId:p.id,quantity,central:true});
+ window.updateCartSummary();alert(quantity+' × '+p.name+' added to your PAMOJA basket.');
+};
+window.makeCentralShopCard=function(p){
+ const card=document.createElement('div');card.className='product-card';
+ if(p.photos?.length){const img=document.createElement('img');img.className='product-image';img.src=p.photos[0];img.alt=(p.name||'Product')+' photo';card.appendChild(img)}
+ else card.appendChild(safeText('div','📦','product-image'));
+ card.append(safeText('small',p.category||'PRODUCT','product-category'),safeText('b',p.name||'Product'),safeText('strong',money(p.price)));
+ if(p.description)card.appendChild(safeText('small',p.description));
+ const stock=Number(p.quantity)||0;
+ card.appendChild(safeText('small',stock>0?'Available: '+stock:'SOLD OUT',stock>0?'status-success':'status-rejected'));
+ if(stock>0){
+  const label=safeText('label','Quantity','quantity-label');const qty=document.createElement('input');qty.type='number';qty.min='1';qty.max=String(stock);qty.step='1';qty.value='1';qty.className='quantity-input';qty.setAttribute('aria-label','Quantity for '+p.name);
+  const add=document.createElement('button');add.type='button';add.textContent='Add to basket';add.disabled=!!(window.Clerk&&!window.Clerk.isSignedIn);add.addEventListener('click',()=>window.addToCart(p.name,Number(p.price),p.id,qty.value));
+  card.append(label,qty,add);
+ }else card.appendChild(safeText('small','Currently out of stock','muted'));
+ return card;
+};
+window.updateCartSummary=function(){
+ const cart=yemCart||[],count=cart.reduce((sum,item)=>sum+item.quantity,0),total=cart.reduce((sum,item)=>sum+item.price*item.quantity,0);
+ const c=document.getElementById('cartCount'),t=document.getElementById('cartTotal'),list=document.getElementById('cartItems');
+ if(c)c.textContent=count+(count===1?' item':' items');if(t)t.textContent=money(total);
+ if(list){list.innerHTML='';cart.forEach((item,index)=>{
+  const row=document.createElement('div');row.className='transaction';const info=document.createElement('div');info.className='transaction-info';
+  info.append(safeText('b',item.name),safeText('small','Quantity: '+item.quantity+' × '+money(item.price)));
+  const amount=safeText('strong',money(item.price*item.quantity));const remove=safeText('button','Remove');
+  remove.type='button';remove.style.background='#A83C3C';remove.addEventListener('click',()=>{cart.splice(index,1);window.updateCartSummary();window.renderShopProducts()});
+  row.append(info,amount,remove);list.appendChild(row);
+ })}
+ const summary=document.querySelector('.cart-summary');if(!summary)return;
+ let checkout=document.getElementById('checkoutButton');
+ if(!checkout){checkout=document.createElement('button');checkout.id='checkoutButton';checkout.className='checkout-button';checkout.textContent='Continue to checkout';checkout.type='button';summary.appendChild(checkout)}
+ checkout.disabled=count===0;checkout.onclick=()=>window.openPamojaCheckout();
+};
+window.openPamojaCheckout=function(){
+ if(!yemCart.length)return alert('Your basket is empty.');
+ if(!window.Clerk?.isSignedIn){alert('Please sign in before checkout.');if(typeof show==='function')show('account');return}
+ let panel=document.getElementById('pamojaCheckoutPanel');
+ if(!panel){
+  panel=document.createElement('div');panel.id='pamojaCheckoutPanel';panel.className='card';
+  panel.innerHTML='<h3>Checkout</h3><p class="muted">Send your order to the merchant. No payment will be taken.</p><form id="pamojaCheckoutForm"><label for="orderCustomerName">Your name</label><input id="orderCustomerName" maxlength="160" required autocomplete="name"><label for="orderCustomerPhone">Phone number (include country code)</label><input id="orderCustomerPhone" type="tel" inputmode="tel" placeholder="+2567XXXXXXXX" required autocomplete="tel"><label for="orderFulfillment">How would you like to receive it?</label><select id="orderFulfillment" required><option value="delivery">Delivery</option><option value="pickup">Pick up from merchant</option></select><div id="deliveryAddressWrap"><label for="orderDeliveryAddress">Delivery address</label><textarea id="orderDeliveryAddress" maxlength="500" placeholder="District, area, street or clear directions"></textarea></div><label for="orderCustomerNote">Note for merchant (optional)</label><textarea id="orderCustomerNote" maxlength="1000" placeholder="Any useful instructions"></textarea><p class="muted" id="orderPaymentNotice">Payment is not available yet. Do not send money to anyone through this order.</p><button id="submitPamojaOrder" type="submit" class="checkout-button">Place unpaid order</button> <button id="cancelPamojaCheckout" type="button" style="background:#607185">Back to basket</button><p id="pamojaCheckoutMessage" class="muted" aria-live="polite"></p></form>';
+  const cartBox=document.querySelector('.cart-summary')?.parentElement;if(cartBox)cartBox.appendChild(panel);
+  document.getElementById('orderFulfillment').addEventListener('change',()=>{document.getElementById('deliveryAddressWrap').classList.toggle('hidden',document.getElementById('orderFulfillment').value!=='delivery')});
+  document.getElementById('cancelPamojaCheckout').addEventListener('click',()=>panel.classList.add('hidden'));
+  document.getElementById('pamojaCheckoutForm').addEventListener('submit',async e=>{
+   e.preventDefault();const submit=document.getElementById('submitPamojaOrder'),message=document.getElementById('pamojaCheckoutMessage');
+   const fulfillment=document.getElementById('orderFulfillment').value,phone=document.getElementById('orderCustomerPhone').value.trim();
+   if(!/^\+[1-9][0-9]{7,14}$/.test(phone)){message.textContent='Enter a valid phone number with country code, for example +2567XXXXXXXX.';return}
+   const address=document.getElementById('orderDeliveryAddress').value.trim();
+   if(fulfillment==='delivery'&&address.length<4){message.textContent='Please enter your delivery address.';return}
+   const items=yemCart.map(x=>({productId:x.productId,quantity:x.quantity}));
+   if(items.some(x=>!x.productId)) {message.textContent='Refresh Market and add the approved products again.';return}
+   submit.disabled=true;message.textContent='Submitting your order securely...';
+   try{
+    const data=await orderRequest('/marketplace/orders',{method:'POST',body:JSON.stringify({items,customerName:document.getElementById('orderCustomerName').value.trim(),customerPhone:phone,fulfillmentMethod:fulfillment,deliveryAddress:fulfillment==='delivery'?address:'',customerNote:document.getElementById('orderCustomerNote').value.trim()})});
+    yemCart.splice(0,yemCart.length);window.updateCartSummary();panel.classList.add('hidden');
+    const numbers=(data.orders||[]).map(o=>o.order_number).filter(Boolean).join(', ');
+    alert('Order submitted successfully. Order number(s): '+(numbers||'see My Orders')+'. Payment has NOT been taken.');
+    await window.renderCustomerOrders();if(typeof loadCentralMarketplaceProducts==='function')loadCentralMarketplaceProducts();
+   }catch(error){message.textContent=error.message;submit.disabled=false}
+  });
+ }
+ const user=window.Clerk.user||{},name=((user.firstName||'')+' '+(user.lastName||'')).trim();
+ document.getElementById('orderCustomerName').value=name;
+ document.getElementById('orderCustomerPhone').value='';
+ document.getElementById('orderDeliveryAddress').value='';
+ document.getElementById('orderCustomerNote').value='';
+ document.getElementById('orderFulfillment').value='delivery';
+ document.getElementById('deliveryAddressWrap').classList.remove('hidden');
+ document.getElementById('pamojaCheckoutMessage').textContent='';
+ document.getElementById('submitPamojaOrder').disabled=false;
+ panel.classList.remove('hidden');panel.scrollIntoView({behavior:'smooth',block:'start'});
+};
+window.renderCustomerOrders=async function(){
+ const container=document.getElementById('customerOrders');if(!container)return;container.innerHTML='';
+ if(!window.Clerk?.isSignedIn){container.textContent='Please sign in to view your orders.';return}
+ container.textContent='Loading your orders...';
+ try{
+  const data=await orderRequest('/marketplace/orders'),orders=data.orders||[];container.innerHTML='';
+  if(!orders.length){container.textContent='No marketplace orders yet.';return}
+  orders.forEach(o=>{
+   const card=document.createElement('div');card.className='transaction';
+   const info=document.createElement('div');info.className='transaction-info';
+   info.append(safeText('b',o.product_name||'Marketplace item'),safeText('small','Order '+(o.order_number||'—')+' · Quantity: '+o.quantity+' · '+(o.fulfillment_method==='pickup'?'Merchant pickup':'Delivery')));
+   const details=safeText('small',money(o.total_amount)+' · '+String(o.order_status||'new').replace(/_/g,' ').toUpperCase());
+   info.appendChild(details);if(o.delivery_address)info.appendChild(safeText('small','Delivery to: '+o.delivery_address));
+   info.appendChild(safeText('small','Placed: '+(o.created_at?new Date(o.created_at).toLocaleString():'—')));
+   card.appendChild(info);container.appendChild(card);
+  });
+ }catch(error){container.textContent=error.message}
+};
+window.renderMerchantOrders=async function(){
+ const container=document.getElementById('merchantOrders');if(!container)return;container.innerHTML='Loading your customer orders...';
+ if(!window.Clerk?.isSignedIn){container.textContent='Please sign in to view merchant orders.';return}
+ try{
+  const data=await orderRequest('/merchant/orders'),orders=data.orders||[];container.innerHTML='';
+  if(!orders.length){container.textContent='No customer orders for your merchant account yet.';return}
+  const allowed={new:['accepted','cancelled'],accepted:['preparing','cancelled'],preparing:['ready','cancelled'],ready:['completed','cancelled'],completed:[],cancelled:[]};
+  orders.forEach(o=>{
+   const card=document.createElement('div');card.className='merchant-order-card';
+   card.append(safeText('b',o.product_name||'Product'),safeText('small','Order '+(o.order_number||'—')),safeText('p','Customer: '+(o.customer_name||'Customer')),safeText('p','Phone: '+(o.customer_phone||'—')),safeText('p','Quantity: '+o.quantity),safeText('strong',money(o.total_amount)),safeText('p','Fulfilment: '+(o.fulfillment_method==='pickup'?'Merchant pickup':'Delivery')),safeText('p','Delivery address: '+(o.delivery_address||'Not required')),safeText('p','Customer note: '+(o.customer_note||'None')),safeText('small','Placed: '+(o.created_at?new Date(o.created_at).toLocaleString():'—')),safeText('p','Status: '+String(o.order_status||'new').toUpperCase()));
+   const options=allowed[o.order_status]||[];
+   if(options.length){
+    const select=document.createElement('select');select.setAttribute('aria-label','Update order '+o.order_number);
+    select.appendChild(new Option('Update order status',''));
+    options.forEach(v=>select.appendChild(new Option(({accepted:'Accept order',preparing:'Start preparing',ready:'Mark ready',completed:'Mark completed',cancelled:'Cancel order'})[v],v)));
+    select.addEventListener('change',async()=>{
+     if(!select.value)return;const next=select.value;
+     if(next==='cancelled'&&!confirm('Cancel this order? The reserved product stock will be restored. No payment or refund will be made.')){select.value='';return}
+     select.disabled=true;
+     try{await orderRequest('/merchant/orders/status',{method:'POST',body:JSON.stringify({orderId:o.order_id,status:next})});await window.renderMerchantOrders();await window.renderCustomerOrders();if(typeof loadCentralMarketplaceProducts==='function')loadCentralMarketplaceProducts()}
+     catch(error){alert(error.message);select.disabled=false;select.value=''}
+    });
+    card.appendChild(select);
+   }
+   container.appendChild(card);
+  });
+ }catch(error){container.textContent=error.message}
+};
+document.addEventListener('DOMContentLoaded',()=>{window.updateCartSummary();window.renderCustomerOrders();window.renderMerchantOrders()});
+window.updateCartSummary();
+})();
+</script>
+
 </body>
 </html>
