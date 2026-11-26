@@ -2365,14 +2365,14 @@ async function orderRequest(path,options){
 function safeText(tag,value,className){
  const el=document.createElement(tag);if(className)el.className=className;el.textContent=value==null?'':String(value);return el;
 }
-function getCentralProduct(id){return (window.centralMarketplaceProducts||[]).find(p=>p.id===id)}
+function getCentralProduct(id){return (centralMarketplaceProducts||[]).find(p=>p.id===id)}
 window.addToCart=function(name,price,productId,quantity){
  const p=getCentralProduct(productId);quantity=Number(quantity);
  if(!p||!Number.isInteger(quantity)||quantity<1)return alert('Please choose an available PAMOJA product and a valid quantity.');
  if(quantity>Number(p.quantity||0))return alert('There is not enough stock available. Please refresh Market.');
- const existing=window.yemCart.find(x=>x.productId===productId);
+ const existing=yemCart.find(x=>x.productId===productId);
  if(existing){if(existing.quantity+quantity>Number(p.quantity||0))return alert('Your basket quantity is greater than the available stock.');existing.quantity+=quantity}
- else window.yemCart.push({name:p.name,price:Number(p.price),productId:p.id,quantity,central:true});
+ else yemCart.push({name:p.name,price:Number(p.price),productId:p.id,quantity,central:true});
  window.updateCartSummary();alert(quantity+' × '+p.name+' added to your PAMOJA basket.');
 };
 window.makeCentralShopCard=function(p){
@@ -2391,7 +2391,7 @@ window.makeCentralShopCard=function(p){
  return card;
 };
 window.updateCartSummary=function(){
- const cart=window.yemCart||[],count=cart.reduce((sum,item)=>sum+item.quantity,0),total=cart.reduce((sum,item)=>sum+item.price*item.quantity,0);
+ const cart=yemCart||[],count=cart.reduce((sum,item)=>sum+item.quantity,0),total=cart.reduce((sum,item)=>sum+item.price*item.quantity,0);
  const c=document.getElementById('cartCount'),t=document.getElementById('cartTotal'),list=document.getElementById('cartItems');
  if(c)c.textContent=count+(count===1?' item':' items');if(t)t.textContent=money(total);
  if(list){list.innerHTML='';cart.forEach((item,index)=>{
@@ -2407,7 +2407,7 @@ window.updateCartSummary=function(){
  checkout.disabled=count===0;checkout.onclick=()=>window.openPamojaCheckout();
 };
 window.openPamojaCheckout=function(){
- if(!window.yemCart.length)return alert('Your basket is empty.');
+ if(!yemCart.length)return alert('Your basket is empty.');
  if(!window.Clerk?.isSignedIn){alert('Please sign in before checkout.');if(typeof show==='function')show('account');return}
  let panel=document.getElementById('pamojaCheckoutPanel');
  if(!panel){
@@ -2422,12 +2422,12 @@ window.openPamojaCheckout=function(){
    if(!/^\+[1-9][0-9]{7,14}$/.test(phone)){message.textContent='Enter a valid phone number with country code, for example +2567XXXXXXXX.';return}
    const address=document.getElementById('orderDeliveryAddress').value.trim();
    if(fulfillment==='delivery'&&address.length<4){message.textContent='Please enter your delivery address.';return}
-   const items=window.yemCart.map(x=>({productId:x.productId,quantity:x.quantity}));
+   const items=yemCart.map(x=>({productId:x.productId,quantity:x.quantity}));
    if(items.some(x=>!x.productId)) {message.textContent='Refresh Market and add the approved products again.';return}
    submit.disabled=true;message.textContent='Submitting your order securely...';
    try{
     const data=await orderRequest('/marketplace/orders',{method:'POST',body:JSON.stringify({items,customerName:document.getElementById('orderCustomerName').value.trim(),customerPhone:phone,fulfillmentMethod:fulfillment,deliveryAddress:fulfillment==='delivery'?address:'',customerNote:document.getElementById('orderCustomerNote').value.trim()})});
-    window.yemCart.splice(0,window.yemCart.length);window.updateCartSummary();panel.classList.add('hidden');
+    yemCart.splice(0,yemCart.length);window.updateCartSummary();panel.classList.add('hidden');
     const numbers=(data.orders||[]).map(o=>o.order_number).filter(Boolean).join(', ');
     alert('Order submitted successfully. Order number(s): '+(numbers||'see My Orders')+'. Payment has NOT been taken.');
     await window.renderCustomerOrders();if(typeof loadCentralMarketplaceProducts==='function')loadCentralMarketplaceProducts();
