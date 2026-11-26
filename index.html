@@ -360,7 +360,7 @@ body.auth-pending #welcome{visibility:visible!important}
 
 <section id="shop" class="hidden"><div class="card"><p class="welcome-tag">PAMOJA MARKET</p><h3>PAMOJA Market</h3><p class="muted">Discover products from local merchants.</p><div class="market-intro"><div><b>Together. More Possible.</b><small>Discover products from local merchants.</small></div><span>🛍️</span></div><h3 class="shop-heading">Explore products</h3><label class="market-search-label" for="marketSearch">Find something in PAMOJA Market</label><input id="marketSearch" class="market-search" type="search" placeholder="Search products or categories..." autocomplete="off"><p id="marketResultsCount" class="muted market-results-count" aria-live="polite">Showing demo products</p><div class="cart-summary"><div><b>🛒 My Shopping Basket</b><small id="cartCount">0 items</small></div><strong id="cartTotal">UGX 0</strong></div><div id="cartItems"></div><div id="shopProducts" class="grid"></div><p class="muted demo-note">Demo catalogue only. Products, prices and merchants are illustrative. No real orders or payments are made.</p></div></section>
 
-<section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 0</b></div><div><small>Money Out</small><b>UGX 0</b></div></div><h3 class="activity-heading">Recent Activity</h3><div id="dynamicActivity"></div><div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">These are sample records for demonstration only. No real money has moved.</p></div></section>
+<section id="activity" class="hidden"><div class="card"><p class="welcome-tag">YOUR ACCOUNT RECORDS</p><h3>Transaction History</h3><p class="muted">Track your payments and purchases.</p><div class="activity-summary"><div><small>Money In</small><b>UGX 0</b></div><div><small>Money Out</small><b>UGX 0</b></div></div><h3 class="activity-heading">Recent Activity</h3><div id="dynamicActivity"></div><div class="card"><h3>📦 My Marketplace Orders</h3><p class="muted">Track your purchases and confirm delivery.</p><div id="customerOrders"><p class="muted">No marketplace orders yet.</p></div></div><p class="muted activity-note">No transactions have been recorded yet. Live payments are not active.</p></div></section>
 
 <section id="profile" class="hidden"><div class="card"><p class="welcome-tag">YOUR PAMOJA PROFILE</p><h3>Account details</h3><div id="loggedIn" class="hidden"><div class="profile-panel"><div class="profile-avatar">P</div><div><small>WELCOME BACK</small><h3 id="displayName"></h3><p id="displayEmail"></p></div></div><h4>Account status</h4><div id="accountSyncMessage" class="muted" style="margin:12px 0;padding:12px;border:1px solid #D8E4DF;border-radius:12px;background:#F7FAF8" aria-live="polite">Checking PAMOJA account connection...</div><div id="adminAccessStatus" class="muted" style="margin:12px 0;padding:12px;border:1px solid #D8E4DF;border-radius:12px;background:#F7FAF8" aria-live="polite">Administrator access will be checked after sign-in.</div><div class="account-status"><div class="status-icon">🪪</div><div><b>Identity verification</b><small>Current KYC status</small></div><span id="profileKycStatus" class="status-pending">Unverified</span></div><h4>Account security</h4><button type="button" class="account-button" onclick="openClerkPasswordSettings()">Manage password &amp; security</button><p class="muted">In the secure sign-in window, open Security to manage your password. Other profile options may also appear there.</p><button class="account-button logout-button" onclick="logoutUser()">Sign Out</button></div></div></section>
 
@@ -538,7 +538,13 @@ const DEMO_WALLET_SETUP_VERSION='2026-11-pamoja-demo-wallet-start-1500000';
 let yemWallet=1500000;
 try{const setup=localStorage.getItem('yembridgeDemoWalletSetup');if(setup!==DEMO_WALLET_SETUP_VERSION){localStorage.setItem('yembridgeDemoBalance','1500000');localStorage.setItem('yembridgeDemoWalletSetup',DEMO_WALLET_SETUP_VERSION)}const saved=Number(localStorage.getItem('yembridgeDemoBalance'));yemWallet=Number.isFinite(saved)&&saved>=0?saved :1500000;localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){console.warn('Wallet storage unavailable:',e)}
 let yemCart=[];
-let yemTransactions=readLocalArray('yembridgeDemoTransactions');
+let yemTransactions=[];
+try{
+ if(localStorage.getItem('yembridgeDemoHistoryClearedV1')!=='yes'){
+  localStorage.removeItem('yembridgeDemoTransactions');
+  localStorage.setItem('yembridgeDemoHistoryClearedV1','yes');
+ }
+}catch(e){console.warn('Could not clear old demo transaction history:',e)}
 
 function saveDemoData(){try{localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){}writeLocalArray('yembridgeDemoTransactions',yemTransactions)}
 
@@ -680,7 +686,7 @@ function renderActivity(){
  const moneyIn=yemTransactions.filter(i=>i.type==='refund').reduce((s,i)=>s+Number(i.amount||0),0);
  const moneyOut=yemTransactions.filter(i=>i.type!=='refund').reduce((s,i)=>s+Number(i.amount||0),0);
  if(summaries.length>=2){summaries[0].querySelector('b').textContent='UGX '+moneyIn.toLocaleString('en-UG');summaries[1].querySelector('b').textContent='UGX '+moneyOut.toLocaleString('en-UG')}
- if(!yemTransactions.length){container.textContent='No demo purchases or refunds yet.';return}
+ if(!yemTransactions.length){container.textContent='No transactions have been recorded yet.';return}
  yemTransactions.forEach(item=>{
   const row=document.createElement('div');row.className='transaction';
   const icon=document.createElement('div');icon.className='transaction-icon';icon.textContent=item.type==='refund'?'↩️':'🛍️';
@@ -732,22 +738,15 @@ async function loadCentralMarketplaceProducts(){
 }
 function renderShopProducts(){
  const container=document.getElementById('shopProducts');if(!container)return;container.innerHTML='';
- const demoItems=[
-  {name:'Casual Sneakers',price:85000,category:'FASHION',emoji:'👟'},
-  {name:'Everyday Backpack',price:45000,category:'ACCESSORIES',emoji:'🎒'},
-  {name:'Smart Watch',price:65000,category:'ELECTRONICS',emoji:'⌚'},
-  {name:'Wireless Earphones',price:35000,category:'ELECTRONICS',emoji:'🎧'}
- ];
- const approved=getProductSubmissions().filter(p=>p.status==='Approved');
  const central=centralMarketplaceProducts;
- const allProducts=demoItems.concat(approved,central);
+ const allProducts=central;
  const search=(document.getElementById('marketSearch')?.value||'').trim().toLowerCase();
  const visible=allProducts.filter(p=>[p.name,p.category,p.description,p.location].some(v=>String(v||'').toLowerCase().includes(search)));
  visible.forEach(p=>container.appendChild(p.central?makeCentralShopCard(p):makeShopCard(p)));
  const count=document.getElementById('marketResultsCount');
- if(count)count.textContent=search?'Showing '+visible.length+' of '+allProducts.length+' products':'Showing '+allProducts.length+' demo and approved products';
+ if(count)count.textContent=search?'Showing '+visible.length+' of '+allProducts.length+' products':'Showing '+allProducts.length+' approved marketplace products';
  if(!visible.length){const note=document.createElement('p');note.className='muted';note.textContent='No products match that search. Try another name or category.';container.appendChild(note)}
- if(!approved.length&&!central.length&&!search){const note=document.createElement('p');note.className='muted';note.textContent='More products from local merchants will appear here after administrator approval.';container.appendChild(note)}
+ if(!central.length&&!search){const note=document.createElement('p');note.className='muted';note.textContent='No approved marketplace products are available yet.';container.appendChild(note)}
 }
 function makeCentralShopCard(p){
  const card=document.createElement('div');card.className='product-card';
