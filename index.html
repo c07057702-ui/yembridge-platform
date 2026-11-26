@@ -540,11 +540,13 @@ try{const setup=localStorage.getItem('yembridgeDemoWalletSetup');if(setup!==DEMO
 let yemCart=[];
 let yemTransactions=[];
 try{
- if(localStorage.getItem('yembridgeDemoHistoryClearedV1')!=='yes'){
+ if(localStorage.getItem('yembridgeDemoHistoryClearedV2')!=='yes'){
+  // These records were created by the browser-only demo checkout. No live order or payment API stores them.
   localStorage.removeItem('yembridgeDemoTransactions');
-  localStorage.setItem('yembridgeDemoHistoryClearedV1','yes');
+  localStorage.removeItem('yembridgeMerchantOrders');
+  localStorage.setItem('yembridgeDemoHistoryClearedV2','yes');
  }
-}catch(e){console.warn('Could not clear old demo transaction history:',e)}
+}catch(e){console.warn('Could not clear old demo orders and transaction history:',e)}
 
 function saveDemoData(){try{localStorage.setItem('yembridgeDemoBalance',String(yemWallet))}catch(e){}writeLocalArray('yembridgeDemoTransactions',yemTransactions)}
 
